@@ -56,7 +56,7 @@ const HomePage = () => {
             <p>Meal Option 3</p>
           </div>
         </div>
-        <button className="meal-get-started">Get Started</button>
+        <button className="meal-get-started">Choose your Meal</button>
       </section>
 
       {/* Testimonials Section */}
