@@ -1,5 +1,3 @@
-/* HomePage.css */
-
 /* General Page Styling */
 .homepage {
     font-family: Arial, sans-serif;
@@ -7,100 +5,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  /* Navigation Bar */
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 50px;
-    padding: 5px 20px;
-    background-color: white;
-    border-bottom: 2px solid #800000; /* Dark red bottom border */
-    position: relative;
-  }
-  
-  .logo-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex: 1;
-    height: 100%;
-  }
-  
-  .logo {
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black;
-    display: flex;
-    align-items: center;
-    height: 100%;
-  }
-  
-  .nav-links {
-    display: flex;
-    gap: 20px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .nav-links a {
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-  }
-  
-  .get-started {
-    background-color: #E5FF48;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-  }
-  
-  .icons-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-  
-  .icon {
-    width: 30px;
-    height: 30px;
-    background-color: lightgray; /* Placeholder for future image */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .cart-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    font-size: 12px;
-    padding: 3px 6px;
-    border-radius: 50%;
-  }
-  
-  /* Hero Banner */
-  .hero {
+}
+
+/* Hero Banner */
+.hero {
     background-color: #A4D37C;
     text-align: center;
     padding: 80px 20px;
-  }
-  
-  .cta-button {
+}
+
+.cta-button {
     background-color: green;
     color: white;
     padding: 10px 20px;
@@ -108,16 +22,16 @@
     cursor: pointer;
     font-size: 16px;
     margin-top: 20px;
-  }
-  
-  /* Market Statistics */
-  .market-statistics {
+}
+
+/* Market Statistics */
+.market-statistics {
     text-align: center;
     padding: 60px 20px;
     background-color: #f4f4f4;
-  }
-  
-  .statistics-placeholder {
+}
+
+.statistics-placeholder {
     width: 80%;
     height: 250px;
     background-color: lightgray;
@@ -127,48 +41,39 @@
     margin: 0 auto;
     font-size: 18px;
     color: #555;
-  }
-  
-  /* Meal Recommendations Section */
-  .meal-recommendations {
+}
+
+/* Meal Recommendations */
+.meal-recommendations {
     text-align: center;
     padding: 60px 20px;
     background-color: white;
-  }
-  
-  .meal-container {
+}
+
+.meal-container {
     display: flex;
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-  }
-  
-  .meal-card {
+}
+
+.meal-card {
     width: 300px;
     background-color: #f8f8f8;
     padding: 15px;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .meal-card img {
+}
+
+.meal-card img {
     width: 100%;
     height: 200px;
     background-color: lightgray;
     border-radius: 10px;
-  }
-  
-  .meal-card .price-tag {
-    background-color: #E5FF48;
-    padding: 5px 10px;
-    border-radius: 10px;
-    font-weight: bold;
-    display: inline-block;
-    margin: 10px 0;
-  }
-  
-  .meal-get-started {
+}
+
+.meal-get-started {
     margin-top: 20px;
     background-color: green;
     color: white;
@@ -177,34 +82,46 @@
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
-  }
-  
-  /* Testimonials Section */
-  .testimonials {
+}
+
+/* Testimonials */
+.testimonials {
     background-color: #A4D37C;
     padding: 40px 20px;
     text-align: center;
-  }
-  
-  .testimonial-container {
+}
+
+.testimonial-container {
     display: flex;
     justify-content: center;
     gap: 20px;
-  }
-  
-  .testimonial {
+    flex-wrap: wrap;
+}
+
+.testimonial {
     background-color: white;
     padding: 20px;
     border-radius: 5px;
     width: 200px;
     text-align: center;
-  }
-  
-  /* Footer */
-  .footer {
-    background-color: gray;
-    text-align: center;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .meal-container, .testimonial-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero, .market-statistics, .meal-recommendations, .testimonials {
+        padding: 40px 10px;
+    }
+    .meal-card {
+        width: 90%;
+    }
+    .testimonial {
+        width: 90%;
+    }
+}

@@ -1,0 +1,131 @@
+/* General Navbar Styles */
+.navbar {
+    width: 100%; /* Full width of the screen */
+    background-color: white; /* Set navbar background */
+    padding: 0 20px; /* Horizontal padding */
+    display: flex; /* Flexbox layout */
+    justify-content: space-between; /* Space between logo, nav links, and login icon */
+    align-items: center; /* Vertically align content */
+    height: 70px; /* Set fixed height for navbar */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for navbar */
+    position: fixed; /* Fix navbar at the top */
+    top: 0; /* Position navbar at the top of the page */
+    left: 0; /* Align to the left */
+    right: 0; /* Ensure it takes up full width */
+    z-index: 1000; /* Keep navbar above other content */
+    margin: 0; /* Remove any margin */
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+  
+  /* Navbar Container for Centering */
+  .nav-container {
+    display: flex;
+    justify-content: space-between; /* Align logo and hamburger to the left */
+    align-items: center; /* Vertically center all items */
+    width: 100%; /* Full width */
+    max-width: 1200px; /* Limit the maximum width of the navbar */
+    margin: 0 auto; /* Center the navbar */
+    padding: 0 20px; /* Horizontal padding */
+  }
+  
+  /* Logo Styling */
+  .logo {
+    display: flex; /* Flexbox for centering logo */
+    align-items: center; /* Vertically center logo */
+    justify-content: flex-start; /* Align logo to the left */
+    margin-right: 10px; /* Reduce space between logo and hamburger */
+  }
+  
+  .logo img {
+    height: 50px; /* Logo size */
+    width: auto; /* Maintain aspect ratio */
+    object-fit: contain; /* Prevent stretching */
+  }
+  
+  /* Hamburger Menu Icon */
+  .menu-icon {
+    font-size: 30px;
+    display: none; /* Hide by default */
+    cursor: pointer;
+    color: black; /* Black color for hamburger */
+  }
+  
+  /* Navigation Links */
+  .nav-links {
+    list-style: none;
+    display: flex; /* Horizontal layout for links */
+    gap: 30px; /* Space between links */
+    margin: 0;
+    padding: 0;
+    flex-grow: 1; /* Ensure nav links take up remaining space */
+    justify-content: center; /* Center links horizontally */
+  }
+  
+  /* Login Icon Styling */
+  .login-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color: black;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    height: 100%; /* Ensure the height is full */
+  }
+  
+  /* Mobile and Tablet Styles */
+  @media (max-width: 768px) {
+    .nav-container {
+      justify-content: flex-start; /* Align everything to the left */
+    }
+  
+    /* Display Hamburger Menu */
+    .menu-icon {
+      display: block; /* Show hamburger menu on mobile */
+      margin-left: 0; /* Position directly next to the logo */
+      align-items: center; /* Vertically center hamburger */
+      justify-content: center; /* Center hamburger horizontally */
+      height: 100%; /* Ensure it stretches to the full height of navbar */
+      margin-left: -125px; /* Space between logo and hamburger */
+    }
+  
+    /* Align logo and hamburger to center vertically */
+    .logo, .menu-icon {
+      display: flex;
+      align-items: center; /* Vertically center the logo and hamburger icon */
+    }
+  
+    /* Mobile Navigation Links */
+    .nav-links {
+      display: none; /* Hide links by default */
+      flex-direction: column; /* Stack links vertically */
+      width: 100%;
+      background-color: white;
+      position: absolute;
+      top: 70px; /* Place below navbar */
+      left: 0;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      padding: 10px 0;
+      z-index: 999; /* Ensure the menu is on top */
+    }
+  
+    /* Show links when active */
+    .nav-links.active {
+      display: flex;
+    }
+  
+    .login-icon {
+      position: absolute;
+      right: 20px;
+      top: 50%; /* Center vertically */
+      transform: translateY(-50%); /* Adjust to ensure it's perfectly centered */
+    }
+  }
+  
+  /* Mobile View */
+  @media (max-width: 480px) {
+    .logo img {
+      height: 40px; /* Adjust logo size for smaller screens */
+    }
+  }
+  

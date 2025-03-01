@@ -5,27 +5,6 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <div className="homepage">
-      {/* Navigation Bar */}
-      <nav className="navbar">
-        <div className="logo-container">
-          <Link to="/" className="logo">logo</Link>
-        </div>
-        
-        <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/menu">Menu</Link>
-          <Link to="/about">About</Link>
-          <Link to="/blog">Blog</Link>
-          <Link to="/contact">Contact</Link>
-        </div>
-
-        <div className="icons-container">
-          <Link to="/login">
-            <div className="icon"></div> {/* Square placeholder */}
-          </Link>
-        </div>
-      </nav>
-
       {/* Hero Banner */}
       <section className="hero">
         <h1>Welcome to Plate Tonic</h1>
@@ -73,8 +52,8 @@ const HomePage = () => {
       <footer className="footer">
         <div className="footer-links">
           <Link to="/about">About Us</Link>
-          <Link to="/contact">Contact</Link>
-          <Link to="/privacy">Privacy Policy</Link>
+          <Link to="/contact">Blog</Link>
+          <Link to="/privacy">Contact Us</Link>
         </div>
         <p>&copy; {new Date().getFullYear()} Plate Tonic. All rights reserved.</p>
       </footer>

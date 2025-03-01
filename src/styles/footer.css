@@ -1,0 +1,14 @@
+/* Footer Styles */
+.footer {
+    background-color: gray;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Footer Responsive */
+@media (max-width: 768px) {
+    .footer {
+        padding: 15px;
+    }
+}

@@ -1,21 +1,24 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
 import HomePage from "./components/homepage";
+import Navbar from "./components/navbar"; // Import the Navbar
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <Router>
+      {/* Navbar should be outside of Routes so it appears on all pages */}
+      <Navbar /> 
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<h1>Login Page</h1>} /> {/* Temporary Login Page */}
       </Routes>
-      
-      <div>
+
+      {/* Commented Vite + React UI */}
+      {/* <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -34,7 +37,7 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </Router>
   );
 }
