@@ -1,6 +1,5 @@
 import React from "react";
 import "../styles/homepage.css";
-import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -47,16 +46,6 @@ const HomePage = () => {
           <div className="testimonial">[Testimonial 3 Placeholder]</div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-links">
-          <Link to="/about">About Us</Link>
-          <Link to="/contact">Blog</Link>
-          <Link to="/privacy">Contact Us</Link>
-        </div>
-        <p>&copy; {new Date().getFullYear()} Plate Tonic. All rights reserved.</p>
-      </footer>
     </div>
   );
 };

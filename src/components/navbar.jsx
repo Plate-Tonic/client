@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaUser, FaBars, FaTimes } from "react-icons/fa";
 import "../styles/navbar.css";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,7 +15,9 @@ const Navbar = () => {
       <div className="nav-container">
         {/* Logo */}
         <div className="logo">
-          <img src="https://bcassetcdn.com/public/blog/wp-content/uploads/2022/10/05203628/blue-window-house-app-by-royallogo-brandcrowd.png" alt="Logo" />
+          <Link to="/">
+            <img src="https://bcassetcdn.com/public/blog/wp-content/uploads/2022/10/05203628/blue-window-house-app-by-royallogo-brandcrowd.png" alt="Logo" />
+          </Link>
         </div>
 
         {/* Navigation Links */}

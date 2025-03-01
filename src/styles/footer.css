@@ -1,14 +1,47 @@
-/* Footer Styles */
 .footer {
-    background-color: gray;
-    text-align: center;
-    padding: 20px;
-    margin-top: 20px;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  position: relative;
+  margin-top: auto;
 }
 
-/* Footer Responsive */
-@media (max-width: 768px) {
-    .footer {
-        padding: 15px;
-    }
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Footer Links */
+.footer-links {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+/* Social Media Icons */
+.footer-social {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-social a {
+  color: white;
+  font-size: 20px;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover {
+  color: #BC4749;
 }
