@@ -5,19 +5,39 @@
   box-sizing: border-box;
 }
 
-/* Set default font and background */
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  line-height: 1.5;
+/* Ensure full height for the entire layout */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Ensure the root container grows to fill the screen */
+/* Ensure root container takes up full height */
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* Pushes main content to fill available space */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+/* Footer should always sit at the bottom */
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  background: #222;
+  color: white;
 }
 
 /* Global link styling */
@@ -43,5 +63,5 @@ button {
 }
 
 button:hover {
-  background-color: #bc4749;
+  background-color: black;
 }

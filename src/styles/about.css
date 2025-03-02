@@ -1,0 +1,71 @@
+/* About Page Wrapper */
+.about-page {
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center the entire content */
+    min-height: calc(100vh - 100px); /* Adjust to viewport height minus header/footer */
+  }
+  
+  /* Section Styling */
+  .about-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1000px;
+    gap: 40px;
+    padding: 20px 0;
+  }
+  
+  /* Ensure text and images take equal space */
+  .about-text,
+  .about-image {
+    flex: 1;
+    max-width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Image Styling */
+  .about-image img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  /* Text Styling */
+  .about-text {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Fix for Smaller Screens */
+  @media (max-width: 768px) {
+    .about-section {
+      flex-direction: column !important;
+      text-align: center;
+    }
+  
+    .about-image,
+    .about-text {
+      max-width: 100%;
+      text-align: center;
+    }
+  
+    .about-image img {
+      max-width: 250px;
+    }
+  }
+  

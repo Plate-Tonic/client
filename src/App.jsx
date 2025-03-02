@@ -4,15 +4,20 @@ import './App.css';
 import Navbar from "./components/navbar"; // Import the Navbar
 import Footer from "./components/footer"; // Import the Footer
 import Homepage from "./components/homepage"; // Import the Homepage
+import About from "./components/about";
 
 function App() {
   return (
     <Router>
       {/* Navbar should be outside of Routes so it appears on all pages */}
-      <Navbar /> 
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-      </Routes>
+      <Navbar />
+      <div classname="main-content"> 
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/about" element={<About />} />
+
+        </Routes>
+      </div>
       <Footer />
     </Router>
   );

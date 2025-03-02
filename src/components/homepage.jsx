@@ -1,53 +1,43 @@
-import React from "react";
 import "../styles/homepage.css";
 
-const HomePage = () => {
+const Homepage = () => {
   return (
     <div className="homepage">
-      {/* Hero Banner */}
-      <section className="hero">
+      {/* HERO BANNER */}
+      <header className="homepage-header">
         <h1>Welcome to Plate Tonic</h1>
         <p>Delicious, nutritious meals tailored for you.</p>
-        <button className="cta-button">Get Started</button>
-      </section>
+        <button>Get Started</button>
+      </header>
 
-      {/* Market Statistics Placeholder */}
+      {/* MARKET STATISTICS */}
       <section className="market-statistics">
         <h2>Market Statistics</h2>
-        <div className="statistics-placeholder">[Image Placeholder]</div>
+        <div className="placeholder-box">[Image Placeholder]</div>
       </section>
 
-      {/* Meal Recommendations Section */}
+      {/* MEAL RECOMMENDATIONS */}
       <section className="meal-recommendations">
         <h2>Meal Recommendations</h2>
-        <div className="meal-container">
-          <div className="meal-card">
-            <img src="" alt="Meal Placeholder" />
-            <p>Meal Option 1</p>
-          </div>
-          <div className="meal-card">
-            <img src="" alt="Meal Placeholder" />
-            <p>Meal Option 2</p>
-          </div>
-          <div className="meal-card">
-            <img src="" alt="Meal Placeholder" />
-            <p>Meal Option 3</p>
-          </div>
+        <div className="meals">
+          <div className="placeholder-box">Meal Option 1</div>
+          <div className="placeholder-box">Meal Option 2</div>
+          <div className="placeholder-box">Meal Option 3</div>
         </div>
-        <button className="meal-get-started">Choose your Meal</button>
+        <button>Choose your Meal</button>
       </section>
 
-      {/* Testimonials Section */}
+      {/* TESTIMONIALS */}
       <section className="testimonials">
         <h2>What Our Customers Say</h2>
         <div className="testimonial-container">
-          <div className="testimonial">[Testimonial 1 Placeholder]</div>
-          <div className="testimonial">[Testimonial 2 Placeholder]</div>
-          <div className="testimonial">[Testimonial 3 Placeholder]</div>
+          <div className="testimonial-item">Testimonial 1</div>
+          <div className="testimonial-item">Testimonial 2</div>
+          <div className="testimonial-item">Testimonial 3</div>
         </div>
       </section>
     </div>
   );
 };
 
-export default HomePage;
+export default Homepage;
