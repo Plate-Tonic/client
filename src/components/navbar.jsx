@@ -1,42 +1,51 @@
 import React, { useState } from "react";
 import { FaUser, FaBars, FaTimes } from "react-icons/fa";
-import "../styles/navbar.css";
 import { Link } from "react-router-dom";
+import "../styles/navbar.css";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen); // Toggle the menu state
+    setMenuOpen((prev) => !prev);
   };
 
   return (
     <nav className="navbar">
       <div className="nav-container">
+        {/* Hamburger Menu Left of Logo */}
+        <button 
+          className="menu-icon" 
+          onClick={toggleMenu} 
+          aria-label="Toggle navigation menu"
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+
         {/* Logo */}
         <div className="logo">
-          <Link to="/">
-            <img src="https://bcassetcdn.com/public/blog/wp-content/uploads/2022/10/05203628/blue-window-house-app-by-royallogo-brandcrowd.png" alt="Logo" />
+          <Link to="/" onClick={() => setMenuOpen(false)}>
+            <img 
+              src="https://bcassetcdn.com/public/blog/wp-content/uploads/2022/10/05203628/blue-window-house-app-by-royallogo-brandcrowd.png" 
+              alt="Plate Tonic Logo" 
+            />
           </Link>
         </div>
 
         {/* Navigation Links */}
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-          <li><a href="/get=started">Get Started</a></li>
-          <li><a href="/menu">Menu</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><Link to="/get-started" onClick={() => setMenuOpen(false)}>Get Started</Link></li>
+          <li><Link to="/menu" onClick={() => setMenuOpen(false)}>Menu</Link></li>
+          <li><Link to="/about" onClick={() => setMenuOpen(false)}>About</Link></li>
+          <li><Link to="/blog" onClick={() => setMenuOpen(false)}>Blog</Link></li>
+          <li><Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link></li>
         </ul>
 
         {/* Login Icon */}
         <div className="login-icon">
-          <FaUser />
-        </div>
-
-        {/* Hamburger Icon */}
-        <div className="menu-icon" onClick={toggleMenu}>
-          {menuOpen ? <FaTimes /> : <FaBars />}
+          <Link to="/login" aria-label="User Login">
+            <FaUser />
+          </Link>
         </div>
       </div>
     </nav>

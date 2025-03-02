@@ -1,27 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css';
-
-import Navbar from "./components/navbar"; // Import the Navbar
-import Footer from "./components/footer"; // Import the Footer
-import Homepage from "./components/homepage"; // Import the Homepage
-import About from "./components/about";
-import Contact from "./components/contact";
-import Blog from "./components/blog";
+// App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Homepage from './pages/homepage.jsx';
+import Contact from './pages/contact.jsx';
+import Blog from './pages/blog.jsx';
+import Menu from './pages/menu.jsx';
+import About from './pages/about.jsx';
+import Navbar from './components/navbar.jsx';
+import Footer from './components/footer.jsx';
+import './App.css'; // Import component-level styles
 
 function App() {
   return (
     <Router>
-      {/* Navbar should be outside of Routes so it appears on all pages */}
-      <Navbar />
-      <div classname="main-content"> 
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+      <div className="app-container">
+        <Navbar />
+        <main className="content">
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </main>
+        <Footer />
       </div>
-      <Footer />
     </Router>
   );
 }

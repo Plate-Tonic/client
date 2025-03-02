@@ -5,13 +5,13 @@
     align-items: center;
     width: 100%;
     min-height: 100vh;
-    padding: 40px 0; /* Ensures vertical centering */
+    padding-bottom: 40px; /* Ensuring proper spacing */
   }
   
   /* Banner */
   .blog-banner {
     width: 100%;
-    height: 320px;
+    height: 320px; /* Increased height */
     background-color: #a5c66c;
     display: flex;
     align-items: center;
@@ -19,7 +19,7 @@
     font-size: 28px;
     font-weight: bold;
     color: black;
-    margin-bottom: 20px;
+    margin-bottom: 20px; /* Reduced gap between banner and content */
   }
   
   /* Blog Content Container */
@@ -27,10 +27,8 @@
     display: flex;
     width: 90%;
     max-width: 1200px;
-    gap: 40px;
-    justify-content: center;
-    align-items: flex-start;
-    flex: 1;
+    gap: 30px;
+    align-items: flex-start; /* Aligns filter and blog content */
   }
   
   /* Filter Section */
@@ -40,25 +38,6 @@
     padding: 20px;
     border-radius: 10px;
     height: fit-content;
-    position: sticky;
-    top: 100px; /* Keeps it fixed on scroll */
-  }
-  
-  /* Filter Options */
-  .blog-filter ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .blog-filter li {
-    cursor: pointer;
-    padding: 8px 0;
-    font-weight: bold;
-    transition: color 0.3s ease;
-  }
-  
-  .blog-filter li:hover {
-    color: #4a7729;
   }
   
   /* Blog Grid */
@@ -66,10 +45,10 @@
     flex: 3;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 20px; /* Adjusted spacing */
   }
   
-  /* Blog Cards */
+  /* Blog Cards (Clickable) */
   .blog-card {
     background-color: #a5c66c;
     height: 200px;
@@ -77,9 +56,6 @@
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   
   .blog-card img {
@@ -102,20 +78,19 @@
     .blog-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-  
-    .blog-filter {
-      position: static;
-      width: 100%;
-    }
   }
   
   @media (max-width: 768px) {
     .blog-banner {
-      height: 250px;
+      height: 250px; /* Slightly smaller for mobile */
     }
   
     .blog-grid {
       grid-template-columns: repeat(1, 1fr);
+    }
+  
+    .blog-container {
+      margin-bottom: 30px;
     }
   }
   
