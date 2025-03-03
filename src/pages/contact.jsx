@@ -1,6 +1,9 @@
 import React from "react";
 import "../styles/contact.css";
 
+// Import images
+import ContactImage from "..//assets/banner-favorites.jpg";
+
 const Contact = () => {
   return (
     <div className="contact-page">
@@ -25,7 +28,7 @@ const Contact = () => {
           </form>
         </div>
         <div className="contact-image">
-          <img src="/placeholder.jpg" alt="Contact" />
+          <img src={ContactImage} alt="Contact" />
         </div>
       </div>
 

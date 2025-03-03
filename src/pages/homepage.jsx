@@ -19,7 +19,7 @@ const Homepage = () => {
       <header className="homepage-header">
         <h1>Welcome to Plate Tonic</h1>
         <p>Delicious, nutritious meals tailored for you.</p>
-        <Link to="/get-started">
+        <Link to="/getstarted">
           <button type="button">Get Started</button>
         </Link>
       </header>
@@ -33,18 +33,18 @@ const Homepage = () => {
       <section className="homepage-stats">
         <div className="stats-item">
           <FaUtensils className="stats-icon" />
-          <h3>New Menu</h3>
+          <h3>New Recipe</h3>
           <p>Every Week</p>
         </div>
         <div className="stats-item">
           <FaSmile className="stats-icon" />
-          <h3>100K</h3>
+          <h3>100K+</h3>
           <p>Satisfied Customers</p>
         </div>
         <div className="stats-item">
           <FaBoxOpen className="stats-icon" />
-          <h3>Over Millions</h3>
-          <p>Meals Delivered</p>
+          <h3>Deliveries</h3>
+          <p>COMING SOON</p>
         </div>
       </section>
 
@@ -68,10 +68,12 @@ const Homepage = () => {
             <strong>400 Calories</strong>
           </div>
         </div>
-        <Link to="/menu">
-          <button type="button">Choose your Meal</button>
-        </Link>
       </section>
+
+      {/* MEAL BUTTON */}
+      <Link to="/menu">
+          <button type="button">Choose your Meal</button>
+      </Link>
 
       {/* TESTIMONIALS SECTION */}
       <section className="homepage-testimonials">
@@ -80,17 +82,17 @@ const Homepage = () => {
           <div className="testimonial-item">
             <img src={testimonial1} alt="Happy customer 1" className="testimonial-image" />
             <p>"Plate Tonic has changed my meal planning forever!"</p>
-            <strong>- Alex R.</strong>
+            <strong>- Alexa R.</strong>
           </div>
           <div className="testimonial-item">
             <img src={testimonial2} alt="Happy customer 2" className="testimonial-image" />
-            <p>"Great taste, great service, and amazing variety!"</p>
-            <strong>- Sarah W.</strong>
+            <p>"Great taste and amazing variety!"</p>
+            <strong>- Michael D.</strong>
           </div>
           <div className="testimonial-item">
             <img src={testimonial3} alt="Happy customer 3" className="testimonial-image" />
-            <p>"Affordable and healthy, exactly what I needed!"</p>
-            <strong>- Michael D.</strong>
+            <p>"Exactly what I needed!"</p>
+            <strong>- Sarah.W.</strong>
           </div>
         </div>
       </section>

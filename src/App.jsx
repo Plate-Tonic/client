@@ -8,6 +8,10 @@ import Menu from './pages/menu.jsx';
 import About from './pages/about.jsx';
 import Navbar from './components/navbar.jsx';
 import Footer from './components/footer.jsx';
+import GetStarted from "./pages/getstarted.jsx";
+import Login from "./pages/login.jsx";
+import SignUp from "./pages/signup.jsx";
+import ForgetPassword from "./pages/forgetpassword.jsx";
 import './App.css'; // Import component-level styles
 
 function App() {
@@ -22,6 +26,10 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/about" element={<About />} />
+            <Route path="/getstarted" element={<GetStarted />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgetPassword />} />
           </Routes>
         </main>
         <Footer />
