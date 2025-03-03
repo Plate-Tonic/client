@@ -1,3 +1,5 @@
+/* BLOG PAGE STYLING */
+
 .blog-page {
     display: flex;
     flex-direction: column;
@@ -49,7 +51,7 @@
 
 .blog-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Force 3 per row */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 30px;
     justify-content: center;
     margin-top: 20px;
@@ -61,8 +63,8 @@
     padding: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 100%; /* Ensures each takes equal space */
-    min-height: 250px; /* Makes sure blogs have uniform height */
+    width: 100%; 
+    min-height: 250px; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -78,12 +80,17 @@
     align-self: center;
 }
 
-/* Responsive Design */
+/* RRESPONSIVENESS */
+
+/* TABLET STYLES */
+
 @media (max-width: 1024px) {
     .blog-list {
         grid-template-columns: repeat(2, 1fr); /* 2 per row on tablets */
     }
 }
+
+/* MOBILE STYLES */
 
 @media (max-width: 768px) {
     .blog-page {

@@ -12,6 +12,7 @@ import GetStarted from "./pages/getstarted.jsx";
 import Login from "./pages/login.jsx";
 import SignUp from "./pages/signup.jsx";
 import ForgetPassword from "./pages/forgetpassword.jsx";
+import Dashboard from './pages/dashboard.jsx';
 import './App.css'; // Import component-level styles
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/forgot-password" element={<ForgetPassword />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
         <Footer />

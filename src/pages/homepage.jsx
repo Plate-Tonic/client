@@ -33,13 +33,13 @@ const Homepage = () => {
       <section className="homepage-stats">
         <div className="stats-item">
           <FaUtensils className="stats-icon" />
-          <h3>New Recipe</h3>
-          <p>Every Week</p>
+          <h3>Updating Recipes</h3>
+          <p>Frequently</p>
         </div>
         <div className="stats-item">
           <FaSmile className="stats-icon" />
           <h3>100K+</h3>
-          <p>Satisfied Customers</p>
+          <p>Satisfied Users</p>
         </div>
         <div className="stats-item">
           <FaBoxOpen className="stats-icon" />

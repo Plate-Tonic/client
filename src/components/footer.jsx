@@ -1,6 +1,6 @@
 import React from "react";
 import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
-import "../styles/footer.css"; // Import footer styles
+import "../styles/footer.css"; 
 
 const Footer = () => {
   return (
@@ -12,6 +12,7 @@ const Footer = () => {
           <a href="/contact">Contact</a>
         </div>
         
+        {/* Social Media */}
         <div className="footer-social">
           <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
             <FaFacebook />

@@ -13,9 +13,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="nav-container">
-        {/* Hamburger Menu Left of Logo */}
+        {/* Hamburger Menu */}
         <button 
-          className="menu-icon" 
+          className="nav-menu-icon" 
           onClick={toggleMenu} 
           aria-label="Toggle navigation menu"
         >

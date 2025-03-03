@@ -12,7 +12,7 @@ const Login = () => {
     // Placeholder authentication logic
     if (email && password) {
       alert("Login Successful!");
-      navigate("/menu"); // Redirect to menu page after login
+      navigate("/dashboard"); // Redirect to menu page after login
     } else {
       alert("Please enter valid credentials.");
     }

@@ -1,4 +1,5 @@
 /* HOMEPAGE STYLES */
+
 .homepage {
     font-family: Arial, sans-serif;
     color: #333;
@@ -149,7 +150,6 @@
     margin-top: 60px;
 }
 
-/* Ensure heading is centered */
 .homepage-testimonials h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -195,6 +195,7 @@
 /* ✅ RESPONSIVENESS */
 
 /* Tablet (768px - 1024px) */
+
 @media (max-width: 1024px) {
     .homepage-header {
         padding: 80px 15px;
@@ -225,6 +226,7 @@
 }
 
 /* Mobile (480px - 768px) */
+
 @media (max-width: 768px) {
     .homepage-header {
         padding: 60px 10px;
@@ -250,6 +252,6 @@
     }
 
     .testimonial-image {
-        height: 200px; /* Adjusted for mobile */
+        height: 200px; 
     }
 }

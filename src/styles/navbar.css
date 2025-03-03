@@ -1,4 +1,5 @@
-/* General Navbar Styles */
+/* Navbar Styles */
+
 .navbar {
   width: 100%;
   background-color: white;
@@ -40,7 +41,7 @@
 }
 
 /* Hamburger Menu Icon */
-.menu-icon {
+.nav-menu-icon {
   font-size: 30px;
   display: none;
   cursor: pointer;
@@ -100,13 +101,15 @@
 }
 
 /* Mobile & Tablet Styles */
+
 @media (max-width: 768px) {
-  .menu-icon {
+  .nav-menu-icon {
     display: block;
     position: absolute;
+    height: 40px;
+    width: 40px;
     right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 15px;
   }
 
   .nav-links {
@@ -139,20 +142,5 @@
     right: 60px;
     top: 50%;
     transform: translateY(-50%);
-  }
-}
-
-/* Mobile View */
-@media (max-width: 480px) {
-  .logo img {
-    height: 40px;
-  }
-
-  .menu-icon {
-    right: 15px;
-  }
-
-  .login-icon {
-    right: 55px;
   }
 }

@@ -1,4 +1,4 @@
-/* About Page Wrapper */
+/* ABOUT PAGE STYLING */
 .about-page {
     font-family: Arial, sans-serif;
     color: #333;
@@ -8,11 +8,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Center the entire content */
-    min-height: calc(100vh - 100px); /* Adjust to viewport height minus header/footer */
+    justify-content: center; 
+    min-height: calc(100vh - 100px); 
   }
   
-/* Banner Styling */
+/* BANNER STYLING */
 .about-banner {
   width: 100vw;
   background-color: #BC4749;
@@ -24,7 +24,7 @@
   margin-bottom: 20px;
 }
 
-  /* Section Styling */
+  /* SECTION Styling */
   .about-section {
     display: flex;
     align-items: center;
@@ -35,7 +35,6 @@
     padding: 20px 0;
   }
   
-  /* Ensure text and images take equal space */
   .about-text,
   .about-image {
     flex: 1;
@@ -45,7 +44,7 @@
     align-items: center;
   }
   
-  /* Image Styling */
+  /* ABOUT IMAGES STYLING */
   .about-image img {
     width: 100%;
     max-width: 350px;
@@ -54,7 +53,7 @@
     object-fit: cover;
   }
   
-  /* Text Styling */
+  /* ABOUT TEXT STYLING */
   .about-text {
     text-align: left;
     display: flex;
@@ -64,6 +63,10 @@
     text-align: center;
   }
   
+/* RESPONSIVENESS */
+
+/* FOR MOBILE DEVICES */
+
   @media (max-width: 768px) {
     .about-section {
         display: flex;
