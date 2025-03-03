@@ -1,0 +1,257 @@
+/* HOMEPAGE STYLES */
+
+.homepage {
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+/* HERO BANNER */
+.homepage-header {
+    width: 100vw;
+    text-align: center;
+    padding: 100px 20px;
+    background: url("src/assets/traditional-salad-with-pieces-medium-rare-grilled-ahi-tuna-sesame-with-fresh-vegetable-salad-rice-plate_2829-18465.jpg") no-repeat center center/cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    position: relative;
+    color: #333;
+}
+
+/* Homepage Header */
+.homepage-header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+/* Homepage Text */
+.homepage-header p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* Marketing Banner */
+.homepage-market {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 60px;
+    text-align: center;
+}
+
+.market-image {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Stats Section */
+.homepage-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    background: white;
+    padding: 40px 20px;
+    border-top: 5px solid #BC4749;
+    text-align: center;
+}
+
+.stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.stats-icon {
+    font-size: 40px;
+    color: #BC4749;
+}
+
+.stats-item h3 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.stats-item p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* MEAL RECOMMENDATIONS SECTION */
+.homepage-meals {
+    width: 100%;
+    padding: 40px 20px;
+    background: #F2E8CF;
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.meal-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap; 
+}
+
+.meal-item {
+    width: 350px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.meal-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px; 
+}
+
+.meal-item p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.meal-item strong {
+    font-size: 14px;
+    color: #333;
+}
+
+/* TESTIMONIALS SECTION */
+.homepage-testimonials {
+    width: 100%;
+    padding: 40px 20px;
+    background: white; 
+    border-radius: 10px;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.homepage-testimonials h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.testimonial-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.testimonial-item {
+    width: 350px;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.testimonial-image {
+    width: 100%;
+    height: 250px; 
+    object-fit: cover;
+    border-radius: 10px; 
+}
+
+.testimonial-item p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+}
+
+.testimonial-item strong {
+    font-size: 14px;
+    color: #333;
+}
+
+/* ✅ RESPONSIVENESS */
+
+/* Tablet (768px - 1024px) */
+
+@media (max-width: 1024px) {
+    .homepage-header {
+        padding: 80px 15px;
+        min-height: 40vh;
+    }
+
+    .homepage-header h1 {
+        font-size: 2rem;
+    }
+
+    .homepage-header p {
+        font-size: 1rem;
+    }
+
+    .homepage-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .testimonial-container {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .testimonial-item {
+        width: 45%;
+    }
+}
+
+/* Mobile (480px - 768px) */
+
+@media (max-width: 768px) {
+    .homepage-header {
+        padding: 60px 10px;
+        min-height: 35vh;
+    }
+
+    .homepage-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .homepage-header p {
+        font-size: 1rem;
+        margin-bottom: 15px;
+    }
+
+    .testimonial-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .testimonial-item {
+        width: 90%;
+    }
+
+    .testimonial-image {
+        height: 200px; 
+    }
+}

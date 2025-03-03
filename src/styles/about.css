@@ -1,0 +1,89 @@
+/* ABOUT PAGE STYLING */
+.about-page {
+    font-family: Arial, sans-serif;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    min-height: calc(100vh - 100px); 
+  }
+  
+/* BANNER STYLING */
+.about-banner {
+  width: 100vw;
+  background-color: #BC4749;
+  color: white;
+  text-align: center;
+  padding: 100px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+  /* SECTION Styling */
+  .about-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1000px;
+    gap: 40px;
+    padding: 20px 0;
+  }
+  
+  .about-text,
+  .about-image {
+    flex: 1;
+    max-width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* ABOUT IMAGES STYLING */
+  .about-image img {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  
+  /* ABOUT TEXT STYLING */
+  .about-text {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+/* RESPONSIVENESS */
+
+/* FOR MOBILE DEVICES */
+
+  @media (max-width: 768px) {
+    .about-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .about-section .about-content {
+        order: 2; /* Text goes below the image */
+        width: 100%;
+    }
+
+    .about-section .about-image {
+        order: 1; /* Image stays on top */
+        width: 100%;
+    }
+}
+
+  
