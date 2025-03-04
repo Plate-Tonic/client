@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Homepage from './pages/homepage.jsx';
 import Contact from './pages/contact.jsx';
 import Blog from './pages/blog.jsx';
+import BlogDetail from './pages/blogdetails.jsx';
 import Menu from './pages/menu.jsx';
 import MealDetails from './pages/mealdetails.jsx';
 import About from './pages/about.jsx';
@@ -26,6 +27,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogDetail />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/menu/:id" element={<MealDetails />} />
             <Route path="/about" element={<About />} />
