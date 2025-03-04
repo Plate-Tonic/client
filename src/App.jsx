@@ -5,6 +5,7 @@ import Homepage from './pages/homepage.jsx';
 import Contact from './pages/contact.jsx';
 import Blog from './pages/blog.jsx';
 import Menu from './pages/menu.jsx';
+import MealDetails from './pages/mealdetails.jsx';
 import About from './pages/about.jsx';
 import Navbar from './components/navbar.jsx';
 import Footer from './components/footer.jsx';
@@ -26,6 +27,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/menu" element={<Menu />} />
+            <Route path="/menu/:id" element={<MealDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/getstarted" element={<GetStarted />} />
             <Route path="/login" element={<Login />} />

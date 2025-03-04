@@ -1,0 +1,30 @@
+.meal-details {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .meal-details-image {
+    width: 80%;
+    max-width: 400px;
+    border-radius: 10px;
+  }
+  
+  .back-btn {
+    margin-bottom: 20px;
+    padding: 8px 12px;
+    background-color: #6a994e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  h3 {
+    margin-top: 20px;
+  }
+  
+  ul, ol {
+    list-style-position: inside;
+    padding: 0;
+  }
+  
