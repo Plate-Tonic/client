@@ -190,9 +190,10 @@ const Menu = () => {
                   src={meal.imageUrl || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
-                  onClick={() => navigate(`/mealdetails`, { state: { mealId: meal._id } })}
+                  onClick={() => navigate(`/meal/${meal._id}`)}
                 />
-                <p className="meal-name" onClick={() => navigate(`/mealdetails`, { state: { mealId: meal._id } })}>
+                {/* Meal Name click to navigate to Meal Details */}
+                <p className="meal-name" onClick={() => navigate(`/mealdetails/${meal._id}`)}>
                   {meal.name}
                 </p>
                 <button onClick={() => handleRemoveMeal(meal)}>Remove</button>
