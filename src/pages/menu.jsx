@@ -11,11 +11,11 @@ const Menu = () => {
   const [filteredMeals, setFilteredMeals] = useState([]);
   const [chosenMeals, setChosenMeals] = useState([]);
   const [recommendedMeals, setRecommendedMeals] = useState([]);
-  const [tdeeData, setTdeeData] = useState({
-    tdee: 2000,
+  const [calorieData, setTdeeData] = useState({
+    calorie: 2000,
     protein: 150,
     carbs: 250,
-    fats: 50
+    fat: 50
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -47,10 +47,10 @@ const Menu = () => {
 
     if (storedTDEE) {
       setTdeeData({
-        tdee: storedTDEE.tdee || 0,
+        calorie: storedTDEE.tdee || 0,
         protein: storedTDEE.proteinGrams || 0, // Ensure proteinGrams is mapped correctly
         carbs: storedTDEE.carbsGrams || 0, // Ensure carbsGrams is mapped correctly
-        fats: storedTDEE.fatsGrams || 0, // Ensure fatsGrams is mapped correctly
+        fat: storedTDEE.fatsGrams || 0, // Ensure fatGrams is mapped correctly
       });
     }
 
@@ -96,9 +96,9 @@ const Menu = () => {
       setFilteredMeals(meals);
     }
 
-    // Log tdeeData to check if it's being updated correctly
-    console.log("TDEE Data in Menu:", tdeeData);
-  }, [selectedFilters, meals, tdeeData]);
+    // Log calorieData to check if it's being updated correctly
+    console.log("TDEE Data in Menu:", calorieData);
+  }, [selectedFilters, meals, calorieData]);
 
   const handleFilterChange = (event) => {
     const { value, checked } = event.target;
@@ -136,10 +136,10 @@ const Menu = () => {
       {/* Calorie Tracker */}
       <div className="calorie-tracker">
         {/* Ensure values are updated here */}
-        Calories: {tdeeData.tdee} kcal | 
-        Protein: {tdeeData.protein}g | 
-        Carbs: {tdeeData.carbs}g | 
-        Fats: {tdeeData.fats}g
+        Calories: {calorieData.calorie} kcal | 
+        Protein: {calorieData.protein}g | 
+        Carbs: {calorieData.carbs}g | 
+        Fat: {calorieData.fat}g
       </div>
 
       {/* FILTER SECTION */}
