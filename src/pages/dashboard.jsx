@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import "../styles/dashboard.css";
 
@@ -19,49 +20,57 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // The user is logged in
-      setIsLoggedIn(true);
-    } else {
-      // The user is not logged in
-      setIsLoggedIn(false);
-    }
-    
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("authToken");
+      console.log("Token from local storage:", token);
 
-    if (token) {
-      const fetchUserData = async () => {
-        try {
-          const response = await axios.get("http://localhost:8008/user/me", {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          const userData = response.data;
+      if (!token) {
+        console.log("No token found, redirecting to login...");
+        navigate("/login");
+        return;
+      }
 
-          // Update the calorie tracker with the user's data
-          setCalorieRequirement(userData.macroTracker.tdee);
-          setProteinRequirement(userData.macroTracker.protein);
-          setCarbRequirement(userData.macroTracker.carbs);
-          setFatRequirement(userData.macroTracker.fats);
+      const decodedToken = jwtDecode(token); // Decode the token to get user ID
+      const userId = decodedToken.userId;
 
-          // Set the selected meals
-          setSelectedMeals(userData.selectedMeals);
+      try {
+        const response = await axios.get(
+          `http://localhost:8008/user/${userId}`,
+          
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const userData = response.data;
+        console.log('userData:', userData);
 
-          // Calculate current intake for calories, protein, carbs, and fats
-          const totalCalories = userData.selectedMeals.reduce((sum, meal) => sum + meal.calories, 0);
-          const totalProtein = userData.selectedMeals.reduce((sum, meal) => sum + meal.protein, 0);
-          const totalCarbs = userData.selectedMeals.reduce((sum, meal) => sum + meal.carbs, 0);
-          const totalFats = userData.selectedMeals.reduce((sum, meal) => sum + meal.fats, 0);
+        // Update the calorie tracker with the user's data
+        setCalorieRequirement(userData.macroTracker.calorie);
+        setProteinRequirement(userData.macroTracker.protein);
+        setCarbRequirement(userData.macroTracker.carbs);
+        setFatRequirement(userData.macroTracker.fat);
 
-          setCurrentCalories(totalCalories);
-          setCurrentProtein(totalProtein);
-          setCurrentCarbs(totalCarbs);
-          setCurrentFats(totalFats);
-        } catch (err) {
-          console.error("Error fetching user data:", err);
-        }
-      };
-      fetchUserData();
-    }
+        // Set the selected meals
+        setSelectedMeals(userData.selectedMeals);
+
+        // Calculate current intake for calories, protein, carbs, and fats
+        const totalCalories = userData.selectedMeals.reduce((sum, meal) => sum + meal.calories, 0);
+        const totalProtein = userData.selectedMeals.reduce((sum, meal) => sum + meal.protein, 0);
+        const totalCarbs = userData.selectedMeals.reduce((sum, meal) => sum + meal.carbs, 0);
+        const totalFats = userData.selectedMeals.reduce((sum, meal) => sum + meal.fats, 0);
+
+        setCurrentCalories(totalCalories);
+        setCurrentProtein(totalProtein);
+        setCurrentCarbs(totalCarbs);
+        setCurrentFats(totalFats);
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+      }
+    };
+
+    fetchUserData();
   }, []);
 
   const removeMeal = (mealId) => {

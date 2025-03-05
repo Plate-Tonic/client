@@ -1,21 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserAuthContext } from "../contexts/UserAuthContext";
+import axios from "axios"; // Import axios
 import "../styles/login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setToken } = useUserAuthContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null); // Add error state
 
   const handleLogin = (event) => {
     event.preventDefault();
-    // Placeholder authentication logic
-    if (email && password) {
-      alert("Login Successful!");
-      navigate("/dashboard"); // Redirect to menu page after login
-    } else {
-      alert("Please enter valid credentials.");
-    }
+    axios.post("http://localhost:8008/login", {
+      email,
+      password
+    })
+      .then((response) => {
+        const token = response.data.token;
+        setToken(token); // Set token in context
+        navigate("/dashboard"); // Redirect to dashboard
+      })
+      .catch((error) => {
+        console.error("Login error:", error);
+        setError("Invalid email or password"); // Set error message
+      });
   };
 
   return (
