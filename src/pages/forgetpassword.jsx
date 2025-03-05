@@ -26,7 +26,7 @@ const ForgetPassword = () => {
         throw new Error(response.data.message || "Email not found.");
       }
     } catch (error) {
-      alert(error.message || "An error occurred while verifying email.");
+      alert("An error occurred while verifying the email.", error.message);
       console.error(error);
     }
   };
@@ -44,7 +44,7 @@ const ForgetPassword = () => {
         throw new Error(response.data.message || "Incorrect security answer.");
       }
     } catch (error) {
-      alert(error.message || "An error occurred while verifying the security answer.");
+      alert("An error occurred while verifying the security answer", error.message);
       console.error(error);
     }
   };
