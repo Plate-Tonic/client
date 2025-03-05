@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/dashboard.css";
 
 const Dashboard = () => {
@@ -14,37 +15,54 @@ const Dashboard = () => {
   const [currentCarbs, setCurrentCarbs] = useState(0);
   const [currentFats, setCurrentFats] = useState(0);
 
-  const [selectedMeals, setSelectedMeals] = useState([
-    { id: 1, name: "Chicken Salad", calories: 350, protein: 30, carbs: 10, fats: 15 },
-    { id: 2, name: "Vegetable Stir-Fry", calories: 220, protein: 8, carbs: 40, fats: 8 },
-  ]); // Sample meal data for testing
-  const navigate = useNavigate(); // Initialize the navigation hook
-
-  const fetchCalorieData = () => {
-    // Simulating fetching calorie data
-    setCalorieRequirement(2000); // Example calorie requirement
-    setProteinRequirement(150); // Example protein requirement in grams
-    setCarbRequirement(250); // Example carb requirement in grams
-    setFatRequirement(70); // Example fat requirement in grams
-
-    // Calculate current intake for calories, protein, carbs, and fats
-    setCurrentCalories(
-      selectedMeals.reduce((sum, meal) => sum + meal.calories, 0)
-    );
-    setCurrentProtein(
-      selectedMeals.reduce((sum, meal) => sum + meal.protein, 0)
-    );
-    setCurrentCarbs(
-      selectedMeals.reduce((sum, meal) => sum + meal.carbs, 0)
-    );
-    setCurrentFats(
-      selectedMeals.reduce((sum, meal) => sum + meal.fats, 0)
-    );
-  };
+  const [selectedMeals, setSelectedMeals] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchCalorieData(); // Update calorie data when meals change
-  }, [selectedMeals]);
+    const token = localStorage.getItem("token");
+    if (token) {
+      // The user is logged in
+      setIsLoggedIn(true);
+    } else {
+      // The user is not logged in
+      setIsLoggedIn(false);
+    }
+    
+
+    if (token) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get("http://localhost:8008/user/me", {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const userData = response.data;
+
+          // Update the calorie tracker with the user's data
+          setCalorieRequirement(userData.macroTracker.tdee);
+          setProteinRequirement(userData.macroTracker.protein);
+          setCarbRequirement(userData.macroTracker.carbs);
+          setFatRequirement(userData.macroTracker.fats);
+
+          // Set the selected meals
+          setSelectedMeals(userData.selectedMeals);
+
+          // Calculate current intake for calories, protein, carbs, and fats
+          const totalCalories = userData.selectedMeals.reduce((sum, meal) => sum + meal.calories, 0);
+          const totalProtein = userData.selectedMeals.reduce((sum, meal) => sum + meal.protein, 0);
+          const totalCarbs = userData.selectedMeals.reduce((sum, meal) => sum + meal.carbs, 0);
+          const totalFats = userData.selectedMeals.reduce((sum, meal) => sum + meal.fats, 0);
+
+          setCurrentCalories(totalCalories);
+          setCurrentProtein(totalProtein);
+          setCurrentCarbs(totalCarbs);
+          setCurrentFats(totalFats);
+        } catch (err) {
+          console.error("Error fetching user data:", err);
+        }
+      };
+      fetchUserData();
+    }
+  }, []);
 
   const removeMeal = (mealId) => {
     const updatedMeals = selectedMeals.filter((meal) => meal.id !== mealId);
@@ -52,8 +70,7 @@ const Dashboard = () => {
   };
 
   const handleAddMealClick = () => {
-    // Redirect to the menu page to select a new meal
-    navigate("/menu"); 
+    navigate("/menu");
   };
 
   const renderContent = () => {

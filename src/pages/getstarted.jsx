@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/getstarted.css";
 
 const GetStarted = () => {
   const navigate = useNavigate();
 
-  // State variables
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
@@ -13,12 +13,13 @@ const GetStarted = () => {
   const [activityLevel, setActivityLevel] = useState("1.2");
   const [goal, setGoal] = useState("maintenance");
 
-  // Modal State
   const [showModal, setShowModal] = useState(false);
   const [tdeeResult, setTdeeResult] = useState(null);
 
-  // Function to calculate TDEE and macros
-  const calculateTDEE = (event) => {
+  // Get the token from localStorage (if user is logged in)
+  const token = localStorage.getItem("token");
+
+  const calculateTDEE = async (event) => {
     event.preventDefault();
 
     const weightKg = parseFloat(weight);
@@ -39,9 +40,7 @@ const GetStarted = () => {
 
     const tdee = Math.round(bmr * parseFloat(activityLevel));
 
-    // Macronutrient Ratios Based on Goal
     let proteinRatio, carbsRatio, fatsRatio;
-
     switch (goal) {
       case "weight-loss":
         proteinRatio = 0.40;
@@ -59,12 +58,10 @@ const GetStarted = () => {
         fatsRatio = 0.20;
     }
 
-    // Macronutrient Breakdown
     const proteinGrams = Math.round((tdee * proteinRatio) / 4);
     const carbsGrams = Math.round((tdee * carbsRatio) / 4);
     const fatsGrams = Math.round((tdee * fatsRatio) / 9);
 
-    // Store results in state and show modal
     setTdeeResult({
       tdee,
       proteinGrams,
@@ -72,12 +69,40 @@ const GetStarted = () => {
       fatsGrams
     });
     setShowModal(true);
+
+    // Prepare the data for backend
+    const formData = {
+      age: ageNum,
+      weight: weightKg,
+      height: heightCm,
+      gender,
+      activityLevel,
+      goal,
+      tdee,
+      proteinGrams,
+      carbsGrams,
+      fatsGrams
+    };
+
+    try {
+      if (token) {
+        // For logged-in users, send the data to the backend to store it
+        await axios.post("http://localhost:8008/user/calorie-tracker", formData, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } else {
+        // For non-users, store data locally
+        localStorage.setItem("calorieTrackerData", JSON.stringify(formData));
+      }
+    } catch (error) {
+      console.error("Error saving TDEE data:", error);
+    }
   };
 
   return (
     <div className="get-started-page">
       <div className="getstarted-banner">Get Started</div>
-      
+
       <h1>Find Your Daily Calorie & Macro Needs</h1>
       <p>Use our TDEE calculator to determine your daily intake.</p>
 

@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/menu.css";
-
-const defaultMeals = [
-  { id: 1, name: "Egg & Cheese Wrap", image: "/images/egg-wrap.jpg", category: ["vegetarian"] },
-  { id: 2, name: "Grilled Chicken Salad", image: "/images/chicken-salad.jpg", category: ["high-protein"] },
-  { id: 3, name: "Vegan Buddha Bowl", image: "/images/vegan-bowl.jpg", category: ["vegan", "gluten-free"] },
-  { id: 4, name: "Salmon with Asparagus", image: "/images/salmon.jpg", category: ["pescatarian", "high-protein"] },
-  { id: 5, name: "Tofu Stir Fry", image: "/images/tofu.jpg", category: ["vegan"] },
-  { id: 6, name: "Quinoa & Avocado Bowl", image: "/images/quinoa-bowl.jpg", category: ["vegetarian", "gluten-free"] },
-  { id: 7, name: "Beef Stir Fry", image: "/images/beef-stirfry.jpg", category: ["high-protein"] },
-];
 
 const Menu = () => {
   const [selectedFilters, setSelectedFilters] = useState([]);
@@ -19,31 +10,66 @@ const Menu = () => {
   const [filteredMeals, setFilteredMeals] = useState([]);
   const [chosenMeals, setChosenMeals] = useState([]);
   const [recommendedMeals, setRecommendedMeals] = useState([]);
-  const [tdeeData, setTdeeData] = useState({ tdee: 2000, protein: 150, carbs: 250, fats: 50 });
+  const [tdeeData, setTdeeData] = useState({
+    tdee: 2000,
+    protein: 150,
+    carbs: 250,
+    fats: 50
+  });
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    setIsLoggedIn(!!token);
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
 
-    const storedMeals = JSON.parse(localStorage.getItem("meals")) || defaultMeals;
-    setMeals(storedMeals);
-    setFilteredMeals(storedMeals);
+    // Fetch meals from the backend API
+    const fetchMeals = async () => {
+      try {
+        const response = await fetch("http://localhost:8008/meal-plan");
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+          setMeals(data);
+          setFilteredMeals(data);
+        }
+      } catch (err) {
+        console.error("Error fetching meals:", err);
+      }
+    };
+
+    fetchMeals();
 
     const storedChosenMeals = JSON.parse(localStorage.getItem("chosenMeals")) || [];
     setChosenMeals(storedChosenMeals);
 
-    const storedTDEE = JSON.parse(localStorage.getItem("tdee"));
+    // Fetch stored TDEE data from localStorage (for non-logged-in users)
+    const storedTDEE = JSON.parse(localStorage.getItem("calorieTrackerData"));
     if (storedTDEE) {
       setTdeeData(storedTDEE);
     }
 
-    // 🔹 Set Recommended Meals Based on Login Status
-    if (!token) {
-      const shuffledMeals = [...defaultMeals].sort(() => 0.5 - Math.random());
-      setRecommendedMeals(shuffledMeals.slice(0, 5)); // Non-user gets 5 random meals
+    if (token) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get("http://localhost:8008/user/me", {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const userData = response.data;
+          setTdeeData(userData.macroTracker);
+          setLoading(false);
+        } catch (err) {
+          console.error("Error fetching user data:", err);
+          setLoading(false);
+        }
+      };
+      fetchUserData();
     } else {
-      setRecommendedMeals(storedChosenMeals); // User sees their chosen meals
+      setLoading(false); // For non-logged-in users, stop loading immediately
     }
   }, []);
 
@@ -51,13 +77,16 @@ const Menu = () => {
     if (selectedFilters.length > 0) {
       setFilteredMeals(
         meals.filter((meal) =>
-          selectedFilters.every((filter) => meal.category.includes(filter))
+          selectedFilters.every((filter) => meal.preference.includes(filter))
         )
       );
     } else {
       setFilteredMeals(meals);
     }
-  }, [selectedFilters, meals]);
+
+    // Log tdeeData to check if it's being updated correctly
+    console.log("TDEE Data in Menu:", tdeeData);
+  }, [selectedFilters, meals, tdeeData]);
 
   const handleFilterChange = (event) => {
     const { value, checked } = event.target;
@@ -72,7 +101,7 @@ const Menu = () => {
       return;
     }
 
-    if (!chosenMeals.find((m) => m.id === meal.id)) {
+    if (!chosenMeals.find((m) => m._id === meal._id)) {
       const updatedMeals = [...chosenMeals, meal];
       setChosenMeals(updatedMeals);
       localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
@@ -83,17 +112,23 @@ const Menu = () => {
   const handleRemoveMeal = (meal) => {
     if (!isLoggedIn) return;
 
-    const updatedMeals = chosenMeals.filter((m) => m.id !== meal.id);
+    const updatedMeals = chosenMeals.filter((m) => m._id !== meal._id);
     setChosenMeals(updatedMeals);
     localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
     setRecommendedMeals(updatedMeals);
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="menu-page">
       <div className="menu-banner">Meal Selection</div>
 
+      {/* Calorie Tracker */}
       <div className="calorie-tracker">
+        {/* Ensure values are updated here */}
         Calories: {tdeeData.tdee} kcal | Protein: {tdeeData.protein}g | Carbs: {tdeeData.carbs}g | Fats: {tdeeData.fats}g
       </div>
 
@@ -115,14 +150,14 @@ const Menu = () => {
         <div className="meal-list">
           {isLoggedIn && recommendedMeals.length > 0 ? (
             recommendedMeals.map((meal) => (
-              <div key={meal.id} className="meal-item">
+              <div key={meal._id} className="meal-item">
                 <img
-                  src={meal.image}
+                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}  // Default image if empty
                   alt={meal.name}
                   className="meal-image"
-                  onClick={() => navigate(`/meal/${meal.id}`, { state: { meal } })}
+                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}
                 />
-                <p className="meal-name" onClick={() => navigate(`/meal/${meal.id}`, { state: { meal } })}>
+                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}>
                   {meal.name}
                 </p>
                 <button onClick={() => handleRemoveMeal(meal)}>Remove</button>
@@ -130,14 +165,14 @@ const Menu = () => {
             ))
           ) : !isLoggedIn ? (
             recommendedMeals.map((meal) => (
-              <div key={meal.id} className="meal-item">
+              <div key={meal._id} className="meal-item">
                 <img
-                  src={meal.image}
+                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
-                  onClick={() => navigate(`/meal/${meal.id}`, { state: { meal } })}
+                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}
                 />
-                <p className="meal-name" onClick={() => navigate(`/meal/${meal.id}`, { state: { meal } })}>
+                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}>
                   {meal.name}
                 </p>
                 <button className="disabled-btn" onClick={() => navigate("/login")}>
@@ -157,14 +192,14 @@ const Menu = () => {
         <div className="meal-list">
           {filteredMeals.length > 0 ? (
             filteredMeals.map((meal) => (
-              <div key={meal.id} className="meal-item">
+              <div key={meal._id} className="meal-item">
                 <img
-                  src={meal.image}
+                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
-                  onClick={() => navigate(`/meal/${meal.id}`, { state: { meal } })}
+                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}
                 />
-                <p className="meal-name" onClick={() => navigate(`/meal/${meal.id}`, { state: { meal } })}>
+                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}>
                   {meal.name}
                 </p>
                 {isLoggedIn ? (
