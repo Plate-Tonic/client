@@ -6,7 +6,7 @@ import "../styles/login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { token, setToken } = useUserAuthContext(); // Get token from context
+  const { token, setToken } = useUserAuthContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -14,10 +14,10 @@ const Login = () => {
   // Redirect if user is already logged in
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
-    if (token || storedToken) {
+    if (storedToken) {
       navigate("/dashboard");
     }
-  }, [token, navigate]);
+  }, []); // ✅ Empty dependency array prevents infinite loop
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -28,9 +28,9 @@ const Login = () => {
       });
 
       const userToken = response.data.token;
-      setToken(userToken); // Update context
-      localStorage.setItem("authToken", userToken); // Store token in localStorage
-      navigate("/dashboard"); // Redirect after login
+      setToken(userToken); // ✅ Update context state
+      localStorage.setItem("authToken", userToken); // ✅ Store token
+      navigate("/dashboard"); // ✅ Redirect after login
     } catch (error) {
       console.error("Login error:", error);
       setError("Invalid email or password");
