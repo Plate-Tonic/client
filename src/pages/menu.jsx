@@ -45,8 +45,8 @@ const Menu = () => {
     if (storedTDEE) {
       setTdeeData({
         calorie: storedTDEE.tdee || 0,
-        protein: storedTDEE.proteinGrams || 0,
-        carbs: storedTDEE.carbsGrams || 0,
+        protein: storedTDEE.proteinGrams || 0, 
+        carbs: storedTDEE.carbsGrams || 0, 
         fat: storedTDEE.fatsGrams || 0,
       });
     }
