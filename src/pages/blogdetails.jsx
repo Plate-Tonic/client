@@ -27,16 +27,24 @@ const BlogDetail = () => {
   }
 
   return (
-    <div className="blog-detail-container">
-      <h2 className="blog-detail-title">{blog.title}</h2>
-      <p className="blog-detail-author">Author: {blog.author}</p>
-      <p className="blog-detail-tags">Tags: {blog.tags.join(", ")}</p>
-      <div className="blog-detail-content">
-        <p>{blog.content}</p>
+    <div>
+      {/* Blog Detail Banner */}
+      <div className="blog-detail-banner">
+        Blog Detail
       </div>
-      <button className="back-button" onClick={() => navigate("/blog")}>
-        Back to Blogs
-      </button>
+
+      {/* Blog Detail Content */}
+      <div className="blog-detail-container">
+        <h2 className="blog-detail-title">{blog.title}</h2>
+        <p className="blog-detail-author">Author: {blog.author}</p>
+        <p className="blog-detail-tags">Tags: {blog.tags.join(", ")}</p>
+        <div className="blog-detail-content">
+          <p>{blog.content}</p>
+        </div>
+        <button className="back-button" onClick={() => navigate("/blog")}>
+          Back to Blogs
+        </button>
+      </div>
     </div>
   );
 };

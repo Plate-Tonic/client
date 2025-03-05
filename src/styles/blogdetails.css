@@ -1,47 +1,58 @@
 /* Blog Detail Page Styles */
 
+/* Banner Styling */
+.blog-detail-banner {
+  width: 100%;
+  background-color: #BC4749;
+  color: white;
+  text-align: center;
+  padding: 130px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Blog Detail Content Styles */
 .blog-detail-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
-  }
-  
-  .blog-detail-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-  
-  .blog-detail-tags {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .blog-detail-content {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #444;
-  }
-  
-  .back-button {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 15px;
-    background-color: #6a994e;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .back-button:hover {
-    background-color: #bc4749;
-  }
-  
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.blog-detail-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.blog-detail-tags {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.blog-detail-content {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.back-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #6a994e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #bc4749;
+}

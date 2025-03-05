@@ -146,7 +146,7 @@ const Menu = () => {
       <div className="filter-section">
         <h3>Filter by Preferences</h3>
         <div className="filter-options">
-          {["vegetarian", "vegan", "gluten-free", "high-protein", "pescatarian"].map((filter) => (
+          {["vegetarian", "vegan", "gluten-free", "nut-free", "none"].map((filter) => (
             <label key={filter}>
               <input type="checkbox" value={filter} onChange={handleFilterChange} /> {filter}
             </label>
