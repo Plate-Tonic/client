@@ -10,7 +10,7 @@ const Menu = () => {
   const [meals, setMeals] = useState([]);
   const [filteredMeals, setFilteredMeals] = useState([]);
   const [chosenMeals, setChosenMeals] = useState([]);
-  const [selectedMeals, setSelectedMeals] = useState([]); // Updated variable name
+  const [selectedMeals, setSelectedMeals] = useState([]);
   const [calorieData, setTdeeData] = useState({
     calorie: 2000,
     protein: 150,
@@ -39,7 +39,7 @@ const Menu = () => {
 
     const storedChosenMeals = JSON.parse(localStorage.getItem("chosenMeals")) || [];
     setChosenMeals(storedChosenMeals);
-    setSelectedMeals(storedChosenMeals); // Updated to reflect selected meals
+    setSelectedMeals(storedChosenMeals);
 
     const storedTDEE = JSON.parse(localStorage.getItem("calorieTrackerData"));
     if (storedTDEE) {
@@ -68,6 +68,7 @@ const Menu = () => {
         });
         const userData = response.data;
         setTdeeData(userData.macroTracker);
+        setSelectedMeals(userData.selectedMealPlan || []);
         setLoading(false);
         setIsLoggedIn(true);
       } catch (err) {
@@ -98,22 +99,58 @@ const Menu = () => {
     );
   };
 
-  const handleChooseMeal = (meal) => {
+  const handleChooseMeal = async (meal) => {
     if (!chosenMeals.find((m) => m._id === meal._id)) {
       const updatedMeals = [...chosenMeals, meal];
       setChosenMeals(updatedMeals);
       localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
       setSelectedMeals(updatedMeals);
+
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.userId;
+
+        try {
+          await axios.post(
+            `http://localhost:8008/user/${userId}/meal-plan`,
+            { selectedMealPlan: meal._id },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+        } catch (err) {
+          console.error("Error saving meal to user profile:", err);
+        }
+      }
     }
   };
 
-  const handleRemoveMeal = (meal) => {
+  const handleRemoveMeal = async (meal) => {
     if (!isLoggedIn) return;
 
-    const updatedMeals = chosenMeals.filter((m) => m._id !== meal._id);
-    setChosenMeals(updatedMeals);
-    localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
-    setSelectedMeals(updatedMeals);
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("No token found, user not authenticated.");
+      return;
+    }
+
+    try {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
+
+      await axios.delete(`http://localhost:8008/user/${userId}/meal-plan/${meal._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const updatedMeals = chosenMeals.filter((m) => m._id !== meal._id);
+      setChosenMeals(updatedMeals);
+      localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
+
+      // Also remove from Dashboard state
+      setSelectedMeals(updatedMeals);
+
+    } catch (err) {
+      console.error("Error removing meal:", err);
+    }
   };
 
   if (loading) {
@@ -142,23 +179,13 @@ const Menu = () => {
         )}
       </div>
 
-
-
       <div className="meal-section">
         <h3>Selected Meals</h3>
         <div className="meal-list">
           {isLoggedIn && selectedMeals.length > 0 ? (
             selectedMeals.map((meal) => (
               <div key={meal._id} className="meal-item">
-                <img
-                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
-                  alt={meal.name}
-                  className="meal-image"
-                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}
-                />
-                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}>
-                  {meal.name}
-                </p>
+                <p>{meal.name}</p>
                 <button onClick={() => handleRemoveMeal(meal)}>Remove</button>
               </div>
             ))
@@ -171,30 +198,12 @@ const Menu = () => {
       <div className="meal-section">
         <h3>Choose Your Meals</h3>
         <div className="meal-list">
-          {filteredMeals.length > 0 ? (
-            filteredMeals.map((meal) => (
-              <div key={meal._id} className="meal-item">
-                <img
-                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
-                  alt={meal.name}
-                  className="meal-image"
-                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}
-                />
-                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}>
-                  {meal.name}
-                </p>
-                {isLoggedIn ? (
-                  <button onClick={() => handleChooseMeal(meal)}>Choose</button>
-                ) : (
-                  <button className="disabled-btn" onClick={() => navigate("/login")}>
-                    Login to Choose
-                  </button>
-                )}
-              </div>
-            ))
-          ) : (
-            <p>No meals match your filters.</p>
-          )}
+          {filteredMeals.map((meal) => (
+            <div key={meal._id} className="meal-item">
+              <p>{meal.name}</p>
+              <button onClick={() => handleChooseMeal(meal)}>Choose</button>
+            </div>
+          ))}
         </div>
       </div>
     </div>
