@@ -206,6 +206,7 @@ const Menu = () => {
         </div>
       </div>
 
+      {/* Choose a Meal Section */}
       <div className="meal-section">
         <h3>Choose Your Meals</h3>
         <div className="meal-list">
