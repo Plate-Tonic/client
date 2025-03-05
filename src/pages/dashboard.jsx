@@ -36,7 +36,6 @@ const Dashboard = () => {
       try {
         const response = await axios.get(
           `http://localhost:8008/user/${userId}`,
-          
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -80,6 +79,11 @@ const Dashboard = () => {
 
   const handleAddMealClick = () => {
     navigate("/menu");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken"); // Remove token from localStorage
+    navigate("/login"); // Redirect to the login page
   };
 
   const renderContent = () => {
@@ -142,6 +146,7 @@ const Dashboard = () => {
         <div className="sidebar">
           <button onClick={() => setActiveSection("calorie-tracker")}>Calorie Tracker</button>
           <button onClick={() => setActiveSection("current-meals")}>Current Meals</button>
+          <button onClick={handleLogout} className="logout-btn">Logout</button> {/* Logout button */}
         </div>
         <div className="main-content">{renderContent()}</div>
       </div>
