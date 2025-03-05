@@ -1,12 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/signup.css";
-
-const securityQuestions = [
-  "What is your mother’s maiden name?",
-  "What was the name of your first pet?",
-  "What is the name of the city where you were born?",
-];
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -15,10 +10,29 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
-  const [selectedQuestion, setSelectedQuestion] = useState(securityQuestions[0]);
+  const [securityQuestions, setSecurityQuestions] = useState([]);
   const [securityAnswer, setSecurityAnswer] = useState("");
+  const [selectedQuestion, setSelectedQuestion] = useState("");
 
-  const handleSignUp = (event) => {
+  useEffect(() => {
+    const fetchSecurityQuestions = async () => {
+      try {
+        const response = await axios.get("http://localhost:8008/questions");
+        console.log("Response data:", response.data);
+
+        setSecurityQuestions(response.data.securityQuestions);
+        if (response.data.securityQuestions.length > 0) {
+          setSelectedQuestion(response.data.securityQuestions[0]); // Set the first question as default
+        }
+      } catch (error) {
+        console.error("Error fetching security questions:", error);
+        alert("Error loading security questions. Please try again.");
+      }
+    };
+    fetchSecurityQuestions();
+  }, []);
+
+  const handleSignUp = async (event) => {
     event.preventDefault();
     if (!agreeTerms) {
       alert("You must agree to the terms and conditions.");
@@ -28,8 +42,12 @@ const SignUp = () => {
       alert("Passwords do not match.");
       return;
     }
+    if (!securityAnswer.trim()) {
+      alert("Please provide an answer to your security question.");
+      return;
+    }
 
-    // Store the basic information in local storage
+    // Store the basic information in localStorage (or state)
     const userData = {
       name,
       email,
@@ -37,11 +55,15 @@ const SignUp = () => {
       securityQuestion: selectedQuestion,
       securityAnswer,
     };
-
-    localStorage.setItem("userData", JSON.stringify(userData));
-
-    // Navigate to the Get Started page to collect the rest of the info
-    navigate("/getstarted");
+    try {
+      const response = await axios.post("http://localhost:8008/register", userData);
+      // Show success message
+      alert("Successfully registered user!");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during sign-up:", error);
+      alert("Error registering user. Please try again.");
+    }
   };
 
   return (
