@@ -186,12 +186,11 @@ const Menu = () => {
           {isLoggedIn && selectedMeals.length > 0 ? (
             selectedMeals.map((meal) => (
               <div key={meal._id} className="meal-item">
-                {/* Meal Image click to navigate to Meal Details */}
                 <img
                   src={meal.imageUrl || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
-                  onClick={() => navigate(`/meal/${meal._id}`)} // Fixed to match the "Choose a Meal" behavior
+                  onClick={() => navigate(`/meal/${meal._id}`)}
                 />
                 {/* Meal Name click to navigate to Meal Details */}
                 <p className="meal-name" onClick={() => navigate(`/mealdetails/${meal._id}`)}>

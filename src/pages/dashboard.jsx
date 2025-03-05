@@ -6,6 +6,7 @@ import "../styles/dashboard.css";
 
 const Dashboard = () => {
   const [activeSection, setActiveSection] = useState("calorie-tracker");
+
   const [calorieRequirement, setCalorieRequirement] = useState(0);
   const [proteinRequirement, setProteinRequirement] = useState(0);
   const [carbRequirement, setCarbRequirement] = useState(0);
@@ -19,6 +20,7 @@ const Dashboard = () => {
   const [selectedMeals, setSelectedMeals] = useState([]);
   const navigate = useNavigate();
 
+  // Fetch user data once on mount
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("authToken");
@@ -40,27 +42,23 @@ const Dashboard = () => {
         const userData = response.data;
         console.log("Fetched userData:", userData);
 
-        // Fetch user's meals
-        const meals = Array.isArray(userData.selectedMealPlan) ? userData.selectedMealPlan : [];
-        setSelectedMeals(meals);
-
-        // Fetch user's macro requirements
+        // Set user macros if available
         if (userData.macroTracker) {
           setCalorieRequirement(userData.macroTracker.calorie || 0);
           setProteinRequirement(userData.macroTracker.protein || 0);
           setCarbRequirement(userData.macroTracker.carbs || 0);
           setFatRequirement(userData.macroTracker.fat || 0);
-        } else {
-          console.warn("Macro tracker not found for user.");
         }
 
+        // Fetch user's meals
+        setSelectedMeals(Array.isArray(userData.selectedMealPlan) ? userData.selectedMealPlan : []);
       } catch (err) {
         console.error("Error fetching user data:", err);
       }
     };
 
     fetchUserData();
-  }, [navigate, selectedMeals]);  // Re-fetch data when selectedMeals changes
+  }, []); // ✅ Runs only once on mount
 
   // Update intake when selectedMeals changes
   useEffect(() => {
@@ -86,13 +84,11 @@ const Dashboard = () => {
       });
 
       // Update frontend state after successful removal
-      setSelectedMeals((prevMeals) => prevMeals.filter((meal) => meal._id !== mealId));
+      const updatedMeals = selectedMeals.filter((meal) => meal._id !== mealId);
+      setSelectedMeals(updatedMeals);
 
-      // Also update Menu.jsx meals
-      const storedMeals = JSON.parse(localStorage.getItem("chosenMeals")) || [];
-      const updatedMeals = storedMeals.filter((meal) => meal._id !== mealId);
+      // Sync with localStorage for Menu.jsx
       localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
-
     } catch (err) {
       console.error("Error removing meal:", err);
     }
@@ -130,16 +126,25 @@ const Dashboard = () => {
               {selectedMeals.length === 0 ? (
                 <p>No meals selected yet.</p>
               ) : (
-                <ul>
+                <ul className="current-meals-list">
                   {selectedMeals.map((meal) => (
                     <li key={meal._id}>
-                      <span>{meal.name || "Unnamed Meal"}</span> - {meal.calories || 0} kcal
-                      <button onClick={() => removeMeal(meal._id)}>Remove</button>
+                      <span className="meal-name">{meal.name}</span> -
+                      <span className="meal-calories">{meal.calories} kcal</span> |
+                      <span className="meal-protein">{meal.protein} g Protein</span> |
+                      <span className="meal-carbs">{meal.carbs} g Carbs</span> |
+                      <span className="meal-fats">{meal.fat} g Fats</span>
+                      <button className="remove-meal" onClick={() => removeMeal(meal._id)}>Remove</button>
                     </li>
                   ))}
                 </ul>
               )}
+              {/* Add Meal Button */}
+              <button className="add-meal-btn" onClick={() => navigate("/menu")}>
+                Add Meal
+              </button>
             </div>
+
           )}
         </div>
       </div>

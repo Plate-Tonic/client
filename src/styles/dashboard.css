@@ -102,11 +102,12 @@
 
 .current-meals-list li {
     display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+    justify-content: space-between; /* Aligns meal name and button */
+    align-items: center; /* Vertically centers meal details */
     padding: 10px;
     border-bottom: 1px solid #ddd;
     font-size: 18px;
+    width: 100%;
 }
 
 .current-meals-list li:last-child {
@@ -118,13 +119,14 @@
     flex: 1; 
 }
 
-.current-meals-list .meal-calories,
-.current-meals-list .meal-protein,
-.current-meals-list .meal-carbs,
-.current-meals-list .meal-fats {
-    color: black; 
-    margin-left: 5px; 
+.meal-calories,
+.meal-protein,
+.meal-carbs,
+.meal-fats {
+    color: black;
+    margin-left: 5px;
 }
+
 
 .remove-meal {
     background-color: #FF4D4D;
