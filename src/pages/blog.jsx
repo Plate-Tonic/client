@@ -42,7 +42,7 @@ const Blog = () => {
       <div className="filter-section">
         <h3>Filter by Tags</h3>
         <div className="filter-options">
-          {['Nutrition', 'Meal Prep', 'Fitness', 'Healthy Eating', 'Weight-loss', 'Gluten-free'].map(tag => (
+          {['Nutrition', 'Meal Prep', 'Fitness', 'Healthy Eating', 'Weight Management', 'Gluten-free'].map(tag => (
             <label key={tag}>
               <input type="checkbox" value={tag} onChange={handleFilterChange} /> {tag.replace('-', ' ')}
             </label>

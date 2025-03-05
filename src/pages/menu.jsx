@@ -49,8 +49,15 @@ const Menu = () => {
 
     // Fetch stored TDEE data from localStorage (for non-logged-in users)
     const storedTDEE = JSON.parse(localStorage.getItem("calorieTrackerData"));
+    console.log("Stored TDEE:", storedTDEE); // Debugging step: Check the stored data
+
     if (storedTDEE) {
-      setTdeeData(storedTDEE);
+      setTdeeData({
+        tdee: storedTDEE.tdee || 0,
+        protein: storedTDEE.proteinGrams || 0, // Ensure proteinGrams is mapped correctly
+        carbs: storedTDEE.carbsGrams || 0, // Ensure carbsGrams is mapped correctly
+        fats: storedTDEE.fatsGrams || 0, // Ensure fatsGrams is mapped correctly
+      });
     }
 
     if (token) {
@@ -129,14 +136,17 @@ const Menu = () => {
       {/* Calorie Tracker */}
       <div className="calorie-tracker">
         {/* Ensure values are updated here */}
-        Calories: {tdeeData.tdee} kcal | Protein: {tdeeData.protein}g | Carbs: {tdeeData.carbs}g | Fats: {tdeeData.fats}g
+        Calories: {tdeeData.tdee} kcal | 
+        Protein: {tdeeData.protein}g | 
+        Carbs: {tdeeData.carbs}g | 
+        Fats: {tdeeData.fats}g
       </div>
 
       {/* FILTER SECTION */}
       <div className="filter-section">
         <h3>Filter by Preferences</h3>
         <div className="filter-options">
-          {["vegetarian", "vegan", "gluten-free", "high-protein", "pescatarian"].map((filter) => (
+          {["vegetarian", "vegan", "gluten-free", "nut-free", "none"].map((filter) => (
             <label key={filter}>
               <input type="checkbox" value={filter} onChange={handleFilterChange} /> {filter}
             </label>
