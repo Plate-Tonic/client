@@ -19,17 +19,12 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // The user is logged in
-      setIsLoggedIn(true);
+    const token = localStorage.getItem("authToken");
+    console.log("Token from local storage:", token);
+    if (!token) {
+      console.log("No token found, redirecting to login...");
+      navigate("/login");
     } else {
-      // The user is not logged in
-      setIsLoggedIn(false);
-    }
-    
-
-    if (token) {
       const fetchUserData = async () => {
         try {
           const response = await axios.get("http://localhost:8008/user/me", {
