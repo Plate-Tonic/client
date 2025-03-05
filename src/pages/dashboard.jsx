@@ -22,7 +22,6 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("authToken");
-      console.log("Token from local storage:", token);
 
       if (!token) {
         console.log("No token found, redirecting to login...");
@@ -30,114 +29,69 @@ const Dashboard = () => {
         return;
       }
 
-      const decodedToken = jwtDecode(token); // Decode the token to get user ID
+      const decodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
 
       try {
-        const response = await axios.get(
-          `http://localhost:8008/user/${userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`http://localhost:8008/user/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
         const userData = response.data;
-        console.log('userData:', userData);
+        console.log("Fetched userData:", userData);
 
-        // Update the calorie tracker with the user's data
-        setCalorieRequirement(userData.macroTracker.calorie);
-        setProteinRequirement(userData.macroTracker.protein);
-        setCarbRequirement(userData.macroTracker.carbs);
-        setFatRequirement(userData.macroTracker.fat);
+        // Ensure `selectedMealPlan` is properly assigned
+        const meals = Array.isArray(userData.selectedMealPlan) ? userData.selectedMealPlan : [];
+        console.log("Extracted Meals:", meals);
+        setSelectedMeals(meals);
 
-        // Set the selected meals
-        setSelectedMeals(userData.selectedMeals);
+        if (userData.macroTracker) {
+          setCalorieRequirement(userData.macroTracker.calorie || 0);
+          setProteinRequirement(userData.macroTracker.protein || 0);
+          setCarbRequirement(userData.macroTracker.carbs || 0);
+          setFatRequirement(userData.macroTracker.fat || 0);
+        }
 
-        // Calculate current intake for calories, protein, carbs, and fats
-        const totalCalories = userData.selectedMeals.reduce((sum, meal) => sum + meal.calories, 0);
-        const totalProtein = userData.selectedMeals.reduce((sum, meal) => sum + meal.protein, 0);
-        const totalCarbs = userData.selectedMeals.reduce((sum, meal) => sum + meal.carbs, 0);
-        const totalFats = userData.selectedMeals.reduce((sum, meal) => sum + meal.fats, 0);
+        // Calculate current intake based on meals
+        setCurrentCalories(meals.reduce((sum, meal) => sum + (meal.calories || 0), 0));
+        setCurrentProtein(meals.reduce((sum, meal) => sum + (meal.protein || 0), 0));
+        setCurrentCarbs(meals.reduce((sum, meal) => sum + (meal.carbs || 0), 0));
+        setCurrentFats(meals.reduce((sum, meal) => sum + (meal.fat || 0), 0));
 
-        setCurrentCalories(totalCalories);
-        setCurrentProtein(totalProtein);
-        setCurrentCarbs(totalCarbs);
-        setCurrentFats(totalFats);
       } catch (err) {
         console.error("Error fetching user data:", err);
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [navigate]);
 
-  const removeMeal = (mealId) => {
-    const updatedMeals = selectedMeals.filter((meal) => meal.id !== mealId);
-    setSelectedMeals(updatedMeals);
-  };
+const removeMeal = async (mealId) => {
+  const token = localStorage.getItem("authToken");
+  if (!token) {
+    console.log("No token found, user not authenticated.");
+    return;
+  }
 
-  const handleAddMealClick = () => {
-    navigate("/menu");
-  };
+  try {
+    // Send request to backend to remove meal
+    const response = await axios.delete(
+      `http://localhost:8008/user/remove-meal/${mealId}`,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+
+    console.log("Updated user meals:", response.data);
+
+    // Update frontend state after successful removal
+    setSelectedMeals((prevMeals) => prevMeals.filter((meal) => meal._id !== mealId));
+  } catch (err) {
+    console.error("Error removing meal:", err);
+  }
+};
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Remove token from localStorage
-    navigate("/login"); // Redirect to the login page
-  };
-
-  const renderContent = () => {
-    switch (activeSection) {
-      case "calorie-tracker":
-        return (
-          <div className="content-box">
-            <h3>Calorie Tracker</h3>
-            <p><strong>Calorie Requirement:</strong> {calorieRequirement} kcal</p>
-            <p><strong>Protein Requirement:</strong> {proteinRequirement} g</p>
-            <p><strong>Carb Requirement:</strong> {carbRequirement} g</p>
-            <p><strong>Fat Requirement:</strong> {fatRequirement} g</p>
-
-            <p><strong>Current Intake:</strong> {currentCalories} kcal</p>
-            <p><strong>Protein Intake:</strong> {currentProtein} g</p>
-            <p><strong>Carb Intake:</strong> {currentCarbs} g</p>
-            <p><strong>Fat Intake:</strong> {currentFats} g</p>
-
-            <p><strong>Difference (Calories):</strong> {calorieRequirement - currentCalories} kcal</p>
-            <p><strong>Difference (Protein):</strong> {proteinRequirement - currentProtein} g</p>
-            <p><strong>Difference (Carbs):</strong> {carbRequirement - currentCarbs} g</p>
-            <p><strong>Difference (Fats):</strong> {fatRequirement - currentFats} g</p>
-          </div>
-        );
-      case "current-meals":
-        return (
-          <div className="content-box">
-            <h3>Current Meals</h3>
-            {selectedMeals.length === 0 ? (
-              <p>No meals selected yet.</p>
-            ) : (
-              <div className="current-meals-list">
-                <ul>
-                  {selectedMeals.map((meal) => (
-                    <li key={meal.id}>
-                      <span className="meal-name">{meal.name}</span>
-                      <span className="meal-calories">{meal.calories} kcal</span>
-                      <span className="meal-protein">{meal.protein} g Protein</span>
-                      <span className="meal-carbs">{meal.carbs} g Carbs</span>
-                      <span className="meal-fats">{meal.fats} g Fats</span>
-                      <button className="remove-meal" onClick={() => removeMeal(meal.id)}>
-                        Remove
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <button className="add-meal-btn" onClick={handleAddMealClick}>Add Meal</button>
-          </div>
-        );
-      default:
-        return <div className="content-box">Welcome to Your Dashboard</div>;
-    }
+    localStorage.removeItem("authToken");
+    navigate("/login");
   };
 
   return (
@@ -146,9 +100,39 @@ const Dashboard = () => {
         <div className="sidebar">
           <button onClick={() => setActiveSection("calorie-tracker")}>Calorie Tracker</button>
           <button onClick={() => setActiveSection("current-meals")}>Current Meals</button>
-          <button onClick={handleLogout} className="logout-btn">Logout</button> {/* Logout button */}
+          <button onClick={handleLogout} className="logout-btn">Logout</button>
         </div>
-        <div className="main-content">{renderContent()}</div>
+        <div className="main-content">
+          {activeSection === "calorie-tracker" ? (
+            <div className="content-box">
+              <h3>Calorie Tracker</h3>
+              <p><strong>Calorie Requirement:</strong> {calorieRequirement} kcal</p>
+              <p><strong>Protein Requirement:</strong> {proteinRequirement} g</p>
+              <p><strong>Carb Requirement:</strong> {carbRequirement} g</p>
+              <p><strong>Fat Requirement:</strong> {fatRequirement} g</p>
+              <p><strong>Current Intake:</strong> {currentCalories} kcal</p>
+              <p><strong>Protein Intake:</strong> {currentProtein} g</p>
+              <p><strong>Carb Intake:</strong> {currentCarbs} g</p>
+              <p><strong>Fat Intake:</strong> {currentFats} g</p>
+            </div>
+          ) : (
+            <div className="content-box">
+              <h3>Current Meals</h3>
+              {selectedMeals.length === 0 ? (
+                <p>No meals selected yet.</p>
+              ) : (
+                <ul>
+                  {selectedMeals.map((meal) => (
+                    <li key={meal._id}>
+                      <span>{meal.name || "Unnamed Meal"}</span> - {meal.calories || 0} kcal
+                      <button onClick={() => removeMeal(meal._id)}>Remove</button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
