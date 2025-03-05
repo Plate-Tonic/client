@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/signup.css";
 
+const securityQuestions = [
+  "What is your mother’s maiden name?",
+  "What was the name of your first pet?",
+  "What is the name of the city where you were born?",
+];
+
 const SignUp = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -9,6 +15,8 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [agreeTerms, setAgreeTerms] = useState(false);
+  const [selectedQuestion, setSelectedQuestion] = useState(securityQuestions[0]);
+  const [securityAnswer, setSecurityAnswer] = useState("");
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -18,6 +26,10 @@ const SignUp = () => {
     }
     if (password !== confirmPassword) {
       alert("Passwords do not match.");
+      return;
+    }
+    if (!securityAnswer.trim()) {
+      alert("Please provide an answer to your security question.");
       return;
     }
 
@@ -68,6 +80,31 @@ const SignUp = () => {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>Security Question:</label>
+            <select
+              value={selectedQuestion}
+              onChange={(e) => setSelectedQuestion(e.target.value)}
+              required
+            >
+              {securityQuestions.map((question, index) => (
+                <option key={index} value={question}>
+                  {question}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="input-group">
+            <label>Security Answer:</label>
+            <input
+              type="text"
+              value={securityAnswer}
+              onChange={(e) => setSecurityAnswer(e.target.value)}
               required
             />
           </div>
