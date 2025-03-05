@@ -29,6 +29,12 @@
     font-weight: bold;
 }
 
+.selected-macros {
+    margin-top: 5px;
+    
+    color: #333;
+  }
+
 /* Filter Section */
 .filter-section {
     background: white;

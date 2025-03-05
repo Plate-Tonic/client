@@ -125,20 +125,24 @@ const Menu = () => {
       <div className="menu-banner">Meal Selection</div>
 
       <div className="calorie-tracker">
-        Calories: {calorieData.calorie} kcal | 
-        Protein: {calorieData.protein}g | 
-        Carbs: {calorieData.carbs}g | 
-        Fat: {calorieData.fat}g
+        <p>
+          Calories: {calorieData.calorie} kcal | 
+          Protein: {calorieData.protein}g | 
+          Carbs: {calorieData.carbs}g | 
+          Fat: {calorieData.fat}g
+        </p>
+
+        {isLoggedIn && (
+          <p className="selected-macros">
+            Selected Meals: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal | 
+            Protein: {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g | 
+            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g | 
+            Fat: {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g
+          </p>
+        )}
       </div>
 
-      {isLoggedIn && (
-        <div className="selected-macros">
-          Selected Meals: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal | 
-          Protein: {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g | 
-          Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g | 
-          Fat: {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g
-        </div>
-      )}
+
 
       <div className="meal-section">
         <h3>Selected Meals</h3>
