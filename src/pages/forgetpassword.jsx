@@ -56,7 +56,7 @@ const ForgetPassword = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:8008/reset", {
+      const response = await axios.post("http://localhost:8008/reset-password", {
         email,
         newPassword,
       });
