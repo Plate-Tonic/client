@@ -1,31 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserAuthContext } from "../contexts/UserAuthContext";
-import axios from "axios"; // Import axios
+import axios from "axios";
 import "../styles/login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setToken } = useUserAuthContext();
+  const { token, setToken } = useUserAuthContext(); // Get token from context
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null); // Add error state
+  const [error, setError] = useState(null);
 
-  const handleLogin = (event) => {
+  // Redirect if user is already logged in
+  useEffect(() => {
+    const storedToken = localStorage.getItem("authToken");
+    if (token || storedToken) {
+      navigate("/dashboard");
+    }
+  }, [token, navigate]);
+
+  const handleLogin = async (event) => {
     event.preventDefault();
-    axios.post("http://localhost:8008/login", {
-      email,
-      password
-    })
-      .then((response) => {
-        const token = response.data.token;
-        setToken(token); // Set token in context
-        navigate("/dashboard"); // Redirect to dashboard
-      })
-      .catch((error) => {
-        console.error("Login error:", error);
-        setError("Invalid email or password"); // Set error message
+    try {
+      const response = await axios.post("http://localhost:8008/login", {
+        email,
+        password,
       });
+
+      const userToken = response.data.token;
+      setToken(userToken); // Update context
+      localStorage.setItem("authToken", userToken); // Store token in localStorage
+      navigate("/dashboard"); // Redirect after login
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Invalid email or password");
+    }
   };
 
   return (
@@ -34,6 +43,7 @@ const Login = () => {
 
       <div className="login-container">
         <h2>Login to Your Account</h2>
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleLogin}>
           <div className="input-group">
             <label>Email:</label>
