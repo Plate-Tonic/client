@@ -57,8 +57,8 @@ const Menu = () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       setLoading(false);
-      console.log("No token found, redirecting to login...");
-      navigate("/login");
+      console.log("No token found, meal options for guest users...");
+      setIsLoggedIn(false);
       return;
     }
 
@@ -108,11 +108,6 @@ const Menu = () => {
   };
 
   const handleChooseMeal = (meal) => {
-    if (!isLoggedIn) {
-      navigate("/login");
-      return;
-    }
-
     if (!chosenMeals.find((m) => m._id === meal._id)) {
       const updatedMeals = [...chosenMeals, meal];
       setChosenMeals(updatedMeals);
