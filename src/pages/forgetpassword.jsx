@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/forgetpassword.css";
-
-const userData = {
-  email: "test@example.com", // Mock user email
-  securityQuestion: "What was the name of your first pet?", // Mock stored security question
-  securityAnswer: "Fluffy", // Mock stored answer
-};
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
@@ -17,33 +12,64 @@ const ForgetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
-  const handleEmailSubmit = (event) => {
+  const handleEmailSubmit = async (event) => {
     event.preventDefault();
-    if (email === userData.email) {
-      setSecurityQuestion(userData.securityQuestion);
-      setStep(2);
-    } else {
-      alert("Email not found.");
+    try {
+      const response = await axios.post("http://localhost:8008/question", {
+        email
+      });
+
+      if (response.status === 200) {
+        setSecurityQuestion(response.data.securityQuestion);
+        setStep(2);
+      } else {
+        throw new Error(response.data.message || "Email not found.");
+      }
+    } catch (error) {
+      alert(error.message || "An error occurred while verifying email.");
+      console.error(error);
     }
   };
 
-  const handleSecurityAnswerSubmit = (event) => {
+  const handleSecurityAnswerSubmit = async (event) => {
     event.preventDefault();
-    if (securityAnswer.trim().toLowerCase() === userData.securityAnswer.toLowerCase()) {
-      setStep(3);
-    } else {
-      alert("Incorrect security answer.");
+    try {
+      const response = await axios.post("http://localhost:8008/answer", {
+        email,
+        securityAnswer,
+      });
+      if (response.status === 200) {
+        setStep(3);
+      } else {
+        throw new Error(response.data.message || "Incorrect security answer.");
+      }
+    } catch (error) {
+      alert(error.message || "An error occurred while verifying the security answer.");
+      console.error(error);
     }
   };
 
-  const handlePasswordReset = (event) => {
+  const handlePasswordReset = async (event) => {
     event.preventDefault();
     if (newPassword !== confirmNewPassword) {
       alert("Passwords do not match.");
       return;
     }
-    alert("Password reset successful! Redirecting to login...");
-    navigate("/login");
+    try {
+      const response = await axios.post("http://localhost:8008/reset", {
+        email,
+        newPassword,
+      });
+      if (response.status === 200) {
+        alert("Password reset successful! Redirecting to login...");
+        navigate("/login");
+      } else {
+        throw new Error(response.data.message || "Error resetting password.");
+      }
+    } catch (error) {
+      alert(error.message || "An error occurred while resetting the password.");
+      console.error(error);
+    }
   };
 
   return (
