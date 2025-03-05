@@ -10,7 +10,7 @@ const Menu = () => {
   const [meals, setMeals] = useState([]);
   const [filteredMeals, setFilteredMeals] = useState([]);
   const [chosenMeals, setChosenMeals] = useState([]);
-  const [selectedMeals, setSelectedMeals] = useState([]);
+  const [selectedMeals, setSelectedMeals] = useState([]); // Updated variable name
   const [calorieData, setTdeeData] = useState({
     calorie: 2000,
     protein: 150,
@@ -20,6 +20,7 @@ const Menu = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Fetch meals and user data (including login status)
   useEffect(() => {
     const fetchMeals = async () => {
       try {
@@ -39,14 +40,14 @@ const Menu = () => {
 
     const storedChosenMeals = JSON.parse(localStorage.getItem("chosenMeals")) || [];
     setChosenMeals(storedChosenMeals);
-    setSelectedMeals(storedChosenMeals);
+    setSelectedMeals(storedChosenMeals); // Updated to reflect selected meals
 
     const storedTDEE = JSON.parse(localStorage.getItem("calorieTrackerData"));
     if (storedTDEE) {
       setTdeeData({
         calorie: storedTDEE.tdee || 0,
-        protein: storedTDEE.proteinGrams || 0, 
-        carbs: storedTDEE.carbsGrams || 0, 
+        protein: storedTDEE.proteinGrams || 0,
+        carbs: storedTDEE.carbsGrams || 0,
         fat: storedTDEE.fatsGrams || 0,
       });
     }
@@ -68,7 +69,6 @@ const Menu = () => {
         });
         const userData = response.data;
         setTdeeData(userData.macroTracker);
-        setSelectedMeals(userData.selectedMealPlan || []);
         setLoading(false);
         setIsLoggedIn(true);
       } catch (err) {
@@ -80,6 +80,7 @@ const Menu = () => {
     fetchUserData();
   }, [navigate]);
 
+  // Filter meals based on selected filters
   useEffect(() => {
     if (selectedFilters.length > 0) {
       setFilteredMeals(
@@ -163,17 +164,17 @@ const Menu = () => {
 
       <div className="calorie-tracker">
         <p>
-          Calories: {calorieData.calorie} kcal | 
-          Protein: {calorieData.protein}g | 
-          Carbs: {calorieData.carbs}g | 
+          Calories: {calorieData.calorie} kcal |
+          Protein: {calorieData.protein}g |
+          Carbs: {calorieData.carbs}g |
           Fat: {calorieData.fat}g
         </p>
 
         {isLoggedIn && (
           <p className="selected-macros">
-            Selected Meals: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal | 
-            Protein: {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g | 
-            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g | 
+            Selected Meals: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal |
+            Protein: {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g |
+            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g |
             Fat: {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g
           </p>
         )}
@@ -185,7 +186,17 @@ const Menu = () => {
           {isLoggedIn && selectedMeals.length > 0 ? (
             selectedMeals.map((meal) => (
               <div key={meal._id} className="meal-item">
-                <p>{meal.name}</p>
+                {/* Meal Image click to navigate to Meal Details */}
+                <img
+                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
+                  alt={meal.name}
+                  className="meal-image"
+                  onClick={() => navigate(`/meal/${meal._id}`)} // Fixed to match the "Choose a Meal" behavior
+                />
+                {/* Meal Name click to navigate to Meal Details */}
+                <p className="meal-name" onClick={() => navigate(`/mealdetails/${meal._id}`)}>
+                  {meal.name}
+                </p>
                 <button onClick={() => handleRemoveMeal(meal)}>Remove</button>
               </div>
             ))
@@ -198,14 +209,33 @@ const Menu = () => {
       <div className="meal-section">
         <h3>Choose Your Meals</h3>
         <div className="meal-list">
-          {filteredMeals.map((meal) => (
-            <div key={meal._id} className="meal-item">
-              <p>{meal.name}</p>
-              <button onClick={() => handleChooseMeal(meal)}>Choose</button>
-            </div>
-          ))}
+          {filteredMeals.length > 0 ? (
+            filteredMeals.map((meal) => (
+              <div key={meal._id} className="meal-item">
+                <img
+                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
+                  alt={meal.name}
+                  className="meal-image"
+                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })} // Corrected this line
+                />
+                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}> {/* Corrected this line too */}
+                  {meal.name}
+                </p>
+                {isLoggedIn ? (
+                  <button onClick={() => handleChooseMeal(meal)}>Choose</button>
+                ) : (
+                  <button className="disabled-btn" onClick={() => navigate("/login")}>
+                    Login to Choose
+                  </button>
+                )}
+              </div>
+            ))
+          ) : (
+            <p>No meals match your filters.</p>
+          )}
         </div>
       </div>
+
     </div>
   );
 };
