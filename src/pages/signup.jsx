@@ -28,13 +28,20 @@ const SignUp = () => {
       alert("Passwords do not match.");
       return;
     }
-    if (!securityAnswer.trim()) {
-      alert("Please provide an answer to your security question.");
-      return;
-    }
 
-    alert("Sign-Up Successful!");
-    navigate("/login");
+    // Store the basic information in local storage
+    const userData = {
+      name,
+      email,
+      password,
+      securityQuestion: selectedQuestion,
+      securityAnswer,
+    };
+
+    localStorage.setItem("userData", JSON.stringify(userData));
+
+    // Navigate to the Get Started page to collect the rest of the info
+    navigate("/getstarted");
   };
 
   return (

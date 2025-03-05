@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import "../styles/getstarted.css";
 
@@ -12,90 +13,87 @@ const GetStarted = () => {
   const [gender, setGender] = useState("male");
   const [activityLevel, setActivityLevel] = useState("1.2");
   const [goal, setGoal] = useState("maintenance");
-
-  const [showModal, setShowModal] = useState(false);
   const [tdeeResult, setTdeeResult] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Get the token from localStorage (if user is logged in)
-  const token = localStorage.getItem("token");
-
-  const calculateTDEE = async (event) => {
-    event.preventDefault();
-
-    const weightKg = parseFloat(weight);
-    const heightCm = parseFloat(height);
-    const ageNum = parseInt(age);
-
-    if (isNaN(weightKg) || isNaN(heightCm) || isNaN(ageNum)) {
-      alert("Please enter valid numeric values.");
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    console.log("Token from local storage:", token);
+    if (!token) {
+      setLoading(false);
+      setIsLoggedIn(false);
       return;
     }
 
-    let bmr;
-    if (gender === "male") {
-      bmr = 10 * weightKg + 6.25 * heightCm - 5 * ageNum + 5;
-    } else {
-      bmr = 10 * weightKg + 6.25 * heightCm - 5 * ageNum - 161;
-    }
+    const decodedToken = jwtDecode(token); // Decode the token to get user ID
+    const userId = decodedToken.userId;
 
-    const tdee = Math.round(bmr * parseFloat(activityLevel));
+    const fetchCalorieTracker = async () => {
+      const url = `http://localhost:8008/${userId}/calorie-tracker`;
+      console.log('Requesting URL:', url);
+      try {
+        const response = await axios.get(url);
+        // const response = await axios.get(`http://localhost:8008/${userId}/calorie-tracker`, {
+        // headers: { Authorization: `Bearer ${token}`, },
+        // });
+        const userData = response.data;
+        setTdeeData(userData.macroTracker);
+        setSelectedMeals(userData.selectedMealPlan || []);
+        setLoading(false);
+        setIsLoggedIn(true);
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        setLoading(false);
+      }
+    };
 
-    let proteinRatio, carbsRatio, fatsRatio;
-    switch (goal) {
-      case "weight-loss":
-        proteinRatio = 0.40;
-        carbsRatio = 0.40;
-        fatsRatio = 0.20;
-        break;
-      case "muscle-gain":
-        proteinRatio = 0.40;
-        carbsRatio = 0.45;
-        fatsRatio = 0.15;
-        break;
-      default:
-        proteinRatio = 0.30;
-        carbsRatio = 0.50;
-        fatsRatio = 0.20;
-    }
+    fetchCalorieTracker();
+  }, []);
 
-    const proteinGrams = Math.round((tdee * proteinRatio) / 4);
-    const carbsGrams = Math.round((tdee * carbsRatio) / 4);
-    const fatsGrams = Math.round((tdee * fatsRatio) / 9);
+  const fetchCalorieCalculator = async (event) => {
+    event.preventDefault();
 
-    setTdeeResult({
-      tdee,
-      proteinGrams,
-      carbsGrams,
-      fatsGrams
-    });
-    setShowModal(true);
+    const token = localStorage.getItem("authToken");
 
-    // Prepare the data for backend
-    const formData = {
-      age: ageNum,
-      weight: weightKg,
-      height: heightCm,
+    const userData = {
+      age,
+      weight,
+      height,
       gender,
       activityLevel,
       goal,
-      tdee,
-      proteinGrams,
-      carbsGrams,
-      fatsGrams
     };
 
     try {
       if (token) {
-        // For logged-in users, send the data to the backend to store it
-        await axios.post("http://localhost:8008/user/calorie-tracker", formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // If the user is logged in, send the data to the backend to store it
+        const decodedToken = jwtDecode(token); // Decode token to get user ID
+        const userId = decodedToken.userId;
+
+        const response = await axios.put(
+          `http://localhost:8008/${userId}/calorie-tracker`,
+          userData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setTdeeResult(response.data); // Assuming backend returns TDEE & macros
+        setShowModal(true);
       } else {
-        // For non-users, store data locally
-        localStorage.setItem("calorieTrackerData", JSON.stringify(formData));
+        // If the user is not logged in, store the data locally
+        localStorage.setItem("calorieTrackerData", JSON.stringify(userData));
+
+        // Optionally, you can still show the results in the modal
+        setTdeeResult(userData);
+        setShowModal(true);
       }
     } catch (error) {
-      console.error("Error saving TDEE data:", error);
+      console.error("Error fetching TDEE from backend:", error);
     }
   };
 
