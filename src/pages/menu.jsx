@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import "../styles/menu.css";
 
@@ -20,13 +21,6 @@ const Menu = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-
     // Fetch meals from the backend API
     const fetchMeals = async () => {
       try {
@@ -53,25 +47,36 @@ const Menu = () => {
       setTdeeData(storedTDEE);
     }
 
-    if (token) {
-      const fetchUserData = async () => {
-        try {
-          const response = await axios.get("http://localhost:8008/user/me", {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          const userData = response.data;
-          setTdeeData(userData.macroTracker);
-          setLoading(false);
-        } catch (err) {
-          console.error("Error fetching user data:", err);
-          setLoading(false);
-        }
-      };
-      fetchUserData();
-    } else {
-      setLoading(false); // For non-logged-in users, stop loading immediately
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      setLoading(false);
+      console.log("No token found, redirecting to login...");
+      navigate("/login");
+      return;
     }
-  }, []);
+
+    const decodedToken = jwtDecode(token); // Decode the token to get user ID
+    const userId = decodedToken.userId;
+
+    // Fetch user data using userId from the decoded token
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8008/user/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const userData = response.data;
+        setTdeeData(userData.macroTracker);
+        setLoading(false);
+        setIsLoggedIn(true);
+      } catch (err) {
+        console.error("Error fetching user data:", err);
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+
+  }, [navigate]);
 
   useEffect(() => {
     if (selectedFilters.length > 0) {
