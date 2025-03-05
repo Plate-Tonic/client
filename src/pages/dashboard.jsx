@@ -40,23 +40,19 @@ const Dashboard = () => {
         const userData = response.data;
         console.log("Fetched userData:", userData);
 
-        // Ensure `selectedMealPlan` is properly assigned
+        // Fetch user's meals
         const meals = Array.isArray(userData.selectedMealPlan) ? userData.selectedMealPlan : [];
-        console.log("Extracted Meals:", meals);
         setSelectedMeals(meals);
 
+        // Fetch user's macro requirements
         if (userData.macroTracker) {
           setCalorieRequirement(userData.macroTracker.calorie || 0);
           setProteinRequirement(userData.macroTracker.protein || 0);
           setCarbRequirement(userData.macroTracker.carbs || 0);
           setFatRequirement(userData.macroTracker.fat || 0);
+        } else {
+          console.warn("Macro tracker not found for user.");
         }
-
-        // Calculate current intake based on meals
-        setCurrentCalories(meals.reduce((sum, meal) => sum + (meal.calories || 0), 0));
-        setCurrentProtein(meals.reduce((sum, meal) => sum + (meal.protein || 0), 0));
-        setCurrentCarbs(meals.reduce((sum, meal) => sum + (meal.carbs || 0), 0));
-        setCurrentFats(meals.reduce((sum, meal) => sum + (meal.fat || 0), 0));
 
       } catch (err) {
         console.error("Error fetching user data:", err);
@@ -64,30 +60,43 @@ const Dashboard = () => {
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, [navigate, selectedMeals]);  // Re-fetch data when selectedMeals changes
 
-const removeMeal = async (mealId) => {
-  const token = localStorage.getItem("authToken");
-  if (!token) {
-    console.log("No token found, user not authenticated.");
-    return;
-  }
+  // Update intake when selectedMeals changes
+  useEffect(() => {
+    setCurrentCalories(selectedMeals.reduce((sum, meal) => sum + (meal.calories || 0), 0));
+    setCurrentProtein(selectedMeals.reduce((sum, meal) => sum + (meal.protein || 0), 0));
+    setCurrentCarbs(selectedMeals.reduce((sum, meal) => sum + (meal.carbs || 0), 0));
+    setCurrentFats(selectedMeals.reduce((sum, meal) => sum + (meal.fat || 0), 0));
+  }, [selectedMeals]);
 
-  try {
-    // Send request to backend to remove meal
-    const response = await axios.delete(
-      `http://localhost:8008/user/remove-meal/${mealId}`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+  const removeMeal = async (mealId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("No token found, user not authenticated.");
+      return;
+    }
 
-    console.log("Updated user meals:", response.data);
+    try {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
 
-    // Update frontend state after successful removal
-    setSelectedMeals((prevMeals) => prevMeals.filter((meal) => meal._id !== mealId));
-  } catch (err) {
-    console.error("Error removing meal:", err);
-  }
-};
+      await axios.delete(`http://localhost:8008/user/${userId}/meal-plan/${mealId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Update frontend state after successful removal
+      setSelectedMeals((prevMeals) => prevMeals.filter((meal) => meal._id !== mealId));
+
+      // Also update Menu.jsx meals
+      const storedMeals = JSON.parse(localStorage.getItem("chosenMeals")) || [];
+      const updatedMeals = storedMeals.filter((meal) => meal._id !== mealId);
+      localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
+
+    } catch (err) {
+      console.error("Error removing meal:", err);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
