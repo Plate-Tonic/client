@@ -32,6 +32,7 @@
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 .add-meal-form textarea {
@@ -56,4 +57,5 @@
     font-size: 16px;
     cursor: pointer;
     white-space: nowrap; /* Prevent text from wrapping */
+    font-weight: bold;
 }

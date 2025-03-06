@@ -7,14 +7,26 @@ import "../styles/addnewblog.css"; // Create a CSS file for styling
 const AddNewBlog = () => {
     const navigate = useNavigate();
     const [isAdmin, setIsAdmin] = useState(false);
-    const [formData, setFormData] = useState({
+    const [blogData, setBlogData] = useState({
         title: "",
         author: "",
         content: "",
-        tags: "",
+        tags: [],
     });
-    const [error, setError] = useState("");
+
     const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
+
+    const handleTagsChange = (e) => {
+        const { value, checked } = e.target;
+        setBlogData((prevState) => {
+            if (checked) {
+                return { ...prevState, tags: [...prevState.tags, value] };
+            } else {
+                return { ...prevState, tags: prevState.tags.filter((item) => item !== value) };
+            }
+        });
+    };
 
     // Check if the user is an admin
     useEffect(() => {
@@ -26,7 +38,7 @@ const AddNewBlog = () => {
     }, []);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setBlogData({ ...blogData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
@@ -37,8 +49,8 @@ const AddNewBlog = () => {
             await axios.post(
                 "http://localhost:8008/blog",
                 {
-                    ...formData,
-                    tags: formData.tags.split(",").map((tag) => tag.trim()), // Convert tags to an array
+                    ...blogData,
+                    tags: blogData.tags, 
                 },
                 {
                     headers: { Authorization: `Bearer ${token}` },
@@ -46,7 +58,7 @@ const AddNewBlog = () => {
             );
 
             setSuccess("Blog post added successfully!");
-            setFormData({ title: "", author: "", content: "", tags: "" });
+            setBlogData({ title: "", author: "", content: "", tags: "" });
 
             setTimeout(() => navigate("/blog"), 2000); // Redirect after 2 sec
         } catch (err) {
@@ -67,7 +79,7 @@ const AddNewBlog = () => {
                 <input
                     type="text"
                     name="title"
-                    value={formData.title}
+                    value={blogData.title}
                     onChange={handleChange}
                     required
                 />
@@ -76,7 +88,7 @@ const AddNewBlog = () => {
                 <input
                     type="text"
                     name="author"
-                    value={formData.author}
+                    value={blogData.author}
                     onChange={handleChange}
                     required
                 />
@@ -84,20 +96,37 @@ const AddNewBlog = () => {
                 <label>Content:</label>
                 <textarea
                     name="content"
-                    value={formData.content}
+                    value={blogData.content}
                     onChange={handleChange}
                     required
                 ></textarea>
 
-                <label>Tags (comma-separated):</label>
-                <input
-                    type="text"
-                    name="tags"
-                    value={formData.tags}
-                    onChange={handleChange}
-                    placeholder="e.g., Nutrition, Meal Prep"
-                    required
-                />
+                <div className="blog-tags">
+                    <label>
+                        <input type="checkbox" value="Nutrition" onChange={handleTagsChange} checked={blogData.tags.includes("Nutrition")} />
+                        Nutrition
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Meal Prep" onChange={handleTagsChange} checked={blogData.tags.includes("Meal Prep")} />
+                        Meal Prep
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Fitness" onChange={handleTagsChange} checked={blogData.tags.includes("Fitness")} />
+                        Fitness
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Healthy Eating" onChange={handleTagsChange} checked={blogData.tags.includes("Healthy Eating")} />
+                        Healthy Eating
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Weight Management" onChange={handleTagsChange} checked={blogData.tags.includes("Weight Management")} />
+                        Weight Management
+                    </label>
+                    <label>
+                        <input type="checkbox" value="Gluten Free" onChange={handleTagsChange} checked={blogData.tags.includes("Gluten Free")} />
+                        Gluten Free
+                    </label>
+                </div>
 
                 <button type="submit">Add Blog</button>
                 <button className="back-btn" onClick={() => navigate("/blog")}>
