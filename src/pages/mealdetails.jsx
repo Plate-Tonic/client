@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import "../styles/mealdetails.css"; // Ensure this is imported
 
 const MealDetail = () => {
-  const { mealId } = useParams(); // Get the meal ID from the URL
+  const { mealId } = useParams();
   const [meal, setMeal] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchMealDetails = async () => {
@@ -19,9 +23,32 @@ const MealDetail = () => {
     };
 
     fetchMealDetails();
+
+    // Check if user is an admin
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      console.log("Decoded Token:", decodedToken);
+      setIsAdmin(decodedToken.isAdmin);
+    }
+
   }, [mealId]);
 
+  const handleRemoveMeal = async () => {
+    try {
+      await axios.delete(`http://localhost:8008/meal-plan/${mealId}`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` }
+      });
+      alert("Meal removed successfully.");
+      navigate("/menu"); // Redirect to menu after deletion
+    } catch (err) {
+      console.error("Error removing meal:", err);
+      alert("Failed to remove meal.");
+    }
+  };
+  console.log("isAdmin state:", isAdmin);
   if (!meal) {
+
     return <div>Loading...</div>;
   }
 
@@ -53,6 +80,22 @@ const MealDetail = () => {
             <span><strong>Fats:</strong> {meal.fat}g</span>
           </div>
         </div>
+
+        {/* Show Remove Button if Admin */}
+        {isAdmin && (
+          <>
+            <button className="remove-meal-btn" onClick={() => setShowConfirm(true)}>Remove Meal</button>
+
+            {showConfirm && (
+              <div className="confirm-popup">
+                <p>Are you sure you want to remove this meal?</p>
+                <button className="confirm-remove-btn" onClick={handleRemoveMeal}>Confirm Remove</button>
+                <button className="cancel-btn" onClick={() => setShowConfirm(false)}>Cancel</button>
+              </div>
+            )}
+          </>
+        )}
+
         <button className="back-btn" onClick={() => navigate("/menu")}>Back to Menu</button>
       </div>
     </div>

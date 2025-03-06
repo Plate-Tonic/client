@@ -92,7 +92,7 @@ const Menu = () => {
     );
   };
 
-  // Add meal
+  // Add meal to selected meals
   const handleSelectMeal = async (meal) => {
     if (!selectedMeals.find((m) => m._id === meal._id)) {
       const updatedMeals = [...selectedMeals, meal];
@@ -221,9 +221,9 @@ const Menu = () => {
                   src={meal.imageUrl || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
-                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })} // Corrected this line
+                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })} 
                 />
-                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}> {/* Corrected this line too */}
+                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`)}> 
                   {meal.name}
                 </p>
                 {isLoggedIn ? (
