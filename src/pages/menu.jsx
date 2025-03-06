@@ -186,6 +186,12 @@ const Menu = () => {
         </div>
       </div>
 
+      {isAdmin && (
+            <div className="new-meal-button">
+              <button onClick={() => navigate("/addnewmeal")}>+ Add New Meal</button>
+            </div>
+          )}
+
       <div className="meal-section">
         <h3>Selected Meals</h3>
         <div className="meal-list">
@@ -239,11 +245,11 @@ const Menu = () => {
             <p>No meals match your filters.</p>
           )}
 
-          {isAdmin && (
+          {/* {isAdmin && (
             <div className="new-meal-button">
               <button onClick={() => navigate("/addnewmeal")}>+ Add New Meal</button>
             </div>
-          )}
+          )} */}
 
         </div>
       </div>

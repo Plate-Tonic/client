@@ -108,8 +108,8 @@ const AddMeal = () => {
 
 
                 <button type="submit">Submit</button>
+                <button className="back-btn" onClick={() => navigate("/menu")}>Cancel</button>
             </form>
-            <button onClick={() => navigate("/menu")}>Cancel</button>
         </div>
     );
 };
