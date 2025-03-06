@@ -54,11 +54,11 @@ const Menu = () => {
         });
         const userData = response.data;
 
-        // Set the TDEE and chosen meals from the backend
+        // Set the TDEE and selected meals from the backend
         setTdeeData(userData.macroTracker);
         setSelectedMeals(userData.selectedMealPlan);
         console.log("User data:", userData);
-        console.log("Chosen meals:", userData.selectedMealPlan);
+        console.log("Selected meals:", userData.selectedMealPlan);
         setLoading(false);
         setIsLoggedIn(true);
       } catch (err) {
@@ -91,7 +91,7 @@ const Menu = () => {
   };
 
   // Add meal
-  const handleChooseMeal = async (meal) => {
+  const handleSelectMeal = async (meal) => {
     if (!selectedMeals.find((m) => m._id === meal._id)) {
       const updatedMeals = [...selectedMeals, meal];
       setSelectedMeals(updatedMeals);
@@ -225,7 +225,7 @@ const Menu = () => {
                   {meal.name}
                 </p>
                 {isLoggedIn ? (
-                  <button onClick={() => handleChooseMeal(meal)}>Choose</button>
+                  <button onClick={() => handleSelectMeal(meal)}>Choose</button>
                 ) : (
                   <button className="disabled-btn" onClick={() => navigate("/login")}>
                     Login to Choose
