@@ -1,0 +1,59 @@
+.add-meal-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.add-meal-page h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.add-meal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-meal-form input,
+.add-meal-form textarea,
+.add-meal-form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-meal-form textarea {
+    height: 500px;
+    resize: vertical;
+}
+
+.preference-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Increase spacing between checkboxes */
+    align-items: center;
+    justify-content: space-between; /* Distribute checkboxes evenly */
+    margin-bottom: 15px;
+    width: 100%; /* Ensure full width */
+}
+
+.preference-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    white-space: nowrap; /* Prevent text from wrapping */
+}

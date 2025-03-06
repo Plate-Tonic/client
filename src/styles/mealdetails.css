@@ -71,3 +71,48 @@
 .meal-detail-page .meal-info .macros span {
   margin-right: 20px;
 }
+
+/* Styling for the remove meal button */
+
+.remove-meal-btn {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.confirm-popup {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.confirm-popup p {
+  color: white;
+}
+
+.confirm-remove-btn {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: gray;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
