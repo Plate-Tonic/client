@@ -7,6 +7,7 @@ import Blog from './pages/blog.jsx';
 import BlogDetail from './pages/blogdetails.jsx';
 import Menu from './pages/menu.jsx';
 import MealDetails from './pages/mealdetails.jsx';
+import AddMeal from './pages/addnewmeal.jsx';
 import About from './pages/about.jsx';
 import Navbar from './components/navbar.jsx';
 import Footer from './components/footer.jsx';
@@ -32,6 +33,7 @@ function App() {
               <Route path="/blog/:id" element={<BlogDetail />} />
               <Route path="/menu" element={<Menu />} />
               <Route path="/menu/:id" element={<MealDetails />} />
+              <Route path="/addnewmeal" element={<AddMeal />} />
               <Route path="/about" element={<About />} />
               <Route path="/getstarted" element={<GetStarted />} />
               <Route path="/login" element={<Login />} />

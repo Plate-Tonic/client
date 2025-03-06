@@ -7,6 +7,7 @@ import "../styles/menu.css";
 const Menu = () => {
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [meals, setMeals] = useState([]);
   const [filteredMeals, setFilteredMeals] = useState([]);
   const [selectedMeals, setSelectedMeals] = useState([]); // Updated variable name
@@ -46,6 +47,7 @@ const Menu = () => {
 
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.userId;
+    setIsAdmin(decodedToken.isAdmin); // checks if user is admin
 
     const fetchUserData = async () => {
       try {
@@ -236,9 +238,15 @@ const Menu = () => {
           ) : (
             <p>No meals match your filters.</p>
           )}
+
+          {isAdmin && (
+            <div className="new-meal-button">
+              <button onClick={() => navigate("/addnewmeal")}>+ Add New Meal</button>
+            </div>
+          )}
+
         </div>
       </div>
-
     </div>
   );
 };
