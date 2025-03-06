@@ -5,13 +5,17 @@ import axios from "axios";
 import "../styles/dashboard.css";
 
 const Dashboard = () => {
-  const [activeSection, setActiveSection] = useState("calorie-tracker");
+  const [activeSection, setActiveSection] = useState("personal-details");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   const [userDetails, setUserDetails] = useState({
     name: "",
+    email: "",
     age: "",
     gender: "",
-    email: "",
+    activitylevel: "",
+    goal: "",
   });
 
   const [calorieRequirement, setCalorieRequirement] = useState(0);
@@ -27,7 +31,6 @@ const Dashboard = () => {
   const [selectedMeals, setSelectedMeals] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch user data once on mount
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("authToken");
@@ -49,23 +52,22 @@ const Dashboard = () => {
         const userData = response.data;
         console.log("Fetched userData:", userData);
 
-        // Set user details
         setUserDetails({
           name: userData.name || "N/A",
+          email: userData.email || "N/A",
           age: userData.macroTracker?.age || "N/A",
           gender: userData.macroTracker?.gender || "N/A",
-          email: userData.email || "N/A",
+          activitylevel: userData.macroTracker?.activity || "N/A",
+          goal: userData.macroTracker?.goal || "N/A",
         });
 
-        // Set user macros if available
         if (userData.macroTracker) {
-          setCalorieRequirement(userData.macroTracker.calorie || 0);
+          setCalorieRequirement(userData.macroTracker.calories || 0);
           setProteinRequirement(userData.macroTracker.protein || 0);
           setCarbRequirement(userData.macroTracker.carbs || 0);
           setFatRequirement(userData.macroTracker.fat || 0);
         }
 
-        // Fetch user's meals
         setSelectedMeals(Array.isArray(userData.selectedMealPlan) ? userData.selectedMealPlan : []);
       } catch (err) {
         console.error("Error fetching user data:", err);
@@ -73,9 +75,8 @@ const Dashboard = () => {
     };
 
     fetchUserData();
-  }, []); // ✅ Runs only once on mount
+  }, []);
 
-  // Update intake when selectedMeals changes
   useEffect(() => {
     setCurrentCalories(selectedMeals.reduce((sum, meal) => sum + (meal.calories || 0), 0));
     setCurrentProtein(selectedMeals.reduce((sum, meal) => sum + (meal.protein || 0), 0));
@@ -98,14 +99,48 @@ const Dashboard = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // Update frontend state after successful removal
       const updatedMeals = selectedMeals.filter((meal) => meal._id !== mealId);
       setSelectedMeals(updatedMeals);
 
-      // Sync with localStorage for Menu.jsx
       localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
     } catch (err) {
       console.error("Error removing meal:", err);
+    }
+  };
+
+  const handleChangePassword = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("No token found, user not authenticated.");
+      return;
+    }
+
+    if (!currentPassword.trim() || !newPassword.trim()) {
+      alert("Both fields are required.");
+      return;
+    }
+
+    try {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
+
+      await axios.put(`http://localhost:8008/user/${userId}`,
+        { currentPassword, newPassword },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      if (response.data.success) {
+        alert("Password changed successfully!");
+        setCurrentPassword("");
+        setNewPassword("");
+      } else {
+        alert("Incorrect current password.");
+      }
+    } catch (err) {
+      console.error("Error changing password:", err);
+      alert("An error occurred while changing the password.");
     }
   };
 
@@ -121,16 +156,20 @@ const Dashboard = () => {
           <button onClick={() => setActiveSection("personal-details")}>Personal Details</button>
           <button onClick={() => setActiveSection("calorie-tracker")}>Calorie Tracker</button>
           <button onClick={() => setActiveSection("current-meals")}>Current Meals</button>
+          <button onClick={() => setActiveSection("change-password")}>Change Password</button>
           <button onClick={handleLogout} className="logout-btn">Logout</button>
         </div>
+
         <div className="main-content">
-          {activeSection === "calorie-tracker" ? (
+          {activeSection === "personal-details" ? (
             <div className="content-box">
               <h3>Personal Details</h3>
               <p><strong>Name:</strong> {userDetails.name}</p>
+              <p><strong>Email:</strong> {userDetails.email}</p>
               <p><strong>Age:</strong> {userDetails.age}</p>
               <p><strong>Gender:</strong> {userDetails.gender}</p>
-              <p><strong>Email:</strong> {userDetails.email}</p>
+              <p><strong>Activity Level:</strong> {userDetails.activitylevel}</p>
+              <p><strong>Goal:</strong> {userDetails.goal}</p>
             </div>
           ) : activeSection === "calorie-tracker" ? (
             <div className="content-box">
@@ -140,35 +179,49 @@ const Dashboard = () => {
               <p><strong>Carb Requirement:</strong> {carbRequirement} g</p>
               <p><strong>Fat Requirement:</strong> {fatRequirement} g</p>
               <p><strong>Current Intake:</strong> {currentCalories} kcal</p>
-              <p><strong>Protein Intake:</strong> {currentProtein} g</p>
-              <p><strong>Carb Intake:</strong> {currentCarbs} g</p>
-              <p><strong>Fat Intake:</strong> {currentFats} g</p>
+              <p><strong>Current Protein:</strong> {currentProtein} g</p>
+              <p><strong>Current Carbs:</strong> {currentCarbs} g</p>
+              <p><strong>Current Fats:</strong> {currentFats} g</p>
             </div>
-          ) : (
+          ) : activeSection === "current-meals" ? (
             <div className="content-box">
               <h3>Current Meals</h3>
-              {selectedMeals.length === 0 ? (
-                <p>No meals selected yet.</p>
-              ) : (
+              {selectedMeals.length === 0 ? <p>No meals selected yet.</p> : (
                 <ul className="current-meals-list">
                   {selectedMeals.map((meal) => (
                     <li key={meal._id}>
-                      <span className="meal-name">{meal.name}</span> -
-                      <span className="meal-calories">{meal.calories} kcal</span> |
-                      <span className="meal-protein">{meal.protein} g Protein</span> |
-                      <span className="meal-carbs">{meal.carbs} g Carbs</span> |
-                      <span className="meal-fats">{meal.fat} g Fats</span>
+                      <span className="meal-name">{meal.name}</span> - {meal.calories} kcal
                       <button className="remove-meal" onClick={() => removeMeal(meal._id)}>Remove</button>
                     </li>
                   ))}
                 </ul>
               )}
-              {/* Add Meal Button */}
-              <button className="add-meal-btn" onClick={() => navigate("/menu")}>
-                Add Meal
-              </button>
+              <button className="add-meal-btn" onClick={() => navigate("/menu")}>Add Meal</button>
             </div>
-          )}
+          ) : activeSection === "change-password" ? (
+            <div className="content-box">
+              <h3>Change Password</h3>
+              <div className="password-change-container">
+
+                <input
+                  type="password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="Enter current password"
+                />
+
+                <input
+                  type="password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new password"
+                />
+                
+                <button className="save-password-btn" onClick={handleChangePassword}>Save</button>
+                
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>
