@@ -85,6 +85,10 @@ const GetStarted = () => {
             carbs: trackerData.carbs,
           });
 
+          // // Update localStorage with new data
+          // localStorage.setItem("macroTracker", JSON.stringify(trackerData));
+          // console.log("TDEE saved to localstorage:', trackerData");
+
           setShowModal(true);
         } else {
           // Scenario 2: User is logged in but has no existing data in localStorage
@@ -118,6 +122,7 @@ const GetStarted = () => {
         const response = await axios.post(`http://localhost:8008/user/calorie-tracker`, {
           ...userData,
         });
+        console.log("Non-user API Response:", response.data); // Debugging
 
         const trackerData = response.data;
 
@@ -128,9 +133,13 @@ const GetStarted = () => {
           carbs: trackerData.carbs,
         });
 
+        // Update localStorage with new data
+        localStorage.setItem("macroTracker", JSON.stringify(trackerData));
+        console.log("TDEE saved to localstorage:', trackerData");
+
         setShowModal(true);
       } catch (error) {
-        console.error("Error saving data for non-logged-in user:", error);
+        console.error("Error saving data for non-logged-in user:", error.response?.data || error.message);
       }
     }
   };

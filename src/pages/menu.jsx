@@ -39,16 +39,27 @@ const Menu = () => {
     fetchMeals();
 
     const token = localStorage.getItem("authToken");
+
     if (!token) {
-      setLoading(false);
-      setIsLoggedIn(false);
-      return;
+    const storedMacros = localStorage.getItem("macroTracker");
+    console.log("Retrieved TDEE from localStorage:", storedMacros); // Debugging log
+    if (storedMacros) {
+      setTdeeData(JSON.parse(storedMacros));
     }
+    setLoading(false);
+    return;
+  }
+    // if (!token) {
+    //   setLoading(false);
+    //   setIsLoggedIn(false);
+    //   return;
+    // }
 
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.userId;
     setIsAdmin(decodedToken.isAdmin); // checks if user is admin
 
+    
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`http://localhost:8008/user/${userId}`, {
@@ -59,8 +70,9 @@ const Menu = () => {
         // Set the TDEE and selected meals from the backend
         if (userData.macroTracker) {
           setTdeeData(userData.macroTracker);
+          localStorage.setItem("macroTracker", JSON.stringify(userData.macroTracker));
         } else {
-          setTdeeData(null);
+          setTdeeData(null); // Set to null if no data is found
         }
 
         setSelectedMeals(userData.selectedMealPlan);
