@@ -12,10 +12,10 @@ const Menu = () => {
   const [chosenMeals, setChosenMeals] = useState([]);
   const [selectedMeals, setSelectedMeals] = useState([]); // Updated variable name
   const [calorieData, setTdeeData] = useState({
-    calorie: 2000,
+    calories: 2000,
     protein: 150,
-    carbs: 250,
-    fat: 50
+    fat: 50,
+    carbs: 250
   });
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -45,10 +45,10 @@ const Menu = () => {
     const storedTDEE = JSON.parse(localStorage.getItem("calorieTrackerData"));
     if (storedTDEE) {
       setTdeeData({
-        calorie: storedTDEE.tdee || 0,
+        calories: storedTDEE.tdee || 0,
         protein: storedTDEE.proteinGrams || 0,
-        carbs: storedTDEE.carbsGrams || 0,
         fat: storedTDEE.fatsGrams || 0,
+        carbs: storedTDEE.carbsGrams || 0
       });
     }
 
@@ -164,18 +164,18 @@ const Menu = () => {
 
       <div className="calorie-tracker">
         <p>
-          Calories: {calorieData.calorie} kcal |
+          Calories: {calorieData.calories} kcal |
           Protein: {calorieData.protein}g |
-          Carbs: {calorieData.carbs}g |
-          Fat: {calorieData.fat}g
+          Fat: {calorieData.fat}g |
+          Carbs: {calorieData.carbs}g
         </p>
 
         {isLoggedIn && (
           <p className="selected-macros">
-            Selected Meals: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal |
+            Selected Meal: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal |
             Protein: {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g |
-            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g |
-            Fat: {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g
+            Fat: {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g |
+            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g 
           </p>
         )}
       </div>
