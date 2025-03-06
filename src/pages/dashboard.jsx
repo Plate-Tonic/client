@@ -95,7 +95,8 @@ const Dashboard = () => {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
 
-      await axios.delete(`http://localhost:8008/user/${userId}/meal-plan/${mealId}`, {
+      await axios.delete(
+        `http://localhost:8008/user/${userId}/meal-plan/${mealId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -206,7 +207,7 @@ const Dashboard = () => {
                   />
                   <button onClick={() => handleUpdateUserDetails("name", userDetails.name)}>Save</button>
                 </div>
-
+  
                 <div className = "input-group">
                 <p><strong>Email:</strong></p>
                   <input
