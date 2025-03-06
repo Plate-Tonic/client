@@ -197,26 +197,26 @@ const Dashboard = () => {
           {activeSection === "personal-details" ? (
             <div className="content-box">
               <h3>Personal Details</h3>
-              
-                <div className="input-group">
+
+              <div className="input-group">
                 <p><strong>Name:</strong></p>
-                  <input
-                    type="text"
-                    value={userDetails.name}
-                    onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
-                  />
-                  <button onClick={() => handleUpdateUserDetails("name", userDetails.name)}>Save</button>
-                </div>
-  
-                <div className = "input-group">
+                <input
+                  type="text"
+                  value={userDetails.name}
+                  onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+                />
+                <button onClick={() => handleUpdateUserDetails("name", userDetails.name)}>Save</button>
+              </div>
+
+              <div className="input-group">
                 <p><strong>Email:</strong></p>
-                  <input
-                    type="email"
-                    value={userDetails.email}
-                    onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
-                  />
-                  <button onClick={() => handleUpdateUserDetails("email", userDetails.email)}>Save</button>
-                </div>
+                <input
+                  type="email"
+                  value={userDetails.email}
+                  onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+                />
+                <button onClick={() => handleUpdateUserDetails("email", userDetails.email)}>Save</button>
+              </div>
 
               <p><strong>Age:</strong> {userDetails.age}</p>
               <p><strong>Gender:</strong> {userDetails.gender}</p>
@@ -242,7 +242,12 @@ const Dashboard = () => {
                 <ul className="current-meals-list">
                   {selectedMeals.map((meal) => (
                     <li key={meal._id}>
-                      <span className="meal-name">{meal.name}</span> - {meal.calories} kcal
+                      <p className="meal-name"
+                        onClick={() => navigate(`/meal/${meal._id}`)}
+                        style={{ cursor: "pointer", textDecoration: "underline", color: "blue" }}>
+                        {meal.name} - {meal.calories} kcal
+                      </p>
+                      
                       <button className="remove-meal" onClick={() => removeMeal(meal._id)}>Remove</button>
                     </li>
                   ))}
