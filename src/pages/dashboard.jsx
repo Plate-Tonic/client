@@ -5,7 +5,7 @@ import axios from "axios";
 import "../styles/dashboard.css";
 
 const Dashboard = () => {
-  const [activeSection, setActiveSection] = useState("personal-details");
+  const [activeSection, setActiveSection] = useState("calorie-tracker");
 
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -73,7 +73,7 @@ const Dashboard = () => {
     };
 
     fetchUserData();
-  }, []); // Runs only once on mount
+  }, []); // ✅ Runs only once on mount
 
   // Update intake when selectedMeals changes
   useEffect(() => {
@@ -124,7 +124,7 @@ const Dashboard = () => {
           <button onClick={handleLogout} className="logout-btn">Logout</button>
         </div>
         <div className="main-content">
-          {activeSection === "personal-details" ? (
+          {activeSection === "calorie-tracker" ? (
             <div className="content-box">
               <h3>Personal Details</h3>
               <p><strong>Name:</strong> {userDetails.name}</p>
