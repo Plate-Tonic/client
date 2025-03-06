@@ -9,7 +9,6 @@ const Menu = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [meals, setMeals] = useState([]);
   const [filteredMeals, setFilteredMeals] = useState([]);
-  const [chosenMeals, setChosenMeals] = useState([]);
   const [selectedMeals, setSelectedMeals] = useState([]); // Updated variable name
   const [calorieData, setTdeeData] = useState({
     calories: 2000,
@@ -38,20 +37,6 @@ const Menu = () => {
 
     fetchMeals();
 
-    const storedChosenMeals = JSON.parse(localStorage.getItem("chosenMeals")) || [];
-    setChosenMeals(storedChosenMeals);
-    setSelectedMeals(storedChosenMeals); // Updated to reflect selected meals
-
-    const storedTDEE = JSON.parse(localStorage.getItem("calorieTrackerData"));
-    if (storedTDEE) {
-      setTdeeData({
-        calories: storedTDEE.tdee || 0,
-        protein: storedTDEE.proteinGrams || 0,
-        fat: storedTDEE.fatsGrams || 0,
-        carbs: storedTDEE.carbsGrams || 0
-      });
-    }
-
     const token = localStorage.getItem("authToken");
     if (!token) {
       setLoading(false);
@@ -68,7 +53,12 @@ const Menu = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
         const userData = response.data;
+
+        // Set the TDEE and chosen meals from the backend
         setTdeeData(userData.macroTracker);
+        setSelectedMeals(userData.selectedMealPlan);
+        console.log("User data:", userData);
+        console.log("Chosen meals:", userData.selectedMealPlan);
         setLoading(false);
         setIsLoggedIn(true);
       } catch (err) {
@@ -100,11 +90,12 @@ const Menu = () => {
     );
   };
 
+  // Add meal
   const handleChooseMeal = async (meal) => {
-    if (!chosenMeals.find((m) => m._id === meal._id)) {
-      const updatedMeals = [...chosenMeals, meal];
-      setChosenMeals(updatedMeals);
-      localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
+    if (!selectedMeals.find((m) => m._id === meal._id)) {
+      const updatedMeals = [...selectedMeals, meal];
+      setSelectedMeals(updatedMeals);
+      localStorage.setItem("selectedMeals", JSON.stringify(updatedMeals));
       setSelectedMeals(updatedMeals);
 
       const token = localStorage.getItem("authToken");
@@ -125,6 +116,7 @@ const Menu = () => {
     }
   };
 
+  // Remove meal
   const handleRemoveMeal = async (meal) => {
     if (!isLoggedIn) return;
 
@@ -137,14 +129,15 @@ const Menu = () => {
     try {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
-
+      console.log("User ID:", userId);
+      console.log("Meal ID:", meal._id);
       await axios.delete(`http://localhost:8008/user/${userId}/meal-plan/${meal._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      const updatedMeals = chosenMeals.filter((m) => m._id !== meal._id);
-      setChosenMeals(updatedMeals);
-      localStorage.setItem("chosenMeals", JSON.stringify(updatedMeals));
+      const updatedMeals = selectedMeals.filter((m) => m._id !== meal._id);
+      setSelectedMeals(updatedMeals);
+      localStorage.setItem("selectedMeals", JSON.stringify(updatedMeals));
 
       // Also remove from Dashboard state
       setSelectedMeals(updatedMeals);
@@ -172,12 +165,23 @@ const Menu = () => {
 
         {isLoggedIn && (
           <p className="selected-macros">
-            Selected Meal: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal |
+            Selected Meal Calories: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal |
             Protein: {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g |
             Fat: {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g |
-            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g 
+            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g
           </p>
         )}
+      </div>
+
+      <div className="filter-section">
+        <h3>Filter by Preferences</h3>
+        <div className="filter-options">
+          {["vegetarian", "vegan", "gluten-free", "nut-free", "none"].map((filter) => (
+            <label key={filter}>
+              <input type="checkbox" value={filter} onChange={handleFilterChange} /> {filter}
+            </label>
+          ))}
+        </div>
       </div>
 
       <div className="meal-section">
