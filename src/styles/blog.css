@@ -70,14 +70,8 @@
     justify-content: space-between;
 }
 
-.blog-item button {
-    margin-top: 15px;
-    padding: 10px 15px;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    align-self: center;
+.new-blog-button {
+    width: 80%;
 }
 
 /* RRESPONSIVENESS */

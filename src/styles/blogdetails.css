@@ -56,3 +56,50 @@
 .back-button:hover {
   background-color: #bc4749;
 }
+
+/* Remove Blog Button */
+.remove-blog-btn {
+  background: red;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.remove-blog-btn:hover {
+  background: darkred;
+}
+
+/* Confirmation Popup */
+.confirm-popup {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 10px;
+}
+
+.confirm-remove-btn {
+  background: red;
+  color: white;
+  padding: 8px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.cancel-btn {
+  background: gray;
+  color: white;
+  padding: 8px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}

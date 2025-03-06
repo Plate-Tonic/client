@@ -30,6 +30,16 @@ button:hover {
   background-color: #bc4749;
 }
 
+  /* Back Button */
+.back-btn {
+  background: #6c757d;
+}
+  
+.back-btn:hover {
+  background: #5a6268;
+}
+
+
 a {
   text-decoration: none;
   color: inherit;

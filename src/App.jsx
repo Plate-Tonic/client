@@ -5,6 +5,7 @@ import Homepage from './pages/homepage.jsx';
 import Contact from './pages/contact.jsx';
 import Blog from './pages/blog.jsx';
 import BlogDetail from './pages/blogdetails.jsx';
+import AddBlog from './pages/addnewblog.jsx';
 import Menu from './pages/menu.jsx';
 import MealDetails from './pages/mealdetails.jsx';
 import AddMeal from './pages/addnewmeal.jsx';
@@ -31,6 +32,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="/addnewblog" element={<AddBlog />} />
               <Route path="/menu" element={<Menu />} />
               <Route path="/meal/:mealId" element={<MealDetails />} />
               <Route path="/addnewmeal" element={<AddMeal />} />
