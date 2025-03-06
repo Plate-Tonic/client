@@ -159,6 +159,23 @@
     margin-bottom: 20px; 
 }
 
+.input-group button {
+    flex-shrink: 0; /* Prevents button from shrinking */
+    width: fit-content; /* Ensures button is only as wide as needed */
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #6A994E; /* Green */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap; /* Prevents text wrapping */
+}
+
+.content-box {
+    text-align: left; /* Aligns all text and form fields to the left */
+}
+
 /* Change Password Input & Button Styling */
 .password-change-container {
     display: flex;

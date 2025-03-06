@@ -108,6 +108,38 @@ const Dashboard = () => {
     }
   };
 
+  const handleUpdateUserDetails = async (field, value) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.log("No token found, user not authenticated.");
+      return;
+    }
+
+    try {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
+
+      await axios.put(`http://localhost:8008/user/${userId}`, { [field]: value }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      const response = await axios.get(`http://localhost:8008/user/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      if (response.data.success) {
+        setUserDetails((prevUserDetails) => ({
+          ...prevUserDetails,
+          [field]: value,
+        }));
+        alert("Details updated successfully!");
+      }
+    } catch (err) {
+      console.error("Error updating user details:", err);
+      alert("An error occurred while updating the details.");
+    }
+  };
+
   const handleChangePassword = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -164,8 +196,27 @@ const Dashboard = () => {
           {activeSection === "personal-details" ? (
             <div className="content-box">
               <h3>Personal Details</h3>
-              <p><strong>Name:</strong> {userDetails.name}</p>
-              <p><strong>Email:</strong> {userDetails.email}</p>
+              
+                <div className="input-group">
+                <p><strong>Name:</strong></p>
+                  <input
+                    type="text"
+                    value={userDetails.name}
+                    onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })}
+                  />
+                  <button onClick={() => handleUpdateUserDetails("name", userDetails.name)}>Save</button>
+                </div>
+
+                <div className = "input-group">
+                <p><strong>Email:</strong></p>
+                  <input
+                    type="email"
+                    value={userDetails.email}
+                    onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })}
+                  />
+                  <button onClick={() => handleUpdateUserDetails("email", userDetails.email)}>Save</button>
+                </div>
+
               <p><strong>Age:</strong> {userDetails.age}</p>
               <p><strong>Gender:</strong> {userDetails.gender}</p>
               <p><strong>Activity Level:</strong> {userDetails.activitylevel}</p>
@@ -216,9 +267,9 @@ const Dashboard = () => {
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Enter new password"
                 />
-                
+
                 <button className="save-password-btn" onClick={handleChangePassword}>Save</button>
-                
+
               </div>
             </div>
           ) : null}
