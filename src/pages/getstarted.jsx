@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
@@ -6,14 +6,13 @@ import "../styles/getstarted.css";
 
 const GetStarted = () => {
   const navigate = useNavigate();
-
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [gender, setGender] = useState("male");
   const [activityLevel, setActivityLevel] = useState("1.2");
   const [goal, setGoal] = useState("maintenance");
-  const [tdeeResult, setTdeeResult] = useState(null);
+  const [trackerResult, setTrackerResult] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,76 +25,119 @@ const GetStarted = () => {
       setIsLoggedIn(false);
       return;
     }
-
-    const decodedToken = jwtDecode(token); // Decode the token to get user ID
-    const userId = decodedToken.userId;
-
-    const fetchCalorieTracker = async () => {
-      const url = `http://localhost:8008/${userId}/calorie-tracker`;
-      console.log('Requesting URL:', url);
-      try {
-        const response = await axios.get(url);
-        // const response = await axios.get(`http://localhost:8008/${userId}/calorie-tracker`, {
-        // headers: { Authorization: `Bearer ${token}`, },
-        // });
-        const userData = response.data;
-        setTdeeData(userData.macroTracker);
-        setSelectedMeals(userData.selectedMealPlan || []);
-        setLoading(false);
-        setIsLoggedIn(true);
-      } catch (err) {
-        console.error("Error fetching user data:", err);
-        setLoading(false);
-      }
-    };
-
-    fetchCalorieTracker();
+    setLoading(false);
+    setIsLoggedIn(true);
   }, []);
 
-  const fetchCalorieCalculator = async (event) => {
-    event.preventDefault();
+  const activityLevelMap = {
+    "1.2": "Sedentary (little or no exercise)",
+    "1.375": "Lightly active (light exercise 1-3 days/week)",
+    "1.55": "Moderately active (moderate exercise 3-5 days/week)",
+    "1.725": "Very active (hard exercise 6-7 days/week)",
+    "1.9": "Super active (very intense exercise, physical job, etc.)"
+  };
+
+  const goalMap = {
+    "weight-loss": "Lose Weight",
+    "maintenance": "Maintain Weight",
+    "muscle-gain": "Gain Muscle"
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('activityLevel:', activityLevel);
+    console.log('goal:', goal);
+    const activityLevelMapped = activityLevelMap[activityLevel];
+    const goalMapped = goalMap[goal];
+    const userData = {
+      age: age,
+      weight: weight,
+      height: height,
+      gender: gender,
+      activity: activityLevelMapped,
+      goal: goalMapped,
+    };
+    console.log('Request body:', userData);
 
     const token = localStorage.getItem("authToken");
 
-    const userData = {
-      age,
-      weight,
-      height,
-      gender,
-      activityLevel,
-      goal,
-    };
+    if (isLoggedIn && token) {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
 
-    try {
-      if (token) {
-        // If the user is logged in, send the data to the backend to store it
-        const decodedToken = jwtDecode(token); // Decode token to get user ID
-        const userId = decodedToken.userId;
+      try {
+        if (localStorage.getItem("userData")) {
+          // Scenario 1: User is logged in and has existing data in localStorage
+          const savedData = JSON.parse(localStorage.getItem("userData"));
 
-        const response = await axios.put(
-          `http://localhost:8008/${userId}/calorie-tracker`,
-          userData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+          await axios.put(`http://localhost:8008/user/${decodedToken.userId}/calorie-tracker`, {
+            id: decodedToken.userId,
+            ...userData,
+          });
 
-        setTdeeResult(response.data); // Assuming backend returns TDEE & macros
-        setShowModal(true);
-      } else {
-        // If the user is not logged in, store the data locally
-        localStorage.setItem("calorieTrackerData", JSON.stringify(userData));
+          const response = await axios.get(`http://localhost:8008/user/${decodedToken.userId}/calorie-tracker`);
+          const trackerData = response.data;
 
-        // Optionally, you can still show the results in the modal
-        setTdeeResult(userData);
-        setShowModal(true);
+          setTrackerResult({
+            calories: trackerData.calories,
+            protein: trackerData.protein,
+            fat: trackerData.fat,
+            carbs: trackerData.carbs,
+          });
+
+          setShowModal(true);
+        } else {
+          // Scenario 2: User is logged in but has no existing data in localStorage
+          localStorage.setItem("userData", JSON.stringify(userData));
+
+          const response = await axios.post(`http://localhost:8008/user/${userId}/calorie-tracker`, {
+            ...userData,
+          });
+
+          localStorage.setItem("userData", JSON.stringify(response.data));
+
+          const trackerData = response.data;
+
+          setTrackerResult({
+            calories: trackerData.calories,
+            protein: trackerData.protein,
+            fat: trackerData.fat,
+            carbs: trackerData.carbs,
+          });
+
+          setShowModal(true);
+        }
+      } catch (error) {
+        console.error("Error saving/updating user data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching TDEE from backend:", error);
+    } else {
+      // Scenario 3: User is not logged in
+      try {
+        localStorage.setItem("userData", JSON.stringify(userData));
+
+        const response = await axios.post(`http://localhost:8008/user/calorie-tracker`, {
+          ...userData,
+        });
+
+        const trackerData = response.data;
+
+        setTrackerResult({
+          calories: trackerData.calories,
+          protein: trackerData.protein,
+          fat: trackerData.fat,
+          carbs: trackerData.carbs,
+        });
+
+        setShowModal(true);
+      } catch (error) {
+        console.error("Error saving data for non-logged-in user:", error);
+      }
     }
   };
+
+  if (loading) {
+    return <div>Loading...</div>; // Loading state while checking token
+  }
 
   return (
     <div className="get-started-page">
@@ -104,7 +146,7 @@ const GetStarted = () => {
       <h1>Find Your Daily Calorie & Macro Needs</h1>
       <p>Use our TDEE calculator to determine your daily intake.</p>
 
-      <form className="tdee-form" onSubmit={calculateTDEE}>
+      <form className="tdee-form" onSubmit={handleSubmit}>
         <div className="input-group">
           <label>Age:</label>
           <input type="number" value={age} onChange={(e) => setAge(e.target.value)} required />
@@ -155,11 +197,11 @@ const GetStarted = () => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h2>Your TDEE & Macros</h2>
-            <p><strong>Calories:</strong> {tdeeResult.tdee} kcal/day</p>
-            <p><strong>Protein:</strong> {tdeeResult.proteinGrams}g</p>
-            <p><strong>Carbs:</strong> {tdeeResult.carbsGrams}g</p>
-            <p><strong>Fats:</strong> {tdeeResult.fatsGrams}g</p>
+            <h2>Your Calories & Macros Intake</h2>
+            <p><strong>Calories:</strong> {trackerResult.calories} kcal/day</p>
+            <p><strong>Protein:</strong> {trackerResult.protein}g</p>
+            <p><strong>Fats:</strong> {trackerResult.fat}g</p>
+            <p><strong>Carbs:</strong> {trackerResult.carbs}g</p>
             <button onClick={() => navigate("/menu")}>Choose Your Meals</button>
             <button onClick={() => setShowModal(false)}>Close</button>
           </div>
