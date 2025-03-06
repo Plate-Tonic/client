@@ -88,6 +88,10 @@
     width: 80%;
 }
 
+.macro-btn {
+    max-width: 50%;
+  }
+
 /* Responsive Design */
 
 /* Tablet View */
@@ -119,3 +123,7 @@
         gap: 15px;
     }
 }
+
+.macro-btn {
+    min-width: 450px;
+  }
