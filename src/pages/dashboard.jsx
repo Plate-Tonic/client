@@ -243,7 +243,7 @@ const Dashboard = () => {
                   {selectedMeals.map((meal) => (
                     <li key={meal._id}>
                       <p className="meal-name"
-                        onClick={() => navigate(`/meal/${meal._id}`)}
+                        onClick={() => navigate(`/meal/${meal._id}`)} // redirect to meal details
                         style={{ cursor: "pointer", textDecoration: "underline", color: "blue" }}>
                         {meal.name} - {meal.calories} kcal
                       </p>
