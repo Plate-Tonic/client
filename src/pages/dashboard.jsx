@@ -5,7 +5,14 @@ import axios from "axios";
 import "../styles/dashboard.css";
 
 const Dashboard = () => {
-  const [activeSection, setActiveSection] = useState("calorie-tracker");
+  const [activeSection, setActiveSection] = useState("personal-details");
+
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    age: "",
+    gender: "",
+    email: "",
+  });
 
   const [calorieRequirement, setCalorieRequirement] = useState(0);
   const [proteinRequirement, setProteinRequirement] = useState(0);
@@ -42,6 +49,14 @@ const Dashboard = () => {
         const userData = response.data;
         console.log("Fetched userData:", userData);
 
+        // Set user details
+        setUserDetails({
+          name: userData.name || "N/A",
+          age: userData.macroTracker?.age || "N/A",
+          gender: userData.macroTracker?.gender || "N/A",
+          email: userData.email || "N/A",
+        });
+
         // Set user macros if available
         if (userData.macroTracker) {
           setCalorieRequirement(userData.macroTracker.calorie || 0);
@@ -58,7 +73,7 @@ const Dashboard = () => {
     };
 
     fetchUserData();
-  }, []); // ✅ Runs only once on mount
+  }, []); // Runs only once on mount
 
   // Update intake when selectedMeals changes
   useEffect(() => {
@@ -103,12 +118,21 @@ const Dashboard = () => {
     <div className="dashboard-wrapper">
       <div className="dashboard-container">
         <div className="sidebar">
+          <button onClick={() => setActiveSection("personal-details")}>Personal Details</button>
           <button onClick={() => setActiveSection("calorie-tracker")}>Calorie Tracker</button>
           <button onClick={() => setActiveSection("current-meals")}>Current Meals</button>
           <button onClick={handleLogout} className="logout-btn">Logout</button>
         </div>
         <div className="main-content">
-          {activeSection === "calorie-tracker" ? (
+          {activeSection === "personal-details" ? (
+            <div className="content-box">
+              <h3>Personal Details</h3>
+              <p><strong>Name:</strong> {userDetails.name}</p>
+              <p><strong>Age:</strong> {userDetails.age}</p>
+              <p><strong>Gender:</strong> {userDetails.gender}</p>
+              <p><strong>Email:</strong> {userDetails.email}</p>
+            </div>
+          ) : activeSection === "calorie-tracker" ? (
             <div className="content-box">
               <h3>Calorie Tracker</h3>
               <p><strong>Calorie Requirement:</strong> {calorieRequirement} kcal</p>
@@ -144,7 +168,6 @@ const Dashboard = () => {
                 Add Meal
               </button>
             </div>
-
           )}
         </div>
       </div>
