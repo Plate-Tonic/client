@@ -57,7 +57,12 @@ const Menu = () => {
         const userData = response.data;
 
         // Set the TDEE and selected meals from the backend
-        setTdeeData(userData.macroTracker);
+        if (userData.macroTracker) {
+          setTdeeData(userData.macroTracker);
+        } else {
+          setTdeeData(null);
+        }
+
         setSelectedMeals(userData.selectedMealPlan);
         console.log("User data:", userData);
         console.log("Selected meals:", userData.selectedMealPlan);
@@ -158,12 +163,18 @@ const Menu = () => {
       <div className="menu-banner">Meal Selection</div>
 
       <div className="calorie-tracker">
-        <p>
-          Calories: {calorieData.calories} kcal |
-          Protein: {calorieData.protein}g |
-          Fat: {calorieData.fat}g |
-          Carbs: {calorieData.carbs}g
-        </p>
+        {calorieData ? (
+          <p>
+            Calories: {calorieData.calories} kcal |
+            Protein: {calorieData.protein}g |
+            Fat: {calorieData.fat}g |
+            Carbs: {calorieData.carbs}g
+          </p>
+        ) : (
+          <button className="macro-btn" onClick={() => navigate("/getstarted")}>
+            Calculate Your Macros
+          </button>
+        )}
 
         {isLoggedIn && (
           <p className="selected-macros">
@@ -221,9 +232,9 @@ const Menu = () => {
                   src={meal.imageUrl || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
-                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })} 
+                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}
                 />
-                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`)}> 
+                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`)}>
                   {meal.name}
                 </p>
                 {isLoggedIn ? (
