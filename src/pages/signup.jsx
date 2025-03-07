@@ -50,6 +50,8 @@ const SignUp = () => {
     // Retrieve stored TDEE data from localStorage (if available)
     const storedTdeeData = JSON.parse(localStorage.getItem("macroTracker")) || {};
     console.log("Retrieved macroTracker:", storedTdeeData);
+    const storedUserData = JSON.parse(localStorage.getItem("userData")) || {};
+    console.log("Retrieved userData:", storedUserData);
 
     // Store the basic information in localStorage (or state)
     const userData = {
@@ -58,7 +60,9 @@ const SignUp = () => {
       password,
       securityQuestion: selectedQuestion,
       securityAnswer,
-      macroTracker: storedTdeeData || {
+      macroTracker: {
+        ...storedTdeeData,
+        ...storedUserData
       }
     };
 
