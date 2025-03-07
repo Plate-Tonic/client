@@ -153,12 +153,18 @@ const Dashboard = () => {
       return;
     }
 
+    if (currentPassword === newPassword) {
+      alert("New password must be different from the current password.");
+      return;
+    }
+
     try {
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
 
-      await axios.put(`http://localhost:8008/user/${userId}`,
-        { currentPassword, newPassword },
+      const response = await axios.put(
+        `http://localhost:8008/user/${userId}`,
+        { password: currentPassword, newPassword: newPassword }, // Sending both currentPassword and newPassword
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -247,7 +253,7 @@ const Dashboard = () => {
                         style={{ cursor: "pointer", textDecoration: "underline", color: "blue" }}>
                         {meal.name} - {meal.calories} kcal
                       </p>
-                      
+
                       <button className="remove-meal" onClick={() => removeMeal(meal._id)}>Remove</button>
                     </li>
                   ))}
