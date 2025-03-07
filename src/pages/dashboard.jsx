@@ -185,6 +185,7 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
+    localStorage.removeItem("macroTracker");
     navigate("/login");
   };
 
