@@ -13,7 +13,7 @@ const Terms = () => {
         </p>
         <h2>2. User Data & Privacy</h2>
         <p>
-          Your personal data is handled according to our <a href="/privacy">Privacy Policy</a>. We do not share your data without your consent, except as required by law.
+          Your personal data is handled according to our Privacy Policy. We do not share your data without your consent, except as required by law.
         </p>
 
         <h2>3. User Responsibilities</h2>
@@ -43,7 +43,7 @@ const Terms = () => {
 
         <h2>Contact</h2>
         <p>
-          For questions regarding these terms, contact us at: <strong>support@example.com</strong>
+          For questions regarding these terms,  reach out through the <a href = "/contact">Contact Us</a> page.
         </p>
       </div>
     </div>
