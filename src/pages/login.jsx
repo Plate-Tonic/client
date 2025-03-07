@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useUserAuthContext } from "../contexts/UserAuthContext";
 import axios from "axios";
 import "../styles/login.css";
@@ -69,14 +70,14 @@ const Login = () => {
             <label>
               <input type="checkbox" /> Remember Me
             </label>
-            <a href="/forgot-password">Forgot Password?</a>
+            <Link to="/forgot-password">Forgot Password?</Link>
           </div>
 
           <button type="submit">Login</button>
         </form>
 
         <p>
-          Don't have an account? <a href="/signup">Sign up here</a>
+          Don't have an account? <Link to="/signup">Sign up here</Link>
         </p>
       </div>
     </div>

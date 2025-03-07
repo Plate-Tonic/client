@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/terms-and-conditions.css";
 
 const Terms = () => {
@@ -43,7 +44,7 @@ const Terms = () => {
 
         <h2>Contact</h2>
         <p>
-          For questions regarding these terms,  reach out through the <a href = "/contact">Contact Us</a> page.
+          For questions regarding these terms,  reach out through the <Link to="/contact">Contact Us</Link>.
         </p>
       </div>
     </div>

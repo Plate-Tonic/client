@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/forgetpassword.css";
 
@@ -146,7 +147,7 @@ const ForgetPassword = () => {
 
         {step !== 3 && (
           <p>
-            Remembered your password? <a href="/login">Back to Login</a>
+            Remembered your password? <Link to="/login">Back to Login</Link>
           </p>
         )}
       </div>
