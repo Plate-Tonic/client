@@ -22,7 +22,7 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8008/login", {
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/login`, {
         email,
         password,
       });
