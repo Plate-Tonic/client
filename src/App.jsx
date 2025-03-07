@@ -17,6 +17,7 @@ import Login from "./pages/login.jsx";
 import SignUp from "./pages/signup.jsx";
 import ForgetPassword from "./pages/forgetpassword.jsx";
 import Dashboard from './pages/dashboard.jsx';
+import TermsAndConditions from './pages/terms-and-conditions.jsx';
 import { UserAuthContextProvider } from './contexts/UserAuthContext.jsx';
 import './App.css'; // Import component-level styles
 
@@ -42,6 +43,7 @@ function App() {
               <Route path="/signup" element={<SignUp />} />
               <Route path="/forgot-password" element={<ForgetPassword />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             </Routes>
           </main>
           <Footer />

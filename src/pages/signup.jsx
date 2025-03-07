@@ -163,7 +163,7 @@ const SignUp = () => {
                 checked={agreeTerms}
                 onChange={(e) => setAgreeTerms(e.target.checked)}
               />
-              I agree to the <a href="/terms">Terms & Conditions</a>
+              I agree to the <a href="/terms-and-conditions">Terms & Conditions</a>
             </label>
           </div>
 
