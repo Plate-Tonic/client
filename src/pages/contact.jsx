@@ -5,13 +5,20 @@ import "../styles/contact.css";
 import ContactImage from "..//assets/banner-favorites.jpg";
 
 const Contact = () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    alert("Thank you for your message! We will get back to you soon.");
+    e.target.reset();
+  };
+
   return (
     <div className="contact-page">
       {/* Top Section: Contact Form + Image */}
       <div className="contact-container">
         <div className="contact-form">
           <h2>Contact Us</h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="input-group">
               <label>Name</label>
               <input type="text" placeholder="Enter your name" required />
@@ -31,6 +38,8 @@ const Contact = () => {
           <img src={ContactImage} alt="Contact" />
         </div>
       </div>
+
+      
 
       {/* Bottom Section: Address & Phone Information */}
       <div className="contact-info">
