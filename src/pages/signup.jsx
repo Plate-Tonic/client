@@ -47,6 +47,10 @@ const SignUp = () => {
       return;
     }
 
+    // Retrieve stored TDEE data from localStorage (if available)
+    const storedTdeeData = JSON.parse(localStorage.getItem("macroTracker")) || {};
+    console.log("Retrieved macroTracker:", storedTdeeData);
+
     // Store the basic information in localStorage (or state)
     const userData = {
       name,
@@ -54,9 +58,19 @@ const SignUp = () => {
       password,
       securityQuestion: selectedQuestion,
       securityAnswer,
+      macroTracker: storedTdeeData || {
+      }
     };
+
     try {
       const response = await axios.post("http://localhost:8008/register", userData);
+
+      // Clear TDEE data from localStorage after registration
+      localStorage.removeItem("macroTracker");
+      console.log("After clearing, macroTracker in localStorage:", localStorage.getItem("macroTracker"));
+
+      window.location.href = "/login";
+
       // Show success message
       alert("Successfully registered user!");
       navigate("/login");
