@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/signup.css";
 
@@ -17,7 +18,7 @@ const SignUp = () => {
   useEffect(() => {
     const fetchSecurityQuestions = async () => {
       try {
-        const response = await axios.get("http://localhost:8008/questions");
+        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/questions`);
         console.log("Response data:", response.data);
 
         setSecurityQuestions(response.data.securityQuestions);
@@ -67,7 +68,7 @@ const SignUp = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:8008/register", userData);
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/register`, userData);
 
       // Clear TDEE data from localStorage after registration
       localStorage.removeItem("macroTracker");
@@ -163,7 +164,7 @@ const SignUp = () => {
                 checked={agreeTerms}
                 onChange={(e) => setAgreeTerms(e.target.checked)}
               />
-              I agree to the <a href="/terms-and-conditions">Terms & Conditions</a>
+              I agree to the <Link to="/terms-and-conditions">Terms & Conditions</Link>
             </label>
           </div>
 
@@ -171,7 +172,7 @@ const SignUp = () => {
         </form>
 
         <p>
-          Already have an account? <a href="/login">Login here</a>
+          Already have an account? <Link to="/login">Login here</Link>
         </p>
       </div>
     </div>

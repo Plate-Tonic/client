@@ -70,12 +70,12 @@ const GetStarted = () => {
           // Scenario 1: User is logged in and has existing data in localStorage
           const savedData = JSON.parse(localStorage.getItem("userData"));
 
-          await axios.put(`http://localhost:8008/user/${decodedToken.userId}/calorie-tracker`, {
+          await axios.put(`${import.meta.env.VITE_AUTH_API_URL}/user/${decodedToken.userId}/calorie-tracker`, {
             id: decodedToken.userId,
             ...userData,
           });
 
-          const response = await axios.get(`http://localhost:8008/user/${decodedToken.userId}/calorie-tracker`);
+          const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${decodedToken.userId}/calorie-tracker`);
           const trackerData = response.data;
 
           setTrackerResult({
@@ -94,7 +94,7 @@ const GetStarted = () => {
           // Scenario 2: User is logged in but has no existing data in localStorage
           localStorage.setItem("userData", JSON.stringify(userData));
 
-          const response = await axios.post(`http://localhost:8008/user/${userId}/calorie-tracker`, {
+          const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`, {
             ...userData,
           });
 
@@ -119,7 +119,7 @@ const GetStarted = () => {
       try {
         localStorage.setItem("userData", JSON.stringify(userData));
 
-        const response = await axios.post(`http://localhost:8008/user/calorie-tracker`, {
+        const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`, {
           ...userData,
         });
         console.log("Non-user API Response:", response.data); // Debugging
