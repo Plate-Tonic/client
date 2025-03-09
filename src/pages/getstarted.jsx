@@ -77,6 +77,9 @@ const GetStarted = () => {
 
     const token = localStorage.getItem("authToken"); // Retrieve token from local storage
 
+    // Prepare headers with token if logged in
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
     // Check if user is logged in and has a token
     if (isLoggedIn && token) {
       const decodedToken = jwtDecode(token);
@@ -93,11 +96,11 @@ const GetStarted = () => {
 
             id: decodedToken.userId,
             ...userData,
-          });
+          }, { headers });
 
           // Retrieve updated data from the API GET request
           const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${decodedToken.userId}/calorie-tracker`);
-          const trackerData = response.data;
+          const trackerData = response.data.data;
 
           // Update state with new data
           setTrackerResult({
@@ -116,12 +119,12 @@ const GetStarted = () => {
           // Send POST request to save user data
           const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`, {
             ...userData,
-          });
+          }, { headers });
 
           // Update state with new data
           localStorage.setItem("userData", JSON.stringify(response.data));
 
-          const trackerData = response.data;
+          const trackerData = response.data.data;
 
           // Update state with new data
           setTrackerResult({
@@ -147,11 +150,11 @@ const GetStarted = () => {
         // Send POST request to save user data
         const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`, {
           ...userData,
-        });
+        }, { headers });
 
         console.log("Non-user API Response:", response.data); // Debugging
 
-        const trackerData = response.data;
+        const trackerData = response.data.data;  
 
         // Update state with new data
         setTrackerResult({
