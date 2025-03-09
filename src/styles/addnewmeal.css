@@ -1,61 +1,68 @@
+/* ADD NEW MEAL PAGE STYLING */
+
+/* Container for the Add New Meal Page */
 .add-meal-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  padding: 20px;
 }
 
+/* Title */
 .add-meal-page h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
+/* Form Container */
 .add-meal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 1000px;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 1000px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Form Labels Styling */
 .add-meal-form input,
 .add-meal-form textarea,
 .add-meal-form select {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-weight: bold;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 .add-meal-form textarea {
-    height: 500px;
-    resize: vertical;
+  height: 500px;
+  resize: vertical;
 }
 
+/* Preference Tag Styling */
 .preference-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Increase spacing between checkboxes */
-    align-items: center;
-    justify-content: space-between; /* Distribute checkboxes evenly */
-    margin-bottom: 15px;
-    width: 100%; /* Ensure full width */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; 
+  align-items: center;
+  justify-content: space-between; 
+  margin-bottom: 15px;
+  width: 100%; 
 }
 
 .preference-options label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    white-space: nowrap; /* Prevent text from wrapping */
-    font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  white-space: nowrap; 
+  font-weight: bold;
 }

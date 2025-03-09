@@ -225,7 +225,7 @@
     }
 }
 
-/* Mobile (480px - 768px) */
+/* Mobile 768px */
 
 @media (max-width: 768px) {
     .homepage-header {

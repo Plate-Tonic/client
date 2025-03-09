@@ -1,4 +1,5 @@
 // App.jsx
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Homepage from './pages/homepage.jsx';
@@ -19,8 +20,9 @@ import ForgetPassword from "./pages/forgetpassword.jsx";
 import Dashboard from './pages/dashboard.jsx';
 import TermsAndConditions from './pages/terms-and-conditions.jsx';
 import { UserAuthContextProvider } from './contexts/UserAuthContext.jsx';
-import './App.css'; // Import component-level styles
+import './App.css'; 
 
+// Main App component
 function App() {
   return (
     <UserAuthContextProvider>

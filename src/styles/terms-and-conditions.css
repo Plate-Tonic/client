@@ -1,3 +1,6 @@
+/* TERMS AND CONDITIONS PAGE STYLING */
+
+/* Terms and Conditions Page Container */
 .terms-container {
   display: flex;
   justify-content: center;
@@ -7,6 +10,7 @@
   background-color: #f9f9f9;
 }
 
+/* Terms and Conditions Content */
 .terms-content {
   max-width: 800px;
   padding: 30px;
@@ -31,13 +35,4 @@
 .terms-content p {
   margin-bottom: 15px;
   line-height: 1.6;
-}
-
-.terms-content a {
-  color: #007BFF;
-  text-decoration: none;
-}
-
-.terms-content a:hover {
-  text-decoration: underline;
 }
