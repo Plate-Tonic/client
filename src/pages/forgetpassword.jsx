@@ -154,7 +154,7 @@ const ForgetPassword = () => {
                 <input
                   type="password"
                   value={newPassword}
-                  onChange={(e) => setConfirmNewPasswordetNewPassword(e.target.value)}
+                  onChange={(e) => setNewPassword(e.target.value)}
                   required
                 />
               </div>

@@ -28,6 +28,7 @@ const GetStarted = () => {
 
   // UseEffect hook to check if user is logged in
   useEffect(() => {
+    console.log(import.meta.env.VITE_AUTH_API_URL);  // This will print the API URL to the console.
     const token = localStorage.getItem("authToken");
     console.log("Token from local storage:", token);
     if (!token) { // If no token is found
@@ -58,9 +59,6 @@ const GetStarted = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('activityLevel:', activityLevel);
-    console.log('goal:', goal);
-
     // Map activity level and goal to human-readable strings
     const activityLevelMapped = activityLevelMap[activityLevel];
     const goalMapped = goalMap[goal];
@@ -76,9 +74,13 @@ const GetStarted = () => {
     console.log('Request body:', userData);
 
     const token = localStorage.getItem("authToken"); // Retrieve token from local storage
+    console.log("Token from local storage:", token);
 
     // Prepare headers with token if logged in
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+    console.log("Sending request with headers: ", headers);
+    console.log("Request URL:", `${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`);
 
     // Check if user is logged in and has a token
     if (isLoggedIn && token) {
@@ -148,9 +150,9 @@ const GetStarted = () => {
         localStorage.setItem("userData", JSON.stringify(userData));
 
         // Send POST request to save user data
-        const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`, {
-          ...userData,
-        }, { headers });
+        const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`, userData, { headers });
+
+        console.log("Response from server:", response.data);
 
         console.log("Non-user API Response:", response.data); // Debugging
 

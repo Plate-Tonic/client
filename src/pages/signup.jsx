@@ -31,6 +31,8 @@ const SignUp = () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/questions`);
 
+        console.log("📋 Fetched security questions:", response.data);
+
         // Set the security questions in state
         setSecurityQuestions(response.data.securityQuestions);
         if (response.data.securityQuestions.length > 0) {
@@ -79,9 +81,13 @@ const SignUp = () => {
       }
     };
 
+    console.log("🚀 Sending user data:", JSON.stringify(userData, null, 2));
+
     // Send POST request to register user
     try {
       const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/register`, userData);
+
+      console.log("✅ Signup successful! Response:", response.data);
 
       // Clear TDEE data from localStorage after registration
       localStorage.removeItem("macroTracker");
@@ -93,9 +99,9 @@ const SignUp = () => {
       alert("Successfully registered user!");
       navigate("/login");
     } catch (error) {
-      console.error("Error during sign-up:", error);
-      alert("Error registering user. Please try again.");
-    }
+      console.error("❌ Error during sign-up:", error.response?.data || error.message);
+      alert(`Error registering user: ${JSON.stringify(error.response?.data, null, 2) || "Please try again."}`);
+    }    
   };
 
   // Render the sign-up form
