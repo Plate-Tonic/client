@@ -7,12 +7,12 @@ const AddMeal = () => {
     const [mealData, setMealData] = useState({
         name: "",
         description: "",
-        imageUrl: "",
         calories: "",
         protein: "",
         fat: "",
         carbs: "",
-        preference: []
+        preference: [],
+        mealImage: "",
     });
 
     const handlePreferenceChange = (e) => {
@@ -78,11 +78,11 @@ const AddMeal = () => {
                 <input type="text" name="name" placeholder="Meal Name" value={mealData.name} onChange={handleChange} required />
                 <textarea name="description" placeholder="Description" value={mealData.description} onChange={handleChange} required />
                 <input type="text" name="ingredients" placeholder="Ingredients (comma separated)" value={mealData.ingredients} onChange={handleChange} required />
-                <input type="text" name="imageUrl" placeholder="Image URL" value={mealData.imageUrl} onChange={handleChange} />
                 <input type="number" name="calories" placeholder="Calories" value={mealData.calories} onChange={handleChange} required />
                 <input type="number" name="protein" placeholder="Protein (g)" value={mealData.protein} onChange={handleChange} required />
                 <input type="number" name="fat" placeholder="Fat (g)" value={mealData.fat} onChange={handleChange} required />
                 <input type="number" name="carbs" placeholder="Carbs (g)" value={mealData.carbs} onChange={handleChange} required />
+                <input type="text" name="mealImage" placeholder="Image URL" value={mealData.mealImage} onChange={handleChange} />
                 <div className="preference-options">
                     <label>
                         <input type="checkbox" value="vegetarian" onChange={handlePreferenceChange} checked={mealData.preference.includes("vegetarian")} />
