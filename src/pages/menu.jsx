@@ -33,7 +33,7 @@ const Menu = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const response = await fetch("http://localhost:8008/meal-plan");
+        const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`);
         const data = await response.json();
 
         if (data && data.length > 0) { // Check if data is available
@@ -69,7 +69,7 @@ const Menu = () => {
     // Function to fetch user data from the backend GET request
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8008/user/${userId}`, {
+        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const userData = response.data;
@@ -137,7 +137,7 @@ const Menu = () => {
         // Send a POST request to save the meal to the user profile
         try {
           await axios.post(
-            `http://localhost:8008/user/${userId}/meal-plan`,
+            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/meal-plan`,
             { selectedMealPlan: meal._id },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -165,7 +165,7 @@ const Menu = () => {
       const userId = decodedToken.userId;
 
       // Send a DELETE request to remove the meal from the user profile
-      await axios.delete(`http://localhost:8008/user/${userId}/meal-plan/${meal._id}`, {
+      await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/meal-plan/${meal._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

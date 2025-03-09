@@ -24,7 +24,7 @@ const MealDetail = () => {
   useEffect(() => {
     const fetchMealDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8008/meal-plan/${mealId}`);
+        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan/${mealId}`);
         setMeal(response.data);
       } catch (err) {
         console.error("Error fetching meal details:", err);
@@ -46,7 +46,7 @@ const MealDetail = () => {
   // Function to remove the meal from the meal plan DELETE request
   const handleRemoveMeal = async () => {
     try {
-      await axios.delete(`http://localhost:8008/meal-plan/${mealId}`, {
+      await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan/${mealId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` }
       });
       alert("Meal removed successfully.");

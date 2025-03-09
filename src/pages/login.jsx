@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useUserAuthContext } from "../contexts/UserAuthContext";
 import axios from "axios";
 import "../styles/login.css";
@@ -29,7 +30,7 @@ const Login = () => {
 
     // Send login request to server POST /login
     try {
-      const response = await axios.post("http://localhost:8008/login", {
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/login`, {
         email,
         password,
       });
@@ -85,7 +86,7 @@ const Login = () => {
               <input
                 type="checkbox" /> Remember Me
             </label>
-            <a href="/forgot-password">Forgot Password?</a>
+            <Link to="/forgot-password">Forgot Password?</Link>
           </div>
 
           <button
@@ -97,7 +98,7 @@ const Login = () => {
         {/* Link to sign up page */}
         <p>
           Don't have an account?
-          <a href="/signup">Sign up here</a>
+          <Link to="/signup">Sign up here</Link>
         </p>
 
       </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/forgetpassword.css";
 
@@ -19,7 +20,7 @@ const ForgetPassword = () => {
   const handleEmailSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
     try {
-      const response = await axios.post("http://localhost:8008/question", {
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/question`, {
         email
       });
 
@@ -40,7 +41,7 @@ const ForgetPassword = () => {
   const handleSecurityAnswerSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8008/answer", {
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/answer`, {
         email,
         securityAnswer,
       });
@@ -67,7 +68,7 @@ const ForgetPassword = () => {
 
     // Send a POST request to reset the password
     try {
-      const response = await axios.post("http://localhost:8008/reset-password", {
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/reset-password`, {
         email,
         newPassword,
       });
@@ -179,7 +180,7 @@ const ForgetPassword = () => {
         {step !== 3 && (
           <p>
             Remembered your password?
-            <a href="/login"> Back to Login</a>
+            <Link to="/login">Back to Login</Link>
           </p>
         )}
 

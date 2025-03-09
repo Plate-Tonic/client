@@ -22,7 +22,7 @@ const Blog = () => {
     // Function to fetch blog posts from the backend server
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("http://localhost:8008/blog");
+        const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/blog`);
         const data = await response.json();
         setBlogs(data); // Store the fetched blogs in state
       } catch (err) {

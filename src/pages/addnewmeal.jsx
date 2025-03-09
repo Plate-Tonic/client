@@ -79,7 +79,8 @@ const AddMeal = () => {
 
         try {
             // Send POST request to add new meal
-            await axios.post("http://localhost:8008/meal-plan", formattedMealData, {
+            await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`, formattedMealData, {
+
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert("Meal added successfully!");

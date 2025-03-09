@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "../styles/terms-and-conditions.css";
 
 // Terms & Conditions Component
@@ -48,7 +49,7 @@ const Terms = () => {
 
         <h2>Contact</h2>
         <p>
-          For questions regarding these terms, contact us at: <strong>support@platetonic.com</strong>
+          For questions regarding these terms,  reach out through the <Link to="/contact">Contact Us</Link>.
         </p>
 
       </div>
