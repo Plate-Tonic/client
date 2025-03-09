@@ -60,7 +60,7 @@ const Dashboard = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const userData = response.data; // Store the fetched user data
+        const userData = response.data.data; // Store the fetched user data
         console.log("Fetched userData:", userData);
 
         // Set user details from the fetched data

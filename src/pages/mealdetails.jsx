@@ -25,7 +25,7 @@ const MealDetail = () => {
     const fetchMealDetails = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan/${mealId}`);
-        setMeal(response.data);
+        setMeal(response.data.data);
       } catch (err) {
         console.error("Error fetching meal details:", err);
       }
