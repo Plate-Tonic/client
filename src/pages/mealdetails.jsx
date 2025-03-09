@@ -60,7 +60,15 @@ const MealDetail = () => {
       {/* Meal Details */}
       <div className="meal-detail-page">
         <h2>{meal.name}</h2>
-        <img src={meal.imageUrl || "path/to/placeholder-image.jpg"} alt={meal.name} className="meal-image" />
+
+         {/* Image Section */}
+         <img
+          src={`${import.meta.env.VITE_AUTH_API_URL}${meal.mealImage || "/uploads/placeholder-image.jpg"}`}
+          alt={meal.name}
+          className="meal-image"
+          crossOrigin="anonymous" 
+        />
+
         <p><strong>Description:</strong> {meal.description}</p>
         <div className="ingredients">
           <strong>Ingredients:</strong>
@@ -69,6 +77,7 @@ const MealDetail = () => {
               <li key={index}>{ingredient}</li>
             ))}
           </ul>
+          
         </div>
         <div className="meal-info">
           <div className="calories">
