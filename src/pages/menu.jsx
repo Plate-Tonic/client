@@ -35,13 +35,15 @@ const Menu = () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`);
         const data = await response.json();
+        console.log("API Response:", data); // Log the entire response
 
-        if (data && data.length > 0) { // Check if data is available
-          setMeals(data);
-          setFilteredMeals(data);
+        // Check if 'data' exists and contains meal items
+        if (data && data.data && Array.isArray(data.data)) { // Ensure 'data.data' exists and is an array
+          setMeals(data.data); // Set meals using the 'data' array
+          setFilteredMeals(data.data); // Set filtered meals in the same way
         }
       } catch (err) {
-        console.error("Error fetching meals:", err);
+        console.error("Error fetching meals:", err); // Handle any errors
       }
     };
 
@@ -251,13 +253,13 @@ const Menu = () => {
 
         {/* Display Selected Meals */}
         <div className="meal-list">
-          
+
           {isLoggedIn && selectedMeals.length > 0 ? ( // Check if user is logged in and meals are selected
             selectedMeals.map((meal) => (
               <div key={meal._id} className="meal-item">
 
                 <img
-                  src={meal.mealImage || "path/to/placeholder-image.jpg"}
+                  src={meal.mealImage || "/uploads/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
                   onClick={() => navigate(`/meal/${meal._id}`)}
@@ -291,14 +293,14 @@ const Menu = () => {
 
                 {/* Meal Name & Image click to navigate to Meal Details */}
                 <img
-                  src={meal.mealImage || "path/to/placeholder-image.jpg"}
+                  src={meal.mealImage || "/uploads/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
-                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })} 
+                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}
                 />
 
                 <p className="meal-name"
-                  onClick={() => navigate(`/meal/${meal._id}`)}>{meal.name} 
+                  onClick={() => navigate(`/meal/${meal._id}`)}>{meal.name}
                 </p>
 
                 {/* Button for Non-Users to Log in */}
