@@ -41,14 +41,14 @@ const Menu = () => {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
-      const storedMacros = localStorage.getItem("macroTracker");
-      console.log("Retrieved TDEE from localStorage:", storedMacros); // Debugging log
-      if (storedMacros) {
-        setTdeeData(JSON.parse(storedMacros));
-      }
-      setLoading(false);
-      return;
+    const storedMacros = localStorage.getItem("macroTracker");
+    console.log("Retrieved TDEE from localStorage:", storedMacros); // Debugging log
+    if (storedMacros) {
+      setTdeeData(JSON.parse(storedMacros));
     }
+    setLoading(false);
+    return;
+  }
     // if (!token) {
     //   setLoading(false);
     //   setIsLoggedIn(false);
@@ -59,7 +59,7 @@ const Menu = () => {
     const userId = decodedToken.userId;
     setIsAdmin(decodedToken.isAdmin); // checks if user is admin
 
-
+    
     const fetchUserData = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}`, {
@@ -210,10 +210,10 @@ const Menu = () => {
       </div>
 
       {isAdmin && (
-        <div className="new-meal-button">
-          <button onClick={() => navigate("/addnewmeal")}>+ Add New Meal</button>
-        </div>
-      )}
+            <div className="new-meal-button">
+              <button onClick={() => navigate("/addnewmeal")}>+ Add New Meal</button>
+            </div>
+          )}
 
       <div className="meal-section">
         <h3>Selected Meals</h3>
@@ -222,7 +222,7 @@ const Menu = () => {
             selectedMeals.map((meal) => (
               <div key={meal._id} className="meal-item">
                 <img
-                  src={`${import.meta.env.VITE_AUTH_API_URL}${meal.mealImage || "/uploads/placeholder-image.jpg"}`} 
+                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
                   onClick={() => navigate(`/meal/${meal._id}`)}
@@ -244,34 +244,37 @@ const Menu = () => {
         <h3>Choose Your Meals</h3>
         <div className="meal-list">
           {filteredMeals.length > 0 ? (
-            filteredMeals.map((meal) => {
-              console.log(meal.imageUrl);  // Add this line here to log the imageUrl
-              return (
-                <div key={meal._id} className="meal-item">
-                  <img
-                    src={`${import.meta.env.VITE_AUTH_API_URL}${meal.mealImage || "/uploads/placeholder-image.jpg"}`} 
-                    alt={meal.name}
-                    className="meal-image"
-                    onClick={() => navigate(`/meal/${meal._id}`)}
-                  />
-                  <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`)}>
-                    {meal.name}
-                  </p>
-                  {isLoggedIn ? (
-                    <button onClick={() => handleSelectMeal(meal)}>Choose</button>
-                  ) : (
-                    <button className="disabled-btn" onClick={() => navigate("/login")}>
-                      Login to Choose
-                    </button>
-                  )}
-                </div>
-              );
-            })
+            filteredMeals.map((meal) => (
+              <div key={meal._id} className="meal-item">
+                <img
+                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
+                  alt={meal.name}
+                  className="meal-image"
+                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })}
+                />
+                <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`)}>
+                  {meal.name}
+                </p>
+                {isLoggedIn ? (
+                  <button onClick={() => handleSelectMeal(meal)}>Choose</button>
+                ) : (
+                  <button className="disabled-btn" onClick={() => navigate("/login")}>
+                    Login to Choose
+                  </button>
+                )}
+              </div>
+            ))
           ) : (
             <p>No meals match your filters.</p>
           )}
-        </div>
 
+          {/* {isAdmin && (
+            <div className="new-meal-button">
+              <button onClick={() => navigate("/addnewmeal")}>+ Add New Meal</button>
+            </div>
+          )} */}
+
+        </div>
       </div>
     </div>
   );
