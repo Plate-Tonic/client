@@ -88,7 +88,7 @@ const AddMeal = () => {
         formData.append("mealImage", image); // Attach image file
 
         try {
-            await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`, formData, {
+            await axios.post(`http://localhost:8008/meal-plan`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
@@ -108,7 +108,7 @@ const AddMeal = () => {
 
         <div className="add-meal-page">
             <h2>Add New Meal</h2>
-            <form className="add-meal-form" onSubmit={handleSubmit}>
+            <form role="form" className="add-meal-form" onSubmit={handleSubmit}>
 
                 {/* Input fields for meal details */}
 
@@ -138,8 +138,10 @@ const AddMeal = () => {
                 {/* New File Input for Image Upload */}
                 <label htmlFor="imageUpload" className="upload-image"> Upload an Image
                     <input
+                        id="imageUpload"
                         type="file"
                         accept="image/*"
+                        data-testid="file-upload"
                         onChange={handleImageChange}
                         required
                     />

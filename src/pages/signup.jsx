@@ -29,7 +29,7 @@ const SignUp = () => {
   useEffect(() => {
     const fetchSecurityQuestions = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/questions`);
+        const response = await axios.get(`http://localhost:8008/questions`);
 
         // Set the security questions in state
         setSecurityQuestions(response.data.securityQuestions);
@@ -81,7 +81,7 @@ const SignUp = () => {
 
     // Send POST request to register user
     try {
-      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/register`, userData);
+      const response = await axios.post(`http://localhost:8008/register`, userData);
 
       // Clear TDEE data from localStorage after registration
       localStorage.removeItem("macroTracker");

@@ -55,7 +55,7 @@ const AddNewBlog = () => {
             // Send blog data to server with authorization token
             const token = localStorage.getItem("authToken");
             await axios.post(
-                `${import.meta.env.VITE_AUTH_API_URL}/blog`,
+                `http://localhost:8008/blog`,
                 {
                     ...blogData,
                     tags: blogData.tags,
@@ -93,8 +93,9 @@ const AddNewBlog = () => {
             <h2>Add New Blog Post</h2>
             <form className="add-blog-form" onSubmit={handleSubmit}>
 
-                <label>Title:</label>
+                <label htmlFor="title">Title:</label>
                 <input
+                    id="title"
                     type="text"
                     name="title"
                     value={blogData.title}
@@ -102,8 +103,9 @@ const AddNewBlog = () => {
                     required
                 />
 
-                <label>Author:</label>
+                <label htmlFor="author">Author:</label>
                 <input
+                    id="author"
                     type="text"
                     name="author"
                     value={blogData.author}
@@ -111,8 +113,9 @@ const AddNewBlog = () => {
                     required
                 />
 
-                <label>Content:</label>
+                <label htmlFor="content">Content:</label>
                 <textarea
+                    id="content"
                     name="content"
                     value={blogData.content}
                     onChange={handleChange}
@@ -176,15 +179,18 @@ const AddNewBlog = () => {
                 <button
                     type="submit">Add Blog  {/* NEED TO ADD SUCCESS MESSAGE AND ERRORS! */}
                 </button>
-               
+
 
                 {/* Button to redirect back to Blog Page */}
                 <button
-                    className="back-btn" 
+                    className="back-btn"
                     onClick={() => navigate("/blog")}>  Back to Blog
                 </button>
 
             </form>
+
+            {success && <p className="success-message">{success}</p>}
+            {error && <p className="error-message">{error}</p>}
         </div>
     );
 };

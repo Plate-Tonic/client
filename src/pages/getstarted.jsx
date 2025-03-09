@@ -89,14 +89,14 @@ const GetStarted = () => {
           const savedData = JSON.parse(localStorage.getItem("userData"));
 
           // Update localStorage with new data
-          await axios.put(`${import.meta.env.VITE_AUTH_API_URL}/user/${decodedToken.userId}/calorie-tracker`, {
+          await axios.put(`http://localhost:8008/user/${decodedToken.userId}/calorie-tracker`, {
 
             id: decodedToken.userId,
             ...userData,
           });
 
           // Retrieve updated data from the API GET request
-          const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${decodedToken.userId}/calorie-tracker`);
+          const response = await axios.get(`http://localhost:8008/user/${decodedToken.userId}/calorie-tracker`);
           const trackerData = response.data;
 
           // Update state with new data
@@ -114,7 +114,7 @@ const GetStarted = () => {
           localStorage.setItem("userData", JSON.stringify(userData));
 
           // Send POST request to save user data
-          const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`, {
+          const response = await axios.post(`http://localhost:8008/user/${userId}/calorie-tracker`, {
             ...userData,
           });
 
@@ -145,7 +145,7 @@ const GetStarted = () => {
         localStorage.setItem("userData", JSON.stringify(userData));
 
         // Send POST request to save user data
-        const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`, {
+        const response = await axios.post(`http://localhost:8008/user/calorie-tracker`, {
           ...userData,
         });
 
