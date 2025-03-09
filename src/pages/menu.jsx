@@ -257,7 +257,7 @@ const Menu = () => {
               <div key={meal._id} className="meal-item">
 
                 <img
-                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
+                  src={meal.mealImage || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
                   onClick={() => navigate(`/meal/${meal._id}`)}
@@ -291,7 +291,7 @@ const Menu = () => {
 
                 {/* Meal Name & Image click to navigate to Meal Details */}
                 <img
-                  src={meal.imageUrl || "path/to/placeholder-image.jpg"}
+                  src={meal.mealImage || "path/to/placeholder-image.jpg"}
                   alt={meal.name}
                   className="meal-image"
                   onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })} 
