@@ -13,7 +13,7 @@ const MealDetail = () => {
   // Get the meal ID from the URL
   const { mealId } = useParams();
 
-  // State variables for storing the meal details and admin status
+  // State variables for storing meal details and admin status
   const [meal, setMeal] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -70,11 +70,16 @@ const MealDetail = () => {
       {/* Meal Details */}
       <div className="meal-detail-page">
         <h2>{meal.name}</h2>
-        <img src={meal.imageUrl || "path/to/placeholder-image.jpg"} alt={meal.name} className="meal-image" />
 
-        <p><strong>
-          Description:</strong> {meal.description}
-        </p>
+        {/* Image Section */}
+        <img
+          src={`${import.meta.env.VITE_AUTH_API_URL}${meal.mealImage || "/uploads/placeholder-image.jpg"}`}
+          alt={meal.name}
+          className="meal-image"
+          crossOrigin="anonymous"
+        />
+
+        <p><strong>Description:</strong> {meal.description}</p>
 
         <div className="ingredients">
           <strong>Ingredients:</strong>
@@ -83,6 +88,7 @@ const MealDetail = () => {
               <li key={index}>{ingredient}</li>
             ))}
           </ul>
+
         </div>
 
         <div className="meal-info">
@@ -114,9 +120,11 @@ const MealDetail = () => {
             {showConfirm && (
               <div className="confirm-popup">
                 <p>Are you sure you want to remove this meal?</p>
+
                 <button className="confirm-remove-btn"
                   onClick={handleRemoveMeal}>Confirm Remove
                 </button>
+
                 <button className="cancel-btn"
                   onClick={() => setShowConfirm(false)}>Cancel
                 </button>

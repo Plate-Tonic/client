@@ -10,6 +10,7 @@ const AddMeal = () => {
         name: "",
         description: "",
         imageUrl: "",
+        ingredients: "",
         calories: "",
         protein: "",
         fat: "",
@@ -17,6 +18,12 @@ const AddMeal = () => {
         preference: []
 
     });
+
+    // State to manage image file
+    const [image, setImage] = useState(null);
+
+    // Hook to navigate between routes
+    const navigate = useNavigate();
 
     // Function to handle changes in dietary preferences checkboxes
     const handlePreferenceChange = (e) => {
@@ -30,13 +37,15 @@ const AddMeal = () => {
         });
     };
 
-    // Hook to navigate between routes
-    const navigate = useNavigate();
-
     // Function to handle changes in text and number inputs
     const handleChange = (e) => {
         // Update the state with new input value
         setMealData({ ...mealData, [e.target.name]: e.target.value });
+    };
+
+    // Function to handle changes in image file input
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
     };
 
     // Function to handle form submission
@@ -67,21 +76,24 @@ const AddMeal = () => {
             return;
         }
 
-        // Format meal data to ensure correct types and structure
-        const formattedMealData = {
-            ...mealData,
-            ingredients: mealData.ingredients.split(",").map((item) => item.trim()), // Convert ingredients to array
-            calories: Number(mealData.calories),
-            protein: Number(mealData.protein),
-            fat: Number(mealData.fat),
-            carbs: Number(mealData.carbs)
-        };
+        const formData = new FormData();
+        formData.append("name", mealData.name);
+        formData.append("description", mealData.description);
+        formData.append("ingredients", mealData.ingredients);
+        formData.append("calories", mealData.calories);
+        formData.append("protein", mealData.protein);
+        formData.append("fat", mealData.fat);
+        formData.append("carbs", mealData.carbs);
+        formData.append("preference", mealData.preference); // Send array directly
+        formData.append("mealImage", image); // Attach image file
 
         try {
-            // Send POST request to add new meal
-            await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`, formattedMealData, {
-
-                headers: { Authorization: `Bearer ${token}` }
+            await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`, formData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
+                }
+      
             });
             alert("Meal added successfully!");
             navigate("/menu"); // Redirect to menu page
@@ -123,12 +135,15 @@ const AddMeal = () => {
                     onChange={handleChange}
                     required />
 
-                <input
-                    type="text"
-                    name="imageUrl"
-                    placeholder="Image URL"
-                    value={mealData.imageUrl}
-                    onChange={handleChange} />
+                {/* New File Input for Image Upload */}
+                <label htmlFor="imageUpload" className="upload-image"> Upload an Image
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        required
+                    />
+                </label>
 
                 <input
                     type="number"
