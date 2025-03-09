@@ -1,5 +1,6 @@
 /* BLOG PAGE STYLING */
 
+/* Blog Page Container */
 .blog-page {
     display: flex;
     flex-direction: column;
@@ -70,6 +71,7 @@
     justify-content: space-between;
 }
 
+/* Button for Add New Blog */
 .new-blog-button {
     width: 80%;
 }

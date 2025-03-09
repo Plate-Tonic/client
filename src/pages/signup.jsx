@@ -1,326 +1,207 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import "../styles/menu.css";
+import "../styles/signup.css";
 
-// Menu Component
-const Menu = () => {
+// Sign Up component
+const SignUp = () => {
 
-  // State variables for managing filters, login status, admin status, meals, and selected meals
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [meals, setMeals] = useState([]);
-
-  // State variables for filtered meals, selected meals, and calorie data
-  const [filteredMeals, setFilteredMeals] = useState([]);
-  const [selectedMeals, setSelectedMeals] = useState([]);
-  const [calorieData, setTdeeData] = useState({
-    calories: 2000,
-    protein: 150,
-    fat: 50,
-    carbs: 250
-  });
-
-  // State variable for loading status
-  const [loading, setLoading] = useState(true);
-
-  // Navigation hook for redirecting to other pages
+  // Initialize navigation
   const navigate = useNavigate();
 
-  // Fetch meals and user data (including login status) 
-  useEffect(() => {
-    const fetchMeals = async () => {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`);
-        const data = await response.json();
+  // State to manage user sign-up data
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-        if (data && data.length > 0) { // Check if data is available
-          setMeals(data);
-          setFilteredMeals(data);
+  // State to manage terms and conditions agreement
+  const [agreeTerms, setAgreeTerms] = useState(false);
+
+
+  // State to manage security questions and answers
+  const [securityQuestions, setSecurityQuestions] = useState([]);
+  const [securityAnswer, setSecurityAnswer] = useState("");
+  const [selectedQuestion, setSelectedQuestion] = useState("");
+
+  // Fetch security questions from the server GET request
+  useEffect(() => {
+    const fetchSecurityQuestions = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/questions`);
+
+        // Set the security questions in state
+        setSecurityQuestions(response.data.securityQuestions);
+        if (response.data.securityQuestions.length > 0) {
+          setSelectedQuestion(response.data.securityQuestions[0]); // Set the first question as default
         }
-      } catch (err) {
-        console.error("Error fetching meals:", err);
+      } catch (error) {
+        alert("Error loading security questions. Please try again.");
       }
     };
 
-    fetchMeals(); // Call the function to fetch meals
+    fetchSecurityQuestions(); // Call the function to fetch security questions
+  }, []); // Empty dependency array to run only once
 
-    const token = localStorage.getItem("authToken"); // Retrieve auth token from local storage
+  // Function to handle sign-up form submission
+  const handleSignUp = async (event) => {
+    event.preventDefault();
 
-    // Check if the user is logged in
-    if (!token) {
-      const storedMacros = localStorage.getItem("macroTracker");
-
-      // If no token is found, check if there are stored macros
-      if (storedMacros) {
-        setTdeeData(JSON.parse(storedMacros));
-      }
-      setLoading(false);
+    // Validate form data
+    if (!agreeTerms) {
+      alert("You must agree to the terms and conditions.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+    if (!securityAnswer.trim()) {
+      alert("Please provide an answer to your security question.");
       return;
     }
 
-    // Decode the token to get the user ID
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.userId;
-    setIsAdmin(decodedToken.isAdmin); // checks if user is admin
+    // Retrieve stored TDEE data from localStorage (if available)
+    const storedTdeeData = JSON.parse(localStorage.getItem("macroTracker")) || {};
+    const storedUserData = JSON.parse(localStorage.getItem("userData")) || {};
 
-    // Function to fetch user data from the backend GET request
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        const userData = response.data;
-
-        // Set the TDEE and selected meals from the backend
-        if (userData.macroTracker) {
-          setTdeeData(userData.macroTracker);
-          localStorage.setItem("macroTracker", JSON.stringify(userData.macroTracker));
-        } else {
-          setTdeeData(null); // Set to null if no data is found
-        }
-
-        // Set the selected meals from the backend
-        setSelectedMeals(userData.selectedMealPlan);
-        setLoading(false);
-        setIsLoggedIn(true);
-      } catch (err) {
-        console.error("Error fetching user data:", err);
-        setLoading(false);
+    // Store the basic information in localStorage (or state)
+    const userData = {
+      name,
+      email,
+      password,
+      securityQuestion: selectedQuestion,
+      securityAnswer,
+      macroTracker: {
+        ...storedTdeeData,
+        ...storedUserData
       }
     };
 
-    fetchUserData(); // Call the function to fetch user data
-
-  }, [navigate]); // Refetch when the `navigate` function changes
-
-  // Filter meals based on selected filters
-  useEffect(() => {
-    if (selectedFilters.length > 0) {
-      setFilteredMeals(
-        meals.filter((meal) =>
-          selectedFilters.every((filter) => meal.preference.includes(filter))
-        )
-      );
-    } else {
-      setFilteredMeals(meals);
-    }
-
-  }, [selectedFilters, meals]); // Refetch when the `selectedFilters` or `meals` change
-
-  // Handle changes to the filter checkboxes
-  const handleFilterChange = (event) => {
-    const { value, checked } = event.target;
-    setSelectedFilters((prevFilters) =>
-      checked ? [...prevFilters, value] : prevFilters.filter((f) => f !== value)
-    );
-  };
-
-  // Add meal to selected meals
-  const handleSelectMeal = async (meal) => {
-    if (!selectedMeals.find((m) => m._id === meal._id)) { // Check if meal is already selected
-
-      // Add the meal to the selected meals list
-      const updatedMeals = [...selectedMeals, meal];
-      setSelectedMeals(updatedMeals);
-      localStorage.setItem("selectedMeals", JSON.stringify(updatedMeals));
-      setSelectedMeals(updatedMeals);
-
-      // Save the selected meal to the user profile
-      const token = localStorage.getItem("authToken");
-      if (token) {
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken.userId;
-
-        // Send a POST request to save the meal to the user profile
-        try {
-          await axios.post(
-            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/meal-plan`,
-            { selectedMealPlan: meal._id },
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-        } catch (err) {
-          console.error("Error saving meal to user profile:", err);
-        }
-      }
-    }
-  };
-
-  // Remove meal from selected meals
-  const handleRemoveMeal = async (meal) => {
-    if (!isLoggedIn) return;
-
-    // Retrieve the auth token from local storage
-    const token = localStorage.getItem("authToken");
-    if (!token) {
-      console.log("No token found, user not authenticated.");
-      return;
-    }
-
-    // Remove the meal from the user profile
+    // Send POST request to register user
     try {
-      const decodedToken = jwtDecode(token);
-      const userId = decodedToken.userId;
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/register`, userData);
 
-      // Send a DELETE request to remove the meal from the user profile
-      await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/meal-plan/${meal._id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      // Clear TDEE data from localStorage after registration
+      localStorage.removeItem("macroTracker");
+      console.log("After clearing, macroTracker in localStorage:", localStorage.getItem("macroTracker"));
 
-      // Remove the meal from the selected meals list
-      const updatedMeals = selectedMeals.filter((m) => m._id !== meal._id);
-      setSelectedMeals(updatedMeals);
-      localStorage.setItem("selectedMeals", JSON.stringify(updatedMeals));
+      window.location.href = "/login"; // Redirect to login page
 
-      // Also remove from Dashboard state
-      setSelectedMeals(updatedMeals);
-    } catch (err) {
-      console.error("Error removing meal:", err);
+      // Show success message
+      alert("Successfully registered user!");
+      navigate("/login");
+    } catch (error) {
+      console.error("Error during sign-up:", error);
+      alert("Error registering user. Please try again.");
     }
   };
 
-  // Show loading message while the data is being fetched
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  // Render the menu page
+  // Render the sign-up form
   return (
-    <div className="menu-page">
-      <div className="menu-banner">Meal Selection</div>
+    <div className="signup-page">
+      <div className="signup-banner">Create Your Account</div>
 
-      <div className="calorie-tracker">
-        {calorieData ? (
-          <p>
-            Calories: {calorieData.calories} kcal |
-            Protein: {calorieData.protein}g |
-            Fat: {calorieData.fat}g |
-            Carbs: {calorieData.carbs}g
-          </p>
-        ) : (
-          <button className="macro-btn"
-            onClick={() => navigate("/getstarted")}> Calculate Your Macros
+      {/* Sign Up Form */}
+      <div className="signup-container">
+        <h2>Sign Up</h2>
+        <form onSubmit={handleSignUp}>
+
+          {/* Input fields for user sign-up */}
+          <div className="input-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>Confirm Password:</label>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label>Security Question:</label>
+            <select
+              value={selectedQuestion}
+              onChange={(e) => setSelectedQuestion(e.target.value)}
+              required
+            >
+              {securityQuestions.map((question, index) => (
+                <option
+                  key={index} value={question}>{question}
+                </option>
+              ))}
+            </select>
+
+          </div>
+
+          <div className="input-group">
+            <label>Security Answer:</label>
+            <input
+              type="text"
+              value={securityAnswer}
+              onChange={(e) => setSecurityAnswer(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="terms-conditions">
+            <label>
+              <input
+                type="checkbox"
+                checked={agreeTerms}
+                onChange={(e) => setAgreeTerms(e.target.checked)}
+              />
+              I agree to the <Link to="/terms-and-conditions">Terms & Conditions</Link>
+            </label>
+          </div>
+           
+          {/* Sign Up button */}
+          <button 
+          type="submit">Sign Up
           </button>
-        )}
 
-        {isLoggedIn && (
-          <p className="selected-macros">
-            Selected Meal Calories: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal |
-            Protein: {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g |
-            Fat: {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g |
-            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g
-          </p>
-        )}
-      </div>
+        </form>
 
-      <div className="filter-section">
-        <h3>Filter by Preferences</h3>
-        <div className="filter-options">
-          {["vegetarian",
-            "vegan",
-            "gluten-free",
-            "nut-free",
-            "none"].map((filter) => (
-              <label key=
-                {filter}>
-                <input
-                  type="checkbox"
-                  value={filter}
-                  onChange={handleFilterChange}
-                />
-                {filter}
-              </label>
-            ))}
-        </div>
-      </div>
-
-      {/* Add New Meal Button Admin ONLY */}
-      {isAdmin && (
-        <div className="new-meal-button">
-          <button
-            onClick={() => navigate("/addnewmeal")}>+ Add New Meal
-          </button>
-        </div>
-      )}
-
-      {/* Selected Meals Section */}
-      <div className="meal-section">
-        <h3>Selected Meals</h3>
-
-        {/* Display Selected Meals */}
-        <div className="meal-list">
-          
-          {isLoggedIn && selectedMeals.length > 0 ? ( // Check if user is logged in and meals are selected
-            selectedMeals.map((meal) => (
-              <div key={meal._id} className="meal-item">
-
-                <img
-                  src={`${import.meta.env.VITE_AUTH_API_URL}${meal.mealImage || "/uploads/placeholder-image.jpg"}`} 
-                  alt={meal.name}
-                  className="meal-image"
-                  onClick={() => navigate(`/meal/${meal._id}`)}
-                />
-
-                {/* Meal Name click to navigate to Meal Details */}
-                <p className="meal-name"
-                  onClick={() => navigate(`/mealdetails/${meal._id}`)}>{meal.name}
-                </p>
-
-                <button
-                  onClick={() => handleRemoveMeal(meal)}>Remove
-                </button>
-
-              </div>
-            ))
-          ) : (
-            <p>No meals selected yet. Choose from below.</p> // Message if no meals are selected
-          )}
-        </div>
-      </div>
-
-      {/* Meal Selection Section */}
-      <div className="meal-section">
-        <h3>Choose Your Meals</h3>
-
-        <div className="meal-list">
-          {filteredMeals.length > 0 ? (
-            filteredMeals.map((meal) => (
-              <div key={meal._id} className="meal-item">
-
-                {/* Meal Name & Image click to navigate to Meal Details */}
-                <img
-                  src={`${import.meta.env.VITE_AUTH_API_URL}${meal.mealImage || "/uploads/placeholder-image.jpg"}`} 
-                  alt={meal.name}
-                  className="meal-image"
-                  onClick={() => navigate(`/meal/${meal._id}`, { state: { meal } })} 
-                />
-
-                <p className="meal-name"
-                  onClick={() => navigate(`/meal/${meal._id}`)}>{meal.name} 
-                </p>
-
-                {/* Button for Non-Users to Log in */}
-                {isLoggedIn ? (
-                  <button
-                    onClick={() => handleSelectMeal(meal)}>Choose</button>
-                ) : (
-                  <button className="disabled-btn"
-                    onClick={() => navigate("/login")}>Login to Choose
-                  </button>
-                )}
-
-              </div>
-            ))
-          ) : (
-            <p>No meals match your filters.</p> // Message if no meals match filters
-          )}
-
-        </div>
+        {/* Link to login page */}
+        <p>
+          Already have an account?
+          <Link to="/login">Login here</Link>
+        </p>
+        
       </div>
     </div>
   );
 };
 
-export default Menu;
+export default SignUp;

@@ -4,7 +4,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "../styles/forgetpassword.css";
 
+// Forgot Password Component
 const ForgetPassword = () => {
+
+  // State to manage the step of the password reset process
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState("");
@@ -13,13 +16,15 @@ const ForgetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
+  // Function to handle email submission
   const handleEmailSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault(); // Prevent default form submission behavior
     try {
       const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/question`, {
         email
       });
 
+      // If the response status is 200, set the security question and move to the next step
       if (response.status === 200) {
         setSecurityQuestion(response.data.securityQuestion);
         setStep(2);
@@ -32,6 +37,7 @@ const ForgetPassword = () => {
     }
   };
 
+  // Function to handle security answer submission
   const handleSecurityAnswerSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -39,6 +45,8 @@ const ForgetPassword = () => {
         email,
         securityAnswer,
       });
+
+      // If the response status is 200, move to the next step
       if (response.status === 200) {
         setStep(3);
       } else {
@@ -50,17 +58,21 @@ const ForgetPassword = () => {
     }
   };
 
+  // Function to handle password reset
   const handlePasswordReset = async (event) => {
     event.preventDefault();
-    if (newPassword !== confirmNewPassword) {
+    if (newPassword !== confirmNewPassword) { // Check if passwords match
       alert("Passwords do not match.");
       return;
     }
+
+    // Send a POST request to reset the password
     try {
       const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/reset-password`, {
         email,
         newPassword,
       });
+
       if (response.status === 200) {
         alert("Password reset successful! Redirecting to login...");
         navigate("/login");
@@ -73,59 +85,76 @@ const ForgetPassword = () => {
     }
   };
 
+  // Render the forget password form
   return (
     <div className="forget-password-page">
       <div className="forget-password-banner">Reset Your Password</div>
 
       <div className="forget-password-container">
+
+        {/* Step One */}
         {step === 1 && (
           <>
             <h2>Enter Your Email</h2>
             <p>We will verify your email and security question.</p>
+
             <form onSubmit={handleEmailSubmit}>
               <div className="input-group">
-                <label>Email:</label>
+                <label>
+                  Email:
+                </label>
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) =>
+                    setEmail(e.target.value)}
                   required
                 />
               </div>
-              <button type="submit">Next</button>
+              <button type="submit">
+                Next
+              </button>
             </form>
           </>
         )}
 
+        {/* Step Two */}
         {step === 2 && (
           <>
             <h2>Security Question</h2>
             <p>{securityQuestion}</p>
             <form onSubmit={handleSecurityAnswerSubmit}>
               <div className="input-group">
-                <label>Answer:</label>
+                <label>
+                  Answer:
+                </label>
                 <input
                   type="text"
                   value={securityAnswer}
-                  onChange={(e) => setSecurityAnswer(e.target.value)}
+                  onChange={(e) =>
+                    setSecurityAnswer(e.target.value)}
                   required
                 />
               </div>
-              <button type="submit">Next</button>
+              <button type="submit">
+                Next
+              </button>
             </form>
           </>
         )}
 
+        {/* Step Three */}
         {step === 3 && (
           <>
             <h2>Reset Your Password</h2>
             <form onSubmit={handlePasswordReset}>
+
               <div className="input-group">
                 <label>New Password:</label>
                 <input
                   type="password"
                   value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  onChange={(e) => setConfirmNewPasswordetNewPassword(e.target.value)}
                   required
                 />
               </div>
@@ -140,16 +169,21 @@ const ForgetPassword = () => {
                 />
               </div>
 
-              <button type="submit">Reset Password</button>
+              <button
+                type="submit">Reset Password
+              </button>
             </form>
           </>
         )}
 
+        {/* Navigate to Login if Remembered Password */}
         {step !== 3 && (
           <p>
-            Remembered your password? <Link to="/login">Back to Login</Link>
+            Remembered your password?
+            <Link to="/login">Back to Login</Link>
           </p>
         )}
+
       </div>
     </div>
   );

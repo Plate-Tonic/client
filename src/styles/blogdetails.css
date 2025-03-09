@@ -22,6 +22,7 @@
   text-align: left;
 }
 
+/* Blog Detail Title */
 .blog-detail-title {
   font-size: 28px;
   font-weight: bold;
@@ -29,32 +30,29 @@
   margin-bottom: 10px;
 }
 
+/* Tag Styling */
 .blog-detail-tags {
   font-size: 14px;
   color: #666;
   margin-bottom: 20px;
 }
 
+/* Blog Content */
 .blog-detail-content {
   font-size: 16px;
   line-height: 1.6;
   color: #444;
 }
 
+/* Back Button */
 .back-button {
   display: inline-block;
   margin-top: 20px;
   padding: 10px 15px;
-  background-color: #6a994e;
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  transition: background 0.3s ease-in-out;
-}
-
-.back-button:hover {
-  background-color: #bc4749;
 }
 
 /* Remove Blog Button */
@@ -67,11 +65,6 @@
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 10px;
-  transition: background 0.3s ease-in-out;
-}
-
-.remove-blog-btn:hover {
-  background: darkred;
 }
 
 /* Confirmation Popup */

@@ -2,9 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/terms-and-conditions.css";
 
+// Terms & Conditions Component
 const Terms = () => {
   return (
+
+    // Terms & Conditions Page
     <div className="terms-container">
+      
+      {/* Terms & Conditions Content */}
       <div className="terms-content">
         <h1>Terms & Conditions</h1>
 
@@ -46,6 +51,7 @@ const Terms = () => {
         <p>
           For questions regarding these terms,  reach out through the <Link to="/contact">Contact Us</Link>.
         </p>
+
       </div>
     </div>
   );

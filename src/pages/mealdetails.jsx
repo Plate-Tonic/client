@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
-import "../styles/mealdetails.css"; // Ensure this is imported
+import "../styles/mealdetails.css";
 
+// Meal Detail Component
 const MealDetail = () => {
 
-  // Navigation hook for redirecting other pages
+  // Navigation hook for redirecting to other pages
   const navigate = useNavigate();
 
   // Get the meal ID from the URL
@@ -16,9 +17,8 @@ const MealDetail = () => {
   const [meal, setMeal] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // State variable for showing the confirmation popup
+  // State variable to show/hide the confirmation popup
   const [showConfirm, setShowConfirm] = useState(false);
-
 
   // Fetch the meal details from the backend GET request
   useEffect(() => {
@@ -43,7 +43,7 @@ const MealDetail = () => {
 
   }, [mealId]); // Refetch when the `mealId` changes
 
-  // Function to remove the meal from the database DELETE request
+  // Function to remove the meal from the meal plan DELETE request
   const handleRemoveMeal = async () => {
     try {
       await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan/${mealId}`, {
@@ -56,7 +56,6 @@ const MealDetail = () => {
       alert("Failed to remove meal.");
     }
   };
-  console.log("isAdmin state:", isAdmin);
 
   if (!meal) { // Show loading message while the data is being fetched
 
@@ -91,6 +90,7 @@ const MealDetail = () => {
           </ul>
 
         </div>
+
         <div className="meal-info">
           <div className="calories">
             <strong>Calories:</strong> {meal.calories}
@@ -111,8 +111,12 @@ const MealDetail = () => {
         {/* Show Remove Button if Admin */}
         {isAdmin && (
           <>
-            <button className="remove-meal-btn" onClick={() => setShowConfirm(true)}>Remove Meal</button>
+            <button className="remove-meal-btn"
+              onClick={() =>
+                setShowConfirm(true)}>Remove Meal
+            </button>
 
+            {/* Connfirm and Cancel Button */}
             {showConfirm && (
               <div className="confirm-popup">
                 <p>Are you sure you want to remove this meal?</p>
@@ -129,9 +133,11 @@ const MealDetail = () => {
           </>
         )}
 
+        {/* Back to Menu Button */}
         <button className="back-btn"
           onClick={() => navigate("/menu")}>Back to Menu
         </button>
+
       </div>
     </div>
   );

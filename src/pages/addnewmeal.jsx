@@ -37,7 +37,6 @@ const AddMeal = () => {
         });
     };
 
-
     // Function to handle changes in text and number inputs
     const handleChange = (e) => {
         // Update the state with new input value
@@ -94,6 +93,7 @@ const AddMeal = () => {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"
                 }
+      
             });
             alert("Meal added successfully!");
             navigate("/menu"); // Redirect to menu page

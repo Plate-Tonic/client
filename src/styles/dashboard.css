@@ -1,5 +1,6 @@
 /* DASHBOARD STYLING */
 
+/* Dashboard Wrapper */
 .dashboard-wrapper {
     display: flex;
     justify-content: center;
@@ -102,8 +103,8 @@
 
 .current-meals-list li {
     display: flex;
-    justify-content: space-between; /* Aligns meal name and button */
-    align-items: center; /* Vertically centers meal details */
+    justify-content: space-between; 
+    align-items: center; 
     padding: 10px;
     border-bottom: 1px solid #ddd;
     font-size: 18px;
@@ -127,7 +128,7 @@
     margin-left: 5px;
 }
 
-
+/* Remove Meal Button Styling */
 .remove-meal {
     background-color: #FF4D4D;
     color: white;
@@ -160,30 +161,30 @@
 }
 
 .input-group button {
-    flex-shrink: 0; /* Prevents button from shrinking */
-    width: fit-content; /* Ensures button is only as wide as needed */
+    flex-shrink: 0; 
+    width: fit-content; 
     padding: 10px 15px;
     font-size: 16px;
-    background-color: #6A994E; /* Green */
+    background-color: #6A994E; 
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    white-space: nowrap; /* Prevents text wrapping */
+    white-space: nowrap; 
 }
 
 .content-box {
-    text-align: left; /* Aligns all text and form fields to the left */
+    text-align: left;
 }
 
 /* Change Password Input & Button Styling */
 .password-change-container {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Align input and button */
+    justify-content: space-between; 
     width: 100%;
-    max-width: 500px; /* Adjust width as needed */
-    margin: 0 auto; /* Centering */
+    max-width: 500px; 
+    margin: 0 auto; 
     padding: 10px;
     background: #F9F9F9;
     border-radius: 8px;
@@ -191,23 +192,22 @@
 }
 
 .password-change-container input {
-    flex: 1; /* Takes most of the space */
+    flex: 1; 
     padding: 12px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-right: 10px; /* Spacing between input and button */
+    margin-right: 10px; 
 }
 
 .save-password-btn {
     padding: 12px 20px;
     font-size: 16px;
-    background-color: #6A994E; /* Green */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    white-space: nowrap; /* Prevents text from wrapping */
+    white-space: nowrap;
 }
 
 /* RESPONSIVENESS */
@@ -220,14 +220,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        min-height: 100vh; /* Ensures full viewport height */
+        min-height: 100vh; 
         width: 100%;
-        padding: 20px 0; /* Prevents content from sticking too close to the edges */
+        padding: 20px 0; 
         box-sizing: border-box;
     }
     
     .dashboard-container {
-        flex-direction: column; /* Stack items vertically */
+        flex-direction: column;
         align-items: center;
         text-align: center;
     }
@@ -235,16 +235,16 @@
     .sidebar {
         width: 100%;
         display: flex;
-        flex-direction: column; /* Ensure buttons stack in a column */
-        align-items: center; /* Center buttons horizontally */
+        flex-direction: column; 
+        align-items: center; 
         gap: 10px;
         padding: 10px;
         border-radius: 10px;
     }
 
     .sidebar button {
-        width: 100%; /* Ensure buttons take full width */
-        max-width: 300px; /* Limit max width for better UI */
+        width: 100%; 
+        max-width: 300px; 
         padding: 10px;
     }
 

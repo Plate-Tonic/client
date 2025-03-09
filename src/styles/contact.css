@@ -1,5 +1,6 @@
 /* Contact Page Layout */
 
+/* Contact Page Container */
 .contact-page {
     display: flex;
     flex-direction: column;
@@ -11,6 +12,7 @@
   
   /* Contact Form & Image Section */
   
+  /* Contact Container */
   .contact-container {
     display: flex;
     justify-content: center; 
@@ -99,6 +101,8 @@
   }
   
   /* Responsive Design */
+
+  /* TABLET RESPONSIVE */
   @media (max-width: 1024px) {
     .contact-container {
       flex-direction: column;
@@ -116,6 +120,7 @@
     }
   }
   
+  /* MOBILE RESPONSIVE */
   @media (max-width: 768px) {
     .contact-page {
       padding: 30px 15px;
