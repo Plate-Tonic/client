@@ -1,9 +1,14 @@
 import React from "react";
 import "../styles/terms-and-conditions.css";
 
+// Terms & Conditions Component
 const Terms = () => {
   return (
+
+    // Terms & Conditions Page
     <div className="terms-container">
+      
+      {/* Terms & Conditions Content */}
       <div className="terms-content">
         <h1>Terms & Conditions</h1>
 
@@ -13,7 +18,7 @@ const Terms = () => {
         </p>
         <h2>2. User Data & Privacy</h2>
         <p>
-          Your personal data is handled according to our <a href="/privacy">Privacy Policy</a>. We do not share your data without your consent, except as required by law.
+          Your personal data is handled according to our Privacy Policy. We do not share your data without your consent, except as required by law.
         </p>
 
         <h2>3. User Responsibilities</h2>
@@ -43,8 +48,9 @@ const Terms = () => {
 
         <h2>Contact</h2>
         <p>
-          For questions regarding these terms, contact us at: <strong>support@example.com</strong>
+          For questions regarding these terms, contact us at: <strong>support@platetonic.com</strong>
         </p>
+
       </div>
     </div>
   );

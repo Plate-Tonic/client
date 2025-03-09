@@ -1,4 +1,6 @@
 /* Menu Page Styles */
+
+/* Menu Page Container */
 .menu-page {
     display: flex;
     flex-direction: column;
@@ -83,11 +85,13 @@
     max-width: 300px;
 }
 
+/* Add Meal Button */
 .new-meal-button {
     
     width: 80%;
 }
 
+/* Macro Button */
 .macro-btn {
     max-width: 50%;
   }

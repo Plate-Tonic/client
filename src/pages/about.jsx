@@ -12,6 +12,7 @@ const About = () => {
   return (
     <div className="about-page">
       <div className="about-banner">What are we about</div>
+
       {/* Our Purpose */}
       <section className="about-section">
         <div className="about-image">
@@ -55,6 +56,7 @@ const About = () => {
           <img src={about4} alt="Our Story" />
         </div>
       </section>
+      
     </div>
   );
 };

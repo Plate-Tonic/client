@@ -1,21 +1,23 @@
-/* Styling for the MealDetail banner */
+/* MEAL DETAIL PAGE STYLING */
+
+/* Styling for the meal detail banner */
 .meal-detail-banner {
-  width: 100%;  /* Ensure full width */
+  width: 100%;  
   background-color: #BC4749;
   color: white;
   text-align: center;
-  padding: 130px;  /* Adjust padding for a good look */
+  padding: 130px;  
   font-size: 24px;
   font-weight: bold;
-  margin: 0;  /* Remove any margins */
-  box-sizing: border-box;  /* Ensure padding does not cause overflow */
+  margin: 0;  
+  box-sizing: border-box; 
 }
 
 /* Styling for the meal detail page */
 .meal-detail-page {
   padding: 20px;
-  max-width: 1200px;  /* Increased width for larger screens */
-  margin: 0 auto;  /* Center the content */
+  max-width: 1200px;  
+  margin: 0 auto;  
   background-color: #fff;
 }
 

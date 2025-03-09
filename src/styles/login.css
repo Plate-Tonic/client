@@ -1,5 +1,6 @@
 /* Login Page Styles */
 
+/* Login Page Container */
 .login-page {
     display: flex;
     flex-direction: column;
@@ -62,7 +63,7 @@
     color: #BC4749;
 }
 
-/* Responsivemess */
+/* Responsiveness */
 
 /* Mobile View */
 
