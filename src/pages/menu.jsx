@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import "../styles/menu.css";
 
-// Menu Component
+// Menu Components
 const Menu = () => {
 
   // State variables for managing filters, login status, admin status, meals, and selected meals
