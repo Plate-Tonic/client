@@ -44,6 +44,11 @@
   color: #444;
 }
 
+/* Blog Paragraph Spacing */
+.blog-detail-content p {
+  margin-bottom: 20px;
+}
+
 /* Back Button */
 .back-button {
   display: inline-block;

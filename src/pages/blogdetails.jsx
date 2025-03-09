@@ -82,8 +82,10 @@ const BlogDetail = () => {
           Tags: {blog.tags.join(", ")}
         </p>
 
-        <div>
-          <p>{blog.content}</p>
+        <div className="blog-detail-content">
+          {blog.content.split("\n").map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
         </div>
 
         {/* Remove Blog Button (Only for Admins) */}

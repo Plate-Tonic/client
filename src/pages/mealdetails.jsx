@@ -72,9 +72,11 @@ const MealDetail = () => {
         <h2>{meal.name}</h2>
         <img src={meal.imageUrl || "path/to/placeholder-image.jpg"} alt={meal.name} className="meal-image" />
 
-        <p><strong>
-          Description:</strong> {meal.description}
-        </p>
+        <div className="blog-detail-content">
+          {meal.description.split("\n").map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
+        </div>
 
         <div className="ingredients">
           <strong>Ingredients:</strong>
