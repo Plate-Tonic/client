@@ -21,7 +21,7 @@ const BlogDetail = () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/blog/${id}`);
         const data = await response.json();
-        setBlog(data); // Store the fetched blog post
+        setBlog(data.data); // Store the fetched blog post
       } catch (err) {
         console.error("Error fetching blog details:", err); // Log any errors
       }
@@ -82,8 +82,10 @@ const BlogDetail = () => {
           Tags: {blog.tags.join(", ")}
         </p>
 
-        <div>
-          <p>{blog.content}</p>
+        <div className="blog-content">
+          {blog.content.split('\n').map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
         </div>
 
         {/* Remove Blog Button (Only for Admins) */}
