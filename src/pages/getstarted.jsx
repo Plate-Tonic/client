@@ -28,16 +28,11 @@ const GetStarted = () => {
 
   // UseEffect hook to check if user is logged in
   useEffect(() => {
-    console.log(import.meta.env.VITE_AUTH_API_URL);  // This will print the API URL to the console.
     const token = localStorage.getItem("authToken");
-    console.log("Token from local storage:", token);
-    if (!token) { // If no token is found
-      setLoading(false);
-      setIsLoggedIn(false);
-      return;
+    if (token) {
+      setIsLoggedIn(true);
     }
     setLoading(false);
-    setIsLoggedIn(true); // If token is found, set isLoggedIn to true
   }, []);
 
   // Maps for activity levels and goals
@@ -46,139 +41,97 @@ const GetStarted = () => {
     "1.375": "Lightly active (light exercise 1-3 days/week)",
     "1.55": "Moderately active (moderate exercise 3-5 days/week)",
     "1.725": "Very active (hard exercise 6-7 days/week)",
-    "1.9": "Super active (very intense exercise, physical job, etc.)"
+    "1.9": "Super active (very intense exercise, physical job, etc.)",
   };
 
   const goalMap = {
     "weight-loss": "Lose Weight",
     "maintenance": "Maintain Weight",
-    "muscle-gain": "Gain Muscle"
+    "muscle-gain": "Gain Muscle",
   };
 
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Map activity level and goal to human-readable strings
+    // Prepare user data for API request
     const activityLevelMapped = activityLevelMap[activityLevel];
     const goalMapped = goalMap[goal];
     const userData = {
-      age: age,
-      weight: weight,
-      height: height,
-      gender: gender,
+      age,
+      weight,
+      height,
+      gender,
       activity: activityLevelMapped,
       goal: goalMapped,
     };
 
-    console.log('Request body:', userData);
-
-    const token = localStorage.getItem("authToken"); // Retrieve token from local storage
-    console.log("Token from local storage:", token);
-
-    // Prepare headers with token if logged in
+    // Retrieve auth token from local storage
+    const token = localStorage.getItem("authToken");
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-    console.log("Sending request with headers: ", headers);
-    console.log("Request URL:", `${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`);
+    try {
+      let response; // Variable to store API response
 
-    // Check if user is logged in and has a token
-    if (isLoggedIn && token) {
-      const decodedToken = jwtDecode(token);
-      const userId = decodedToken.userId;
+      // Check if user is logged in and has a token
+      if (isLoggedIn && token) {
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.userId;
 
-      // Check if user has existing data in localStorage
-      try {
+        // Check if user has existing data in localStorage
         if (localStorage.getItem("userData")) {
+
           // Scenario 1: User is logged in and has existing data in localStorage
           const savedData = JSON.parse(localStorage.getItem("userData"));
 
-          // Update localStorage with new data
-          await axios.put(`${import.meta.env.VITE_AUTH_API_URL}/user/${decodedToken.userId}/calorie-tracker`, {
-
-            id: decodedToken.userId,
-            ...userData,
-          }, { headers });
-
-          // Retrieve updated data from the API GET request
-          const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${decodedToken.userId}/calorie-tracker`);
-          const trackerData = response.data.data;
-
-          // Update state with new data
-          setTrackerResult({
-            calories: trackerData.calories,
-            protein: trackerData.protein,
-            fat: trackerData.fat,
-            carbs: trackerData.carbs,
-          });
-
-          // Show modal with results
-          setShowModal(true);
+          // Update user data in backend
+          response = await axios.put(
+            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`,
+            { id: userId, ...userData },
+            { headers }
+          );
         } else {
-          // Scenario 2: User is logged in but has no existing data in localStorage
-          localStorage.setItem("userData", JSON.stringify(userData));
 
-          // Send POST request to save user data
-          const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`, {
-            ...userData,
-          }, { headers });
-
-          // Update state with new data
-          localStorage.setItem("userData", JSON.stringify(response.data));
-
-          const trackerData = response.data.data;
-
-          // Update state with new data
-          setTrackerResult({
-            calories: trackerData.calories,
-            protein: trackerData.protein,
-            fat: trackerData.fat,
-            carbs: trackerData.carbs,
-          });
-
-          // Show modal with results
-          setShowModal(true);
+          // Scenario 2: User is logged in but has no existing data
+          response = await axios.post(
+            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`,
+            userData,
+            { headers }
+          );
         }
-      } catch (error) {
-        console.error("Error saving/updating user data:", error);
+      } else {
+
+        // Scenario 3: User is not logged in (non-user)
+        response = await axios.post(
+          `${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`,
+          userData,
+          { headers }
+        );
       }
 
-    } else {
-      // Scenario 3: User is not logged in
-      try {
-        // Save user data to localStorage
-        localStorage.setItem("userData", JSON.stringify(userData));
+      const trackerData = response.data.data;
 
-        // Send POST request to save user data
-        const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`, userData, { headers });
+      // Save data in localStorage
+      localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("macroTracker", JSON.stringify(trackerData));
 
-        console.log("Response from server:", response.data);
+      // Update state with the new tracker data
+      setTrackerResult({
+        calories: trackerData.calories,
+        protein: trackerData.protein,
+        fat: trackerData.fat,
+        carbs: trackerData.carbs,
+      });
 
-        console.log("Non-user API Response:", response.data); // Debugging
+      // Show modal with results
+      setShowModal(true);
 
-        const trackerData = response.data.data;  
-
-        // Update state with new data
-        setTrackerResult({
-          calories: trackerData.calories,
-          protein: trackerData.protein,
-          fat: trackerData.fat,
-          carbs: trackerData.carbs,
-        });
-
-        // Update localStorage with new data
-        localStorage.setItem("macroTracker", JSON.stringify(trackerData));
-        console.log("TDEE saved to localstorage:', trackerData");
-
-        // Show modal with results
-        setShowModal(true);
-      } catch (error) {
-        console.error("Error saving data for non-logged-in user:", error.response?.data || error.message);
-      }
+    } catch (error) {
+      console.error("Error during API request:", error.response ? error.response.data : error.message);
     }
   };
 
-  // Return loading state if token is being checked
+  // Return loading state while token is being checked
   if (loading) {
     return <div>Loading...</div>; // Loading state while checking token
   }
@@ -192,7 +145,7 @@ const GetStarted = () => {
       <p>Use our TDEE calculator to determine your daily intake.</p>
 
       <form className="tdee-form" onSubmit={handleSubmit}>
-
+        
         {/* Enter Information */}
         <div className="input-group">
           <label>Age:</label>
@@ -229,12 +182,8 @@ const GetStarted = () => {
           <select
             value={gender}
             onChange={(e) => setGender(e.target.value)}>
-            <option
-              value="male">Male
-            </option>
-            <option
-              value="female">Female
-            </option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
           </select>
         </div>
 
@@ -243,23 +192,12 @@ const GetStarted = () => {
           <label>Activity Level:</label>
           <select
             value={activityLevel}
-            onChange={(e) => setActivityLevel(e.target.value)}
-          >
-            <option
-              value="1.2">Sedentary (little or no exercise)
-            </option>
-            <option
-              value="1.375">Lightly active (light exercise 1-3 days/week)
-            </option>
-            <option
-              value="1.55">Moderately active (moderate exercise 3-5 days/week)
-            </option>
-            <option
-              value="1.725">Very active (hard exercise 6-7 days/week)
-            </option>
-            <option
-              value="1.9">Super active (very intense exercise, physical job, etc.)
-            </option>
+            onChange={(e) => setActivityLevel(e.target.value)}>
+            <option value="1.2">Sedentary (little or no exercise)</option>
+            <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+            <option value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
+            <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+            <option value="1.9">Super active (very intense exercise, physical job, etc.)</option>
           </select>
         </div>
 
@@ -268,24 +206,14 @@ const GetStarted = () => {
           <label>Goal:</label>
           <select
             value={goal}
-            onChange={(e) => setGoal(e.target.value)}
-          >
-            <option
-              value="weight-loss">Weight Loss
-            </option>
-            <option
-              value="maintenance">Maintenance
-            </option>
-            <option
-              value="muscle-gain">Muscle Gain
-            </option>
+            onChange={(e) => setGoal(e.target.value)}>
+            <option value="weight-loss">Weight Loss</option>
+            <option value="maintenance">Maintenance</option>
+            <option value="muscle-gain">Muscle Gain</option>
           </select>
         </div>
 
-        <button
-          type="submit">Calculate TDEE & Macros
-        </button>
-
+        <button type="submit">Calculate TDEE & Macros</button>
       </form>
 
       {/* Modal for Results */}
@@ -294,34 +222,16 @@ const GetStarted = () => {
           <div className="modal-content">
             <h2>Your Calories & Macros Intake</h2>
 
-            <p><strong>
-              Calories:
-            </strong>
-              {trackerResult.calories} kcal/day
-            </p>
-
-            <p>
-              <strong>Protein:</strong>{trackerResult.protein}g
-            </p>
-
-            <p>
-              <strong>Fats:</strong>{trackerResult.fat}g
-            </p>
-
-            <p>
-              <strong>Carbs:</strong>{trackerResult.carbs}g
-            </p>
+            <p><strong>Calories:</strong> {trackerResult.calories} kcal/day</p>
+            <p><strong>Protein:</strong> {trackerResult.protein}g</p>
+            <p><strong>Fats:</strong> {trackerResult.fat}g</p>
+            <p><strong>Carbs:</strong> {trackerResult.carbs}g</p>
 
             {/* Navigate to Menu Button */}
-            <button
-              onClick={() => navigate("/menu")}>Choose Your Meals
-            </button>
+            <button onClick={() => navigate("/menu")}>Choose Your Meals</button>
 
             {/* Close Modal Button */}
-            <button
-              onClick={() => setShowModal(false)}>Close
-            </button>
-
+            <button onClick={() => setShowModal(false)}>Close</button>
           </div>
         </div>
       )}
