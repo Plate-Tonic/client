@@ -91,6 +91,7 @@ const SignUp = () => {
 
       // Clear TDEE data from localStorage after registration
       localStorage.removeItem("macroTracker");
+      localStorage.setItem("userData", JSON.stringify({})); // Reset instead of removing
       console.log("After clearing, macroTracker in localStorage:", localStorage.getItem("macroTracker"));
 
       window.location.href = "/login"; // Redirect to login page

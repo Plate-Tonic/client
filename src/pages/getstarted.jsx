@@ -64,19 +64,21 @@ const GetStarted = () => {
       goal: goalMapped,
     };
 
+    // Retrieve auth token from local storage
     const token = localStorage.getItem("authToken");
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
     try {
-      let response;
+      let response; // Variable to store API response
 
+      // Check if user is logged in and has a token
       if (isLoggedIn && token) {
         const decodedToken = jwtDecode(token);
         const userId = decodedToken.userId;
 
         // Check if user has existing data in localStorage
         if (localStorage.getItem("userData")) {
-          
+
           // Scenario 1: User is logged in and has existing data in localStorage
           const savedData = JSON.parse(localStorage.getItem("userData"));
 
@@ -104,6 +106,7 @@ const GetStarted = () => {
           { headers }
         );
       }
+
 
       // Extract tracker data from response
       const trackerData = response.data.data;
@@ -142,6 +145,7 @@ const GetStarted = () => {
       <p>Use our TDEE calculator to determine your daily intake.</p>
 
       <form className="tdee-form" onSubmit={handleSubmit}>
+
         {/* Enter Information */}
         <div className="input-group">
           <label>Age:</label>
