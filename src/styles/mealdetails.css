@@ -41,6 +41,12 @@
   margin-bottom: 12px;
 }
 
+.meal-detail-page .description {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
 .meal-detail-page .ingredients {
   font-size: 18px;
   color: #333;

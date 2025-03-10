@@ -7,7 +7,7 @@ import about2 from "../assets/Website_meal-plans_hands-holding_500px_LC_Low-Carb
 import about3 from "../assets/meal-prep-ideas-storing-recipes-1296x728.webp"
 import about4 from "../assets/istockphoto-1225778251-612x612.jpg"
 
-
+// About Component
 const About = () => {
   return (
     <div className="about-page">

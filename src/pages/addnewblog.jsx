@@ -55,18 +55,13 @@ const AddNewBlog = () => {
             // Send blog data to server with authorization token
             const token = localStorage.getItem("authToken");
             await axios.post(
-                `http://localhost:8008/blog`,
-                {
-                    ...blogData,
-                    tags: blogData.tags,
-                },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
+
+                `http://localhost:8008/blog`, { ...blogData, tags: blogData.tags, },
+                { headers: { Authorization: `Bearer ${token}` }, }
             );
 
             // Show success message and clear form data
-            setSuccess("Blog post added successfully!");
+            window.alert("Blog post added successfully!");
 
             setBlogData({
                 title: "",
@@ -78,8 +73,8 @@ const AddNewBlog = () => {
             // Redirect to blog page after 2 seconds
             setTimeout(() => navigate("/blog"), 2000);
         } catch (err) {
-            console.error("Error adding blog:", err);
-            setError("Failed to add blog. Ensure all fields are filled."); {/* NEED TO ADD MORE SPECIFIC ERRORS */ }
+            const message = err.response?.data?.message || "Something went wrong. Please try again.";
+            window.alert(`Error: ${message}`);
         }
     };
 
@@ -177,7 +172,7 @@ const AddNewBlog = () => {
 
                 {/* Button to submit form */}
                 <button
-                    type="submit">Add Blog  {/* NEED TO ADD SUCCESS MESSAGE AND ERRORS! */}
+                    type="submit">Create Blog Post
                 </button>
 
 

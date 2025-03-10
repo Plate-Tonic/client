@@ -6,10 +6,9 @@ import "../styles/addnewmeal.css";
 const AddMeal = () => {
     // State to manage input data for a new meal
     const [mealData, setMealData] = useState({
-
         name: "",
         description: "",
-        imageUrl: "",
+        mealImage: "",
         ingredients: "",
         calories: "",
         protein: "",
@@ -225,7 +224,6 @@ const AddMeal = () => {
                 </div>
 
                 {/* Submit and Cancel buttons */}
-
                 <button
                     type="submit"> Submit
                 </button>

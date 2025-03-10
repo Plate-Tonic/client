@@ -66,6 +66,11 @@ const ForgetPassword = () => {
       return;
     }
 
+    if (newPassword.length < 8) { // Check password length
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
+
     // Send a POST request to reset the password
     try {
       const response = await axios.post(`http://localhost:8008/reset-password`, {
@@ -100,10 +105,11 @@ const ForgetPassword = () => {
 
             <form onSubmit={handleEmailSubmit}>
               <div className="input-group">
-                <label>
+                <label htmlFor="email">
                   Email:
                 </label>
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) =>
@@ -125,10 +131,11 @@ const ForgetPassword = () => {
             <p>{securityQuestion}</p>
             <form onSubmit={handleSecurityAnswerSubmit}>
               <div className="input-group">
-                <label>
+                <label htmlFor="securityAnswer">
                   Answer:
                 </label>
                 <input
+                  id="securityAnswer"
                   type="text"
                   value={securityAnswer}
                   onChange={(e) =>
@@ -150,18 +157,20 @@ const ForgetPassword = () => {
             <form onSubmit={handlePasswordReset}>
 
               <div className="input-group">
-                <label>New Password:</label>
+                <label htmlFor="password">New Password:</label>
                 <input
+                  id="password"
                   type="password"
                   value={newPassword}
-                  onChange={(e) => setConfirmNewPasswordetNewPassword(e.target.value)}
+                  onChange={(e) => setNewPassword(e.target.value)}
                   required
                 />
               </div>
 
               <div className="input-group">
-                <label>Confirm New Password:</label>
+                <label htmlFor="confirm-password">Confirm New Password:</label>
                 <input
+                  id="confirm-password"
                   type="password"
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}

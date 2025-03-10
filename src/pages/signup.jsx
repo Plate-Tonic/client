@@ -31,6 +31,8 @@ const SignUp = () => {
       try {
         const response = await axios.get(`http://localhost:8008/questions`);
 
+        console.log(" Fetched security questions:", response.data);
+
         // Set the security questions in state
         setSecurityQuestions(response.data.securityQuestions);
         if (response.data.securityQuestions.length > 0) {
@@ -57,6 +59,10 @@ const SignUp = () => {
       alert("Passwords do not match.");
       return;
     }
+    if (confirmPassword.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
     if (!securityAnswer.trim()) {
       alert("Please provide an answer to your security question.");
       return;
@@ -79,12 +85,17 @@ const SignUp = () => {
       }
     };
 
+    console.log(" Sending user data:", JSON.stringify(userData, null, 2));
+
     // Send POST request to register user
     try {
       const response = await axios.post(`http://localhost:8008/register`, userData);
 
+      console.log("Signup successful! Response:", response.data);
+
       // Clear TDEE data from localStorage after registration
       localStorage.removeItem("macroTracker");
+      localStorage.setItem("userData", JSON.stringify({})); // Reset instead of removing
       console.log("After clearing, macroTracker in localStorage:", localStorage.getItem("macroTracker"));
 
       window.location.href = "/login"; // Redirect to login page
@@ -93,8 +104,8 @@ const SignUp = () => {
       alert("Successfully registered user!");
       navigate("/login");
     } catch (error) {
-      console.error("Error during sign-up:", error);
-      alert("Error registering user. Please try again.");
+      console.error("Error during sign-up:", error.response?.data || error.message);
+      alert(`Error registering user: ${JSON.stringify(error.response?.data, null, 2) || "Please try again."}`);
     }
   };
 
@@ -106,12 +117,13 @@ const SignUp = () => {
       {/* Sign Up Form */}
       <div className="signup-container">
         <h2>Sign Up</h2>
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSignUp} data-testid="signup-form">
 
           {/* Input fields for user sign-up */}
           <div className="input-group">
-            <label>Name:</label>
+            <label htmlFor="name">Name:</label>
             <input
+              id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -120,8 +132,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
+              id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -130,8 +143,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Password:</label>
+            <label htmlFor="password">Password:</label>
             <input
+              id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -140,8 +154,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Confirm Password:</label>
+            <label htmlFor="confirmPassword">Confirm Password:</label>
             <input
+              id="confirmPassword"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -150,8 +165,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Security Question:</label>
+            <label htmlFor="securityQuestion">Security Question:</label>
             <select
+              id="securityQuestion"
               value={selectedQuestion}
               onChange={(e) => setSelectedQuestion(e.target.value)}
               required
@@ -166,8 +182,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Security Answer:</label>
+            <label htmlFor="securityAnswer">Security Answer:</label>
             <input
+              id="securityAnswer"
               type="text"
               value={securityAnswer}
               onChange={(e) => setSecurityAnswer(e.target.value)}
@@ -176,8 +193,9 @@ const SignUp = () => {
           </div>
 
           <div className="terms-conditions">
-            <label>
+            <label htmlFor="agreeTerms">
               <input
+                id="agreeTerms"
                 type="checkbox"
                 checked={agreeTerms}
                 onChange={(e) => setAgreeTerms(e.target.checked)}
@@ -185,10 +203,10 @@ const SignUp = () => {
               I agree to the <Link to="/terms-and-conditions">Terms & Conditions</Link>
             </label>
           </div>
-           
+
           {/* Sign Up button */}
-          <button 
-          type="submit">Sign Up
+          <button
+            type="submit">Sign Up
           </button>
 
         </form>
@@ -198,7 +216,7 @@ const SignUp = () => {
           Already have an account?
           <Link to="/login">Login here</Link>
         </p>
-        
+
       </div>
     </div>
   );

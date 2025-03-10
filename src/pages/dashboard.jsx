@@ -60,7 +60,7 @@ const Dashboard = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const userData = response.data; // Store the fetched user data
+        const userData = response.data.data; // Store the fetched user data
         console.log("Fetched userData:", userData);
 
         // Set user details from the fetched data
@@ -184,6 +184,12 @@ const Dashboard = () => {
     // Check if new password is different from the current password
     if (currentPassword === newPassword) {
       alert("New password must be different from the current password.");
+      return;
+    }
+
+    // Check new password length
+    if (newPassword.length < 8) { // Check password length
+      alert("New password must be at least 8 characters long.");
       return;
     }
 

@@ -44,6 +44,11 @@
   color: #444;
 }
 
+/* Blog Content Paragraph */
+.blog-content p {
+  margin-bottom: 20px;
+}
+
 /* Back Button */
 .back-button {
   display: inline-block;

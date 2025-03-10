@@ -21,7 +21,7 @@ const BlogDetail = () => {
       try {
         const response = await fetch(`http://localhost:8008/blog/${id}`);
         const data = await response.json();
-        setBlog(data); // Store the fetched blog post
+        setBlog(data.data); // Store the fetched blog post
       } catch (err) {
         console.error("Error fetching blog details:", err); // Log any errors
       }
@@ -54,10 +54,9 @@ const BlogDetail = () => {
       alert("Failed to delete blog post. Please try again.");
     }
   };
-
-  // Show loading message while the data is being fetched
+  
   if (!blog) {
-    return <p>Loading...</p>;
+    return null; // Show nothing if the blog post is not loaded yet
   }
 
   return (
@@ -82,8 +81,10 @@ const BlogDetail = () => {
           Tags: {blog.tags.join(", ")}
         </p>
 
-        <div>
-          <p>{blog.content}</p>
+        <div className="blog-content">
+          {blog.content.split('\n').map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
         </div>
 
         {/* Remove Blog Button (Only for Admins) */}

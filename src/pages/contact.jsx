@@ -30,30 +30,33 @@ const Contact = () => {
           <form onSubmit={handleSubmit}>
 
             <div className="input-group">
-              <label>
+              <label htmlFor="name">
                 Name
               </label>
               <input
+                id="name"
                 type="text"
                 placeholder="Enter your name"
                 required />
             </div>
 
             <div className="input-group">
-              <label>
+              <label htmlFor="email">
                 Email
               </label>
               <input
+                id="email"
                 type="email"
                 placeholder="Enter your email"
                 required />
             </div>
 
             <div className="input-group">
-              <label>
+              <label htmlFor="message">
                 Message
               </label>
               <textarea
+                id="message"
                 placeholder="Enter your message"
                 required>
               </textarea>

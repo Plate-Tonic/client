@@ -24,7 +24,7 @@ const Blog = () => {
       try {
         const response = await fetch(`http://localhost:8008/blog`);
         const data = await response.json();
-        setBlogs(data); // Store the fetched blogs in state
+        setBlogs(data.data); // Store the fetched blogs array in state
       } catch (err) {
         console.error("Error fetching blogs:", err); // Log any errors (NEED MORE SPECIFIC ERROR HANDLING)
       }
