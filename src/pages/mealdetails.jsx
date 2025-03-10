@@ -79,8 +79,6 @@ const MealDetail = () => {
           crossOrigin="anonymous"
         />
 
-        <p><strong>Description:</strong> {meal.description}</p>
-
         <div className="ingredients">
           <strong>Ingredients:</strong>
           <ul>
@@ -88,7 +86,13 @@ const MealDetail = () => {
               <li key={index}>{ingredient}</li>
             ))}
           </ul>
+        </div>
 
+        <div className="description">
+          <strong>Recipe:</strong>
+          {meal.description.split('\n').map((line, index) => (
+            <p key={index}>{line}</p>
+          ))}
         </div>
 
         <div className="meal-info">
