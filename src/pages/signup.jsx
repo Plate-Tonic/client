@@ -59,6 +59,10 @@ const SignUp = () => {
       alert("Passwords do not match.");
       return;
     }
+    if (confirmPassword.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
     if (!securityAnswer.trim()) {
       alert("Please provide an answer to your security question.");
       return;
@@ -102,7 +106,7 @@ const SignUp = () => {
     } catch (error) {
       console.error("❌ Error during sign-up:", error.response?.data || error.message);
       alert(`Error registering user: ${JSON.stringify(error.response?.data, null, 2) || "Please try again."}`);
-    }    
+    }
   };
 
   // Render the sign-up form
@@ -192,10 +196,10 @@ const SignUp = () => {
               I agree to the <Link to="/terms-and-conditions">Terms & Conditions</Link>
             </label>
           </div>
-           
+
           {/* Sign Up button */}
-          <button 
-          type="submit">Sign Up
+          <button
+            type="submit">Sign Up
           </button>
 
         </form>
@@ -205,7 +209,7 @@ const SignUp = () => {
           Already have an account?
           <Link to="/login">Login here</Link>
         </p>
-        
+
       </div>
     </div>
   );
