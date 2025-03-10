@@ -187,6 +187,12 @@ const Dashboard = () => {
       return;
     }
 
+    // Check new password length
+    if (newPassword.length < 8) { // Check password length
+      alert("New password must be at least 8 characters long.");
+      return;
+    }
+
     // Decode token to get user ID
     try {
       const decodedToken = jwtDecode(token);

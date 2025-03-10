@@ -66,6 +66,11 @@ const ForgetPassword = () => {
       return;
     }
 
+    if (newPassword.length < 8) { // Check password length
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
+
     // Send a POST request to reset the password
     try {
       const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/reset-password`, {

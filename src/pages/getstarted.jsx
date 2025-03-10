@@ -6,8 +6,6 @@ import "../styles/getstarted.css";
 
 // GetStarted component
 const GetStarted = () => {
-
-  // Initialize navigation hook
   const navigate = useNavigate();
 
   // State variables for form data and results
@@ -109,6 +107,8 @@ const GetStarted = () => {
         );
       }
 
+
+      // Extract tracker data from response
       const trackerData = response.data.data;
 
       // Save data in localStorage
@@ -145,7 +145,7 @@ const GetStarted = () => {
       <p>Use our TDEE calculator to determine your daily intake.</p>
 
       <form className="tdee-form" onSubmit={handleSubmit}>
-        
+
         {/* Enter Information */}
         <div className="input-group">
           <label>Age:</label>
