@@ -16,6 +16,8 @@ const Blog = () => {
   // State to track if the user is an admin
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const [error, setError] = useState(""); // Store error messages 
+
   // Effect to fetch blogs and check admin status when component mounts
   useEffect(() => {
 
@@ -23,10 +25,14 @@ const Blog = () => {
     const fetchBlogs = async () => {
       try {
         const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/blog`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch blogs");
+        }
         const data = await response.json();
         setBlogs(data.data); // Store the fetched blogs array in state
       } catch (err) {
-        console.error("Error fetching blogs:", err); // Log any errors (NEED MORE SPECIFIC ERROR HANDLING)
+        console.error("Error fetching blogs:", err); 
+        setError("Failed to load blog posts. Please try again later."); 
       }
     };
 
@@ -102,6 +108,8 @@ const Blog = () => {
       {/* Section displaying the list of blogs */}
       <div className="blog-section">
         <h3>Latest Posts</h3>
+
+        {error && <p className="error-message">{error}</p>} {/* Show error message if fetch fails */}
 
         <div className="blog-list">
           {filteredBlogs.length > 0 ? (
