@@ -54,8 +54,8 @@ test("submits email and proceeds to security question step", async () => {
 
 test("submits security answer and proceeds to password reset step", async () => {
   axios.post
-    .mockResolvedValueOnce({ status: 200, data: { securityQuestion: "What is your pet's name?" } })
-    .mockResolvedValueOnce({ status: 200 });
+    .mockResolvedValueOnce({ status: 200, data: { securityQuestion: "What is your pet's name?" } }) // Mock email step
+    .mockResolvedValueOnce({ status: 200 }); // Mock security answer step
 
   render(
     <MemoryRouter>
@@ -94,40 +94,45 @@ test("validates password reset and submits successfully", async () => {
     </MemoryRouter>
   );
 
-  // Enter email
+  // Step 1: Enter email and proceed to security question
   fireEvent.change(screen.getByLabelText(/email/i), { target: { value: "user@example.com" } });
   fireEvent.click(screen.getByRole("button", { name: /next/i }));
 
-  // Wait for Security Question step
   await waitFor(() => {
     expect(screen.getByText(/security question/i)).toBeInTheDocument();
   });
 
-  // Enter security answer
+  // Step 2: Answer security question
   fireEvent.change(screen.getByLabelText(/answer/i), { target: { value: "Fluffy" } });
   fireEvent.click(screen.getByRole("button", { name: /next/i }));
 
-  // Wait for Password Reset step
   await waitFor(() => {
     expect(screen.getByText(/reset your password/i)).toBeInTheDocument();
   });
 
-  // ✅ Get inputs using exact IDs instead of generic label text
+  // Step 3: Enter new passwords
   const newPasswordInput = screen.getByLabelText("New Password:");
   const confirmPasswordInput = screen.getByLabelText("Confirm New Password:");
 
-  // Enter new passwords
   fireEvent.change(newPasswordInput, { target: { value: "newpassword123" } });
   fireEvent.change(confirmPasswordInput, { target: { value: "newpassword123" } });
 
-  // Click Reset Password
   fireEvent.click(screen.getByRole("button", { name: /reset password/i }));
 
-  // Ensure axios was called with correct data
+  // Ensure API calls happen in correct order
   await waitFor(() => {
-    expect(axios.post).toHaveBeenCalledWith("http://localhost:8008/reset-password", {
-      email: "user@example.com",
-      newPassword: "newpassword123",
-    });
+    expect(axios.post).toHaveBeenCalledTimes(3);
+    expect(axios.post).toHaveBeenCalledWith(
+      "https://platetonic.onrender.com/question",
+      { email: "user@example.com" }
+    );
+    expect(axios.post).toHaveBeenCalledWith(
+      "https://platetonic.onrender.com/answer",
+      { email: "user@example.com", securityAnswer: "Fluffy" }
+    );
+    expect(axios.post).toHaveBeenCalledWith(
+      "https://platetonic.onrender.com/reset-password",
+      { email: "user@example.com", newPassword: "newpassword123" }
+    );
   });
 });

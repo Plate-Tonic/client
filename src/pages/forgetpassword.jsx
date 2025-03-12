@@ -20,7 +20,7 @@ const ForgetPassword = () => {
   const handleEmailSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
     try {
-      const response = await axios.post(`http://localhost:8008/question`, {
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/question`, {
         email
       });
 
@@ -41,7 +41,7 @@ const ForgetPassword = () => {
   const handleSecurityAnswerSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:8008/answer`, {
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/answer`, {
         email,
         securityAnswer,
       });
@@ -73,7 +73,7 @@ const ForgetPassword = () => {
 
     // Send a POST request to reset the password
     try {
-      const response = await axios.post(`http://localhost:8008/reset-password`, {
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/reset-password`, {
         email,
         newPassword,
       });

@@ -29,7 +29,7 @@ const SignUp = () => {
   useEffect(() => {
     const fetchSecurityQuestions = async () => {
       try {
-        const response = await axios.get(`http://localhost:8008/questions`);
+        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/questions`);
 
         console.log(" Fetched security questions:", response.data);
 
@@ -89,7 +89,7 @@ const SignUp = () => {
 
     // Send POST request to register user
     try {
-      const response = await axios.post(`http://localhost:8008/register`, userData);
+      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/register`, userData);
 
       console.log("Signup successful! Response:", response.data);
 

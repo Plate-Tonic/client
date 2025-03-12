@@ -19,7 +19,7 @@ const BlogDetail = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await fetch(`http://localhost:8008/blog/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/blog/${id}`);
         const data = await response.json();
         setBlog(data.data); // Store the fetched blog post
       } catch (err) {
@@ -43,7 +43,7 @@ const BlogDetail = () => {
     try {
       // Send a DELETE request to the backend to remove the blog post
       const token = localStorage.getItem("authToken");
-      await axios.delete(`http://localhost:8008/blog/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/blog/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

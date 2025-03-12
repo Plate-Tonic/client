@@ -87,7 +87,7 @@ const AddMeal = () => {
         formData.append("mealImage", image); // Attach image file
 
         try {
-            await axios.post(`http://localhost:8008/meal-plan`, formData, {
+            await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"

@@ -56,7 +56,7 @@ const AddNewBlog = () => {
             const token = localStorage.getItem("authToken");
             await axios.post(
 
-                `http://localhost:8008/blog`, { ...blogData, tags: blogData.tags, },
+                `${import.meta.env.VITE_AUTH_API_URL}/blog`, { ...blogData, tags: blogData.tags, },
                 { headers: { Authorization: `Bearer ${token}` }, }
             );
 

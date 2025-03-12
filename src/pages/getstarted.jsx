@@ -84,7 +84,7 @@ const GetStarted = () => {
 
           // Update user data in backend
           response = await axios.put(
-            `http://localhost:8008/user/${userId}/calorie-tracker`,
+            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`,
             { id: userId, ...userData },
             { headers }
           );
@@ -92,7 +92,7 @@ const GetStarted = () => {
 
           // Scenario 2: User is logged in but has no existing data
           response = await axios.post(
-            `http://localhost:8008/user/${userId}/calorie-tracker`,
+            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`,
             userData,
             { headers }
           );
@@ -101,7 +101,7 @@ const GetStarted = () => {
 
         // Scenario 3: User is not logged in (non-user)
         response = await axios.post(
-          `http://localhost:8008/user/calorie-tracker`,
+          `${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`,
           userData,
           { headers }
         );
