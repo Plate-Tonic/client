@@ -5,24 +5,23 @@ import AddNewBlog from "../src/pages/addnewblog";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-// Mock axios and jwtDecode
+// Mock axios and jwtDecode 
 vi.mock("axios");
 vi.mock("jwt-decode", () => ({
   jwtDecode: vi.fn(),
 }));
 
-// Mock window.alert
+// Mock window.alert to control and verify the alert behavior
 global.alert = vi.fn();
 
+// Setting up mock data and cleaning up before each test
 beforeEach(() => {
-  // Ensure the user is an admin for the test
   localStorage.setItem("authToken", "fakeToken");
   jwtDecode.mockReturnValue({ isAdmin: true });
-
-  // Clear mocks before each test
   vi.clearAllMocks();
 });
 
+// Test to ensure the Add New Blog form renders with the correct fields
 test("renders Add New Blog form with input fields", () => {
   render(
     <MemoryRouter>
@@ -30,14 +29,16 @@ test("renders Add New Blog form with input fields", () => {
     </MemoryRouter>
   );
 
+  // Verifying the presence of the Add New Blog heading and form fields
   expect(screen.getByText("Add New Blog Post")).toBeInTheDocument();
   expect(screen.getByLabelText(/title:/i)).toBeInTheDocument();
   expect(screen.getByLabelText(/author:/i)).toBeInTheDocument();
   expect(screen.getByLabelText(/content:/i)).toBeInTheDocument();
 });
 
+// Test to check form submission, including success message and API interaction
 test("submits form and displays success message", async () => {
-  // Mock successful API response
+  // Mocking a successful response from the API
   axios.post.mockResolvedValueOnce({ data: { message: "Success" } });
 
   render(
@@ -46,7 +47,7 @@ test("submits form and displays success message", async () => {
     </MemoryRouter>
   );
 
-  // Fill out form fields
+  // Simulating form field changes
   fireEvent.change(screen.getByLabelText(/title/i), {
     target: { value: "New Blog Title" },
   });
@@ -59,30 +60,30 @@ test("submits form and displays success message", async () => {
     target: { value: "This is a test blog content." },
   });
 
-  // Select a category
+  // Simulating category selection
   fireEvent.click(screen.getByLabelText(/nutrition/i));
 
-  // Find and click the submit button
+  // Finding and clicking the submit button
   fireEvent.click(screen.getByRole("button", { name: /create blog post/i }));
 
-  // Wait for the alert to be triggered
+  // Waiting for the alert to be triggered
   await waitFor(() => {
     expect(global.alert).toHaveBeenCalledWith("Blog post added successfully!");
   });
 
-  // Verify axios was called with correct data
+  // Verifying the API call was made with the correct data
   expect(axios.post).toHaveBeenCalledWith(
     `${import.meta.env.VITE_AUTH_API_URL}/blog`,
     {
       title: "New Blog Title",
       author: "John Doe",
       content: "This is a test blog content.",
-      tags: ["Nutrition"], // Checkbox selection
+      tags: ["Nutrition"], // The selected checkbox tag
     },
     { headers: { Authorization: "Bearer fakeToken" } }
   );
 
-  // Ensure form is reset after submission
+  // Ensuring that the form is reset after submission
   expect(screen.getByLabelText(/title/i)).toHaveValue("");
   expect(screen.getByLabelText(/author/i)).toHaveValue("");
   expect(screen.getByLabelText(/content/i)).toHaveValue("");

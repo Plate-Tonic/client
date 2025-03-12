@@ -7,10 +7,12 @@ import axios from "axios";
 // Mock axios globally
 vi.mock("axios");
 
+// Set up mock token before each test
 beforeEach(() => {
-  localStorage.setItem("authToken", "fakeToken"); // Simulate logged-in user
+  localStorage.setItem("authToken", "fakeToken"); 
 });
 
+// Test form submission and success alert
 test("submits form and shows success alert", async () => {
   axios.post.mockResolvedValueOnce({ data: { message: "Meal added successfully!" } });
 
