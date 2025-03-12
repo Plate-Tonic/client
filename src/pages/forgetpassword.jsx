@@ -20,7 +20,7 @@ const ForgetPassword = () => {
   const handleEmailSubmit = async (event) => {
     event.preventDefault(); // Prevent default form submission behavior
     try {
-      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/question`, {
+      const response = await axios.post(`http://localhost:8008/question`, {
         email
       });
 
@@ -41,7 +41,7 @@ const ForgetPassword = () => {
   const handleSecurityAnswerSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/answer`, {
+      const response = await axios.post(`http://localhost:8008/answer`, {
         email,
         securityAnswer,
       });
@@ -73,7 +73,7 @@ const ForgetPassword = () => {
 
     // Send a POST request to reset the password
     try {
-      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/reset-password`, {
+      const response = await axios.post(`http://localhost:8008/reset-password`, {
         email,
         newPassword,
       });
@@ -105,10 +105,11 @@ const ForgetPassword = () => {
 
             <form onSubmit={handleEmailSubmit}>
               <div className="input-group">
-                <label>
+                <label htmlFor="email">
                   Email:
                 </label>
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) =>
@@ -130,10 +131,11 @@ const ForgetPassword = () => {
             <p>{securityQuestion}</p>
             <form onSubmit={handleSecurityAnswerSubmit}>
               <div className="input-group">
-                <label>
+                <label htmlFor="securityAnswer">
                   Answer:
                 </label>
                 <input
+                  id="securityAnswer"
                   type="text"
                   value={securityAnswer}
                   onChange={(e) =>
@@ -155,8 +157,9 @@ const ForgetPassword = () => {
             <form onSubmit={handlePasswordReset}>
 
               <div className="input-group">
-                <label>New Password:</label>
+                <label htmlFor="password">New Password:</label>
                 <input
+                  id="password"
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -165,8 +168,9 @@ const ForgetPassword = () => {
               </div>
 
               <div className="input-group">
-                <label>Confirm New Password:</label>
+                <label htmlFor="confirm-password">Confirm New Password:</label>
                 <input
+                  id="confirm-password"
                   type="password"
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}

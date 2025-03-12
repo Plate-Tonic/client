@@ -84,7 +84,7 @@ const GetStarted = () => {
 
           // Update user data in backend
           response = await axios.put(
-            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`,
+            `http://localhost:8008/user/${userId}/calorie-tracker`,
             { id: userId, ...userData },
             { headers }
           );
@@ -92,7 +92,7 @@ const GetStarted = () => {
 
           // Scenario 2: User is logged in but has no existing data
           response = await axios.post(
-            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/calorie-tracker`,
+            `http://localhost:8008/user/${userId}/calorie-tracker`,
             userData,
             { headers }
           );
@@ -101,7 +101,7 @@ const GetStarted = () => {
 
         // Scenario 3: User is not logged in (non-user)
         response = await axios.post(
-          `${import.meta.env.VITE_AUTH_API_URL}/user/calorie-tracker`,
+          `http://localhost:8008/user/calorie-tracker`,
           userData,
           { headers }
         );
@@ -148,8 +148,9 @@ const GetStarted = () => {
 
         {/* Enter Information */}
         <div className="input-group">
-          <label>Age:</label>
+          <label htmlFor="age">Age:</label>
           <input
+            id="age"
             type="number"
             value={age}
             onChange={(e) => setAge(e.target.value)}
@@ -158,8 +159,9 @@ const GetStarted = () => {
         </div>
 
         <div className="input-group">
-          <label>Weight (kg):</label>
+          <label htmlFor="weight">Weight (kg):</label>
           <input
+            id="weight"
             type="number"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
@@ -168,8 +170,9 @@ const GetStarted = () => {
         </div>
 
         <div className="input-group">
-          <label>Height (cm):</label>
+          <label htmlFor="height">Height (cm):</label>
           <input
+            id="height"
             type="number"
             value={height}
             onChange={(e) => setHeight(e.target.value)}
@@ -178,8 +181,9 @@ const GetStarted = () => {
         </div>
 
         <div className="input-group">
-          <label>Gender:</label>
+          <label htmlFor="gender">Gender:</label>
           <select
+            id="gender"
             value={gender}
             onChange={(e) => setGender(e.target.value)}>
             <option value="male">Male</option>
@@ -189,8 +193,9 @@ const GetStarted = () => {
 
         {/* Activity Level */}
         <div className="input-group">
-          <label>Activity Level:</label>
+          <label htmlFor="activity">Activity Level:</label>
           <select
+            id="activity"
             value={activityLevel}
             onChange={(e) => setActivityLevel(e.target.value)}>
             <option value="1.2">Sedentary (little or no exercise)</option>
@@ -203,8 +208,9 @@ const GetStarted = () => {
 
         {/* Goal */}
         <div className="input-group">
-          <label>Goal:</label>
+          <label htmlFor="goal">Goal:</label>
           <select
+            id="goal"
             value={goal}
             onChange={(e) => setGoal(e.target.value)}>
             <option value="weight-loss">Weight Loss</option>

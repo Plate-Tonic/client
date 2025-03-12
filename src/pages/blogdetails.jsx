@@ -19,7 +19,7 @@ const BlogDetail = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/blog/${id}`);
+        const response = await fetch(`http://localhost:8008/blog/${id}`);
         const data = await response.json();
         setBlog(data.data); // Store the fetched blog post
       } catch (err) {
@@ -43,7 +43,7 @@ const BlogDetail = () => {
     try {
       // Send a DELETE request to the backend to remove the blog post
       const token = localStorage.getItem("authToken");
-      await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/blog/${id}`, {
+      await axios.delete(`http://localhost:8008/blog/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -54,10 +54,9 @@ const BlogDetail = () => {
       alert("Failed to delete blog post. Please try again.");
     }
   };
-
-  // Show loading message while the data is being fetched
+  
   if (!blog) {
-    return <p>Loading...</p>;
+    return null; // Show nothing if the blog post is not loaded yet
   }
 
   return (

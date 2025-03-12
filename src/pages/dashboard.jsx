@@ -56,7 +56,7 @@ const Dashboard = () => {
 
       // Fetch user data from the backend
       try {
-        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}`, {
+        const response = await axios.get(`http://localhost:8008/user/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -114,7 +114,7 @@ const Dashboard = () => {
 
       // Send a DELETE request to remove the meal
       await axios.delete(
-        `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/meal-plan/${mealId}`, {
+        `http://localhost:8008/user/${userId}/meal-plan/${mealId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -143,12 +143,12 @@ const Dashboard = () => {
       const userId = decodedToken.userId;
 
       // Send a PUT request to update the user details
-      await axios.put(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}`, { [field]: value }, {
+      await axios.put(`http://localhost:8008/user/${userId}`, { [field]: value }, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       // Update the user details state
-      const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}`, {
+      const response = await axios.get(`http://localhost:8008/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -200,7 +200,7 @@ const Dashboard = () => {
 
       // Send a PUT request to change the password
       const response = await axios.put(
-        `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}`,
+        `http://localhost:8008/user/${userId}`,
         { password: currentPassword, newPassword: newPassword }, // Sending both currentPassword and newPassword
         {
           headers: { Authorization: `Bearer ${token}` },

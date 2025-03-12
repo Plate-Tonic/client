@@ -29,7 +29,7 @@ const SignUp = () => {
   useEffect(() => {
     const fetchSecurityQuestions = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/questions`);
+        const response = await axios.get(`http://localhost:8008/questions`);
 
         console.log(" Fetched security questions:", response.data);
 
@@ -89,7 +89,7 @@ const SignUp = () => {
 
     // Send POST request to register user
     try {
-      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/register`, userData);
+      const response = await axios.post(`http://localhost:8008/register`, userData);
 
       console.log("Signup successful! Response:", response.data);
 
@@ -117,12 +117,13 @@ const SignUp = () => {
       {/* Sign Up Form */}
       <div className="signup-container">
         <h2>Sign Up</h2>
-        <form onSubmit={handleSignUp}>
+        <form onSubmit={handleSignUp} data-testid="signup-form">
 
           {/* Input fields for user sign-up */}
           <div className="input-group">
-            <label>Name:</label>
+            <label htmlFor="name">Name:</label>
             <input
+              id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -131,8 +132,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
+              id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -141,8 +143,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Password:</label>
+            <label htmlFor="password">Password:</label>
             <input
+              id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -151,8 +154,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Confirm Password:</label>
+            <label htmlFor="confirmPassword">Confirm Password:</label>
             <input
+              id="confirmPassword"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -161,8 +165,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Security Question:</label>
+            <label htmlFor="securityQuestion">Security Question:</label>
             <select
+              id="securityQuestion"
               value={selectedQuestion}
               onChange={(e) => setSelectedQuestion(e.target.value)}
               required
@@ -177,8 +182,9 @@ const SignUp = () => {
           </div>
 
           <div className="input-group">
-            <label>Security Answer:</label>
+            <label htmlFor="securityAnswer">Security Answer:</label>
             <input
+              id="securityAnswer"
               type="text"
               value={securityAnswer}
               onChange={(e) => setSecurityAnswer(e.target.value)}
@@ -187,8 +193,9 @@ const SignUp = () => {
           </div>
 
           <div className="terms-conditions">
-            <label>
+            <label htmlFor="agreeTerms">
               <input
+                id="agreeTerms"
                 type="checkbox"
                 checked={agreeTerms}
                 onChange={(e) => setAgreeTerms(e.target.checked)}

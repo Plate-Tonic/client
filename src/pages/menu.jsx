@@ -33,7 +33,7 @@ const Menu = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_AUTH_API_URL}/meal-plan`);
+        const response = await fetch(`http://localhost:8008/meal-plan`);
         const data = await response.json();
         console.log("API Response:", data.data); // Log the entire response
 
@@ -71,7 +71,7 @@ const Menu = () => {
     // Function to fetch user data from the backend GET request
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}`, {
+        const response = await axios.get(`http://localhost:8008/user/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         const userData = response.data.data;
@@ -139,7 +139,7 @@ const Menu = () => {
         // Send a POST request to save the meal to the user profile
         try {
           await axios.post(
-            `${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/meal-plan`,
+            `http://localhost:8008/user/${userId}/meal-plan`,
             { selectedMealPlan: meal._id },
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -167,7 +167,7 @@ const Menu = () => {
       const userId = decodedToken.userId;
 
       // Send a DELETE request to remove the meal from the user profile
-      await axios.delete(`${import.meta.env.VITE_AUTH_API_URL}/user/${userId}/meal-plan/${meal._id}`, {
+      await axios.delete(`http://localhost:8008/user/${userId}/meal-plan/${meal._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -259,7 +259,7 @@ const Menu = () => {
               <div key={meal._id} className="meal-item">
 
                 <img
-                  src={`${import.meta.env.VITE_AUTH_API_URL}${meal.mealImage || "/uploads/placeholder-image.jpg"}`}
+                  src={`http://localhost:8008${meal.mealImage || "/uploads/placeholder-image.jpg"}`}
                   alt={meal.name}
                   className="meal-image"
                   onClick={() => navigate(`/meal/${meal._id}`)}

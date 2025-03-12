@@ -23,9 +23,8 @@ const Homepage = () => {
         <h1>Welcome to Plate Tonic</h1>
         <p>Delicious, nutritious meals tailored for you.</p>
         {/* Link to GetStarted Page */}
-        <Link to="/getstarted">
-          <button
-            type="button">
+        <Link to="/getstarted" data-testid="get-started-button">
+          <button type="button">
             Get Started
           </button>
         </Link>

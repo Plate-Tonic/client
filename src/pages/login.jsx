@@ -30,7 +30,7 @@ const Login = () => {
 
     // Send login request to server POST /login
     try {
-      const response = await axios.post(`${import.meta.env.VITE_AUTH_API_URL}/login`, {
+      const response = await axios.post(`http://localhost:8008/login`, {
         email,
         password,
       });
@@ -62,8 +62,9 @@ const Login = () => {
         <form onSubmit={handleLogin}>
 
           <div className="input-group">
-            <label>Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
+              id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -72,8 +73,9 @@ const Login = () => {
           </div>
 
           <div className="input-group">
-            <label>Password:</label>
+            <label htmlFor="password">Password:</label>
             <input
+              id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
