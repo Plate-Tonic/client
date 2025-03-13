@@ -24,6 +24,10 @@ html, body {
   min-height: 100vh; 
 }
 
+p {
+  color: #555;
+}
+
 /* Buttons */
 button {
   cursor: pointer;

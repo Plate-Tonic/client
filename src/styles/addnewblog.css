@@ -14,7 +14,6 @@
 .add-blog-page h2 {
   font-size: 23px;
   margin-bottom: 20px;
-  color: #333;
 }
 
 /* Form Container */
@@ -38,7 +37,6 @@
   text-align: left;
   display: block;
   margin-bottom: 5px;
-  color: #555;
 }
 
 /* Input Fields */
