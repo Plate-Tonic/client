@@ -1,16 +1,5 @@
 /* Blog Detail Page Styles */
 
-/* Banner Styling */
-.blog-detail-banner {
-  width: 100%;
-  background-color: #BC4749;
-  color: white;
-  text-align: center;
-  padding: 130px;
-  font-size: 24px;
-  font-weight: bold;
-}
-
 /* Blog Detail Content Styles */
 .blog-detail-container {
   max-width: 800px;
@@ -62,7 +51,7 @@
 
 /* Remove Blog Button */
 .remove-blog-btn {
-  background: red;
+  background: #BC4749;
   color: white;
   padding: 10px;
   font-size: 16px;

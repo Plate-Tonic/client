@@ -61,10 +61,6 @@ const BlogDetail = () => {
 
   return (
     <div>
-      {/* Blog Detail Banner */}
-      <div className="blog-detail-banner">
-        Blog Detail
-      </div>
 
       {/* Blog Detail Content */}
       <div className="blog-detail-container">

@@ -5,26 +5,38 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
+    min-height: 90vh;
+    padding: 0 20px; /
+}
+
+.get-started-page h1, p  {
+    margin-bottom: 20px;
 }
 
 /* Banner Styling */
 .getstarted-banner {
-    width: 100vw;
-    background-color: #BC4749;
-    color: white;
+    width: 100%;
     text-align: center;
-    padding: 100px;
-    font-size: 24px;
+    padding: 40px;
+    font-size: clamp(3rem, 5vw, 5rem);
     font-weight: bold;
+}
+
+.get-started-page h2 {
+    text-align: center;
     margin-bottom: 20px;
+}
+
+.get-started-page p {
+    text-align: center;
+    margin-bottom: 50px;
 }
 
 /* Form Styling */
 .tdee-form {
     width: 100%;
     max-width: 500px;
-    background: #f8f8f8;
+    border: 1px solid #ddd;
     padding: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -33,19 +45,19 @@
     align-items: center;
 }
 
-.input-group {
+.getstarted-input {
     width: 100%;
     margin-bottom: 15px;
 }
 
-.input-group label {
+.getstarted-input label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-.input-group input,
-.input-group select {
+.getstarted-input input,
+.getstarted-input select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -103,3 +115,7 @@ button {
     color: white;
     margin-top: 10px;
 }
+
+/* Responsiveness */
+
+@media (max-width: 768px) {

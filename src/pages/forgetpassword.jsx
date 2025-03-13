@@ -104,7 +104,7 @@ const ForgetPassword = () => {
             <p>We will verify your email and security question.</p>
 
             <form onSubmit={handleEmailSubmit}>
-              <div className="input-group">
+              <div className="forgetpassword-input">
                 <label htmlFor="email">
                   Email:
                 </label>
@@ -130,7 +130,7 @@ const ForgetPassword = () => {
             <h2>Security Question</h2>
             <p>{securityQuestion}</p>
             <form onSubmit={handleSecurityAnswerSubmit}>
-              <div className="input-group">
+              <div className="forgetpassword-input">
                 <label htmlFor="securityAnswer">
                   Answer:
                 </label>
@@ -156,7 +156,7 @@ const ForgetPassword = () => {
             <h2>Reset Your Password</h2>
             <form onSubmit={handlePasswordReset}>
 
-              <div className="input-group">
+              <div className="forgetpassword-input">
                 <label htmlFor="password">New Password:</label>
                 <input
                   id="password"
@@ -167,7 +167,7 @@ const ForgetPassword = () => {
                 />
               </div>
 
-              <div className="input-group">
+              <div className="forgetpassword-input">
                 <label htmlFor="confirm-password">Confirm New Password:</label>
                 <input
                   id="confirm-password"

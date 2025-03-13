@@ -1,7 +1,7 @@
 // App.jsx
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Homepage from './pages/homepage.jsx';
 import Contact from './pages/contact.jsx';
 import Blog from './pages/blog.jsx';
@@ -22,11 +22,23 @@ import TermsAndConditions from './pages/terms-and-conditions.jsx';
 import { UserAuthContextProvider } from './contexts/UserAuthContext.jsx';
 import './App.css'; 
 
+// Ensure Scroll to Top on Route Change
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]); // Runs when the route changes
+
+  return null; // No UI, just functionality
+};
+
 // Main App component
 function App() {
   return (
     <UserAuthContextProvider>
       <Router>
+      <ScrollToTop />
         <div className="app-container">
           <Navbar />
           <main className="content">

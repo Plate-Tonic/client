@@ -10,7 +10,8 @@
 /* Body */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f8f9fa;
+  padding-top: 50px;
+  background-color: white;
   color: #333;
   line-height: 1.6;
   display: flex;
@@ -22,11 +23,12 @@ body {
 /* Buttons */
 button {
   cursor: pointer;
-  background-color: #6a994e;
+  background-color: #A7C957;
   color: white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: background 0.3s ease-in-out;
 }
 

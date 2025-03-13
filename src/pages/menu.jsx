@@ -102,14 +102,19 @@ const Menu = () => {
   useEffect(() => {
     if (selectedFilters.length > 0) {
       setFilteredMeals(
-        meals.filter((meal) =>
-          selectedFilters.every((filter) => meal.preference.includes(filter))
-        )
+        meals.filter((meal) => {
+          if (!meal.preference) return false;
+
+          const mealPreferences = Array.isArray(meal.preference)
+            ? meal.preference.map((p) => p.toLowerCase())
+            : [meal.preference.toLowerCase()];
+
+          return selectedFilters.some((filter) => mealPreferences.includes(filter.toLowerCase()));
+        })
       );
     } else {
       setFilteredMeals(meals);
     }
-
   }, [selectedFilters, meals]); // Refetch when the `selectedFilters` or `meals` change
 
   // Handle changes to the filter checkboxes
@@ -194,49 +199,90 @@ const Menu = () => {
       <div className="menu-banner">Meal Selection</div>
 
       <div className="calorie-tracker">
+        <h3>Your Required Calories</h3>
         {calorieData ? (
-          <p>
-            Calories: {calorieData.calories} kcal |
-            Protein: {calorieData.protein}g |
-            Fat: {calorieData.fat}g |
-            Carbs: {calorieData.carbs}g
-          </p>
+          <div className="macro-grid-wrapper">
+            <div className="macro-grid">
+              <div>
+                <p className="macro-label">Calories</p>
+                <p className="macro-value">{calorieData.calories} kcal</p>
+              </div>
+              <div>
+                <p className="macro-label">Protein</p>
+                <p className="macro-value">{calorieData.protein}g</p>
+              </div>
+              <div>
+                <p className="macro-label">Fat</p>
+                <p className="macro-value">{calorieData.fat}g</p>
+              </div>
+              <div>
+                <p className="macro-label">Carbs</p>
+                <p className="macro-value">{calorieData.carbs}g</p>
+              </div>
+            </div>
+          </div>
         ) : (
-          <button className="macro-btn"
-            onClick={() => navigate("/getstarted")}> Calculate Your Macros
+          <button className="macro-btn" onClick={() => navigate("/getstarted")}>
+            Calculate Your Macros
           </button>
         )}
 
         {isLoggedIn && (
-          <p className="selected-macros">
-            Selected Meal Calories: {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal |
-            Protein: {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g |
-            Fat: {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g |
-            Carbs: {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g
-          </p>
+          <>
+            <h3>Selected Meal Calories</h3>
+            <div className="macro-grid-wrapper">
+              <div className="macro-grid">
+                <div>
+                  <p className="macro-label">Calories</p>
+                  <p className="macro-value">
+                    {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal
+                  </p>
+                </div>
+                <div>
+                  <p className="macro-label">Protein</p>
+                  <p className="macro-value">
+                    {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g
+                  </p>
+                </div>
+                <div>
+                  <p className="macro-label">Fat</p>
+                  <p className="macro-value">
+                    {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g
+                  </p>
+                </div>
+                <div>
+                  <p className="macro-label">Carbs</p>
+                  <p className="macro-value">
+                    {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g
+                  </p>
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </div>
 
       <div className="filter-section">
         <h3>Filter by Preferences</h3>
         <div className="filter-options">
-          {["vegetarian",
-            "vegan",
-            "gluten-free",
-            "nut-free",
-            "none"].map((filter) => (
-              <label key=
-                {filter}>
-                <input
-                  type="checkbox"
-                  value={filter}
-                  onChange={handleFilterChange}
-                />
-                {filter}
-              </label>
-            ))}
+          {["Vegetarian", "Vegan", "Gluten Free", "Nut Free", "None"].map((filter) => (
+            <button
+              key={filter}
+              className={`filter-button ${selectedFilters.includes(filter) ? "active" : ""}`}
+              onClick={() =>
+                setSelectedFilters((prevFilters) =>
+                  prevFilters.includes(filter)
+                    ? prevFilters.filter((f) => f !== filter)
+                    : [...prevFilters, filter]
+                )
+              }
+            >
+              {filter}
+            </button>
+          ))}
         </div>
       </div>
+
 
       {/* Add New Meal Button Admin ONLY */}
       {isAdmin && (
@@ -271,7 +317,7 @@ const Menu = () => {
                   onClick={() => navigate(`/mealdetails/${meal._id}`)}>{meal.name}
                 </p>
 
-                <button
+                <button className="remove-meal-btn"
                   onClick={() => handleRemoveMeal(meal)}>Remove
                 </button>
 
@@ -307,7 +353,7 @@ const Menu = () => {
 
                 {/* Button for Non-Users to Log in */}
                 {isLoggedIn ? (
-                  <button
+                  <button className="choose-btn"
                     onClick={() => handleSelectMeal(meal)}>Choose</button>
                 ) : (
                   <button className="disabled-btn"
