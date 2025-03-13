@@ -2,186 +2,184 @@
 
 /* Menu Page Container */
 .menu-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
 }
 
 /* Banner Styling */
 .menu-banner {
-    width: 100%;
-    text-align: center;
-    padding: 40px;
-    font-size: clamp(3rem, 5vw, 5rem);
-    font-weight: bold;
+  width: 100%;
+  text-align: center;
+  padding: 40px;
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: bold;
 }
 
 /* Calorie Tracker */
 
 .calorie-tracker {
-    width: 80%;
-    text-align: center;
-    font-size: 18px;
-    color: #333;
+  width: 80%;
+  text-align: center;
+  font-size: 18px;
 }
 
 .calorie-tracker h3 {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .macro-grid-wrapper {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    width: 100%;
-    /* max-width: 700px; */
+  background: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  width: 100%;
+  /* max-width: 700px; */
 }
 
 /* Grid layout */
 .macro-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 100%;
-    margin: 0 auto;
-    text-align: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .macro-grid div {
-    padding: 12px;
-    border-right: 1px solid #ddd; 
+  padding: 12px;
+  border-right: 1px solid #ddd;
 }
 
 .macro-grid div:last-child {
-    border-right: none;
+  border-right: none;
 }
 
 /* Label styling */
 .macro-label {
-    font-size: 16px;
-    font-weight: bold;
-    color: #222;
-    margin-bottom: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 5px;
 }
 
 /* Value text */
 .macro-value {
-    font-size: 16px;
-    color: #555;
+  font-size: 16px;
 }
 
 /* Selected Meal Calories heading */
 h3 {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 .selected-macros {
-    margin-top: 5px;
-    color: #333;
-  }
+  margin-top: 5px;
+}
 
 /* Filter Section */
 .filter-section {
-    text-align: center;
-    margin: 20px 0;
+  text-align: center;
+  margin: 20px 0;
 }
 
 /* Filter Options Container */
 .filter-options {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 100%;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
 /* Filter Buttons */
 .filter-button {
-    padding: 10px 18px;
-    border-radius: 50px;
-    border: 2px solid #000;
-    background: transparent;
-    color: #000;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    white-space: nowrap;
-    display: inline-flex; 
-    align-items: center;
-    justify-content: center;
-    width: 100%; 
-    min-width: unset; 
+  padding: 10px 18px;
+  border-radius: 50px;
+  border: 2px solid #000;
+  background: transparent;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: unset;
 }
 
 .filter-options button {
-    flex: 0; /* Prevents buttons from expanding */
+  flex: 0; /* Prevents buttons from expanding */
 }
 
 /* Active (Selected) Button */
 .filter-button.active {
-    background: #A7C957;
-    color: white;
+  background: #a7c957;
+  color: white;
 }
 
 /* Hover Effect */
 .filter-button:hover {
-    background: #BC4749;
-    color: white;
+  background: #bc4749;
+  color: white;
 }
 
 /* Meal Sections */
 .meal-section {
-    width: 100%;
-    text-align: center;
-    margin-top: 30px;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
 }
 
 .meal-section h3 {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 /* Grid for meals */
 .meal-list {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    max-width: 80%;
-    margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 .meal-item {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    min-width: 300px;
-    max-width: 300px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 300px;
+  max-width: 300px;
+  cursor: pointer;
 }
 
 /* Add Meal Details Button */
 .new-meal-button {
-    width: 80%;
+  width: 80%;
 }
 
 /* Macro Button */
 .macro-btn {
-    max-width: 50%;
-  }
+  max-width: 50%;
+}
 
 /* Remove Meal Button */
 .remove-meal-btn {
-    background-color: #BC4749;
+  background-color: #bc4749;
 }
 
 /* Responsive Design */
@@ -189,38 +187,38 @@ h3 {
 /* Tablet View */
 
 @media (max-width: 1024px) {
-    .filter-options {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
+  .filter-options {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 
-    .meal-list {
-        max-width: 100%;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
-    }
+  .meal-list {
+    max-width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
+  }
 }
 
 /* Mobile View */
 
 @media (max-width: 768px) {
-    .menu-page {
-        padding: 20px;
-    }
+  .menu-page {
+    padding: 20px;
+  }
 
-    .calorie-tracker {
-        width: 100%;
-    }
+  .calorie-tracker {
+    width: 100%;
+  }
 
-    .filter-section {
-        width: 100%;
-    }
+  .filter-section {
+    width: 100%;
+  }
 
-    .meal-list {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 15px;
-    }
+  .meal-list {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+  }
 }
 
 .macro-btn {
-    min-width: 100%;
-  }
+  min-width: 100%;
+}

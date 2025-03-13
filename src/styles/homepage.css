@@ -1,280 +1,295 @@
 /* HOMEPAGE STYLES */
 
 .homepage {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  overflow-x: hidden;
 }
 
 /* HERO BANNER */
 
 .banner-image {
-    /* width: 50%;  */
-    height: 100%;
-    object-fit: cover; 
+  /* width: 50%;  */
+  height: 100%;
+  object-fit: cover;
 }
 
 .banner-content {
-    width: 45%; 
-    color: #333;
-    text-align: right; 
+  width: 45%;
+  text-align: right;
 }
 
 .homepage-header {
-    width: 100%;
-    height: 40vh; 
-    background-color: white;
-    min-height: 300px;
-    max-height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; 
-    text-align: right; 
-    padding: 0 5%;
-}
-
-.homepage-header h1 {
-    font-size: clamp(3rem, 5vh, 5rem);
-    line-height: 4rem;
-    margin-bottom: 10px;
+  width: 100%;
+  height: 40vh;
+  background-color: white;
+  min-height: 300px;
+  max-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: right;
+  padding: 0 5%;
+  margin-bottom: 50px;
 }
 
 .homepage-header p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    text-align: right;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-align: right;
 }
 
-/* Marketing Banner */
+.homepage button {
+  max-width: 200px;
+}
+
+/* MARKET STATISTICS SECTION */
 .homepage-market {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 60px;
-    text-align: center;
+  width: 100%;
+  text-align: center;
+  margin-top: 50px; /* Increase this to create more space */
+  padding-top: 20px; /* Extra padding to ensure separation */
 }
 
-.market-image {
-    width: 100%;
-    height: auto;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.homepage-market h2 {
+  text-align: center;
+  margin-bottom: 50px;
+  font-weight: bold;
+  font-size: clamp(4rem, 5vw, 2.5rem);
 }
 
-/* Stats Section */
-.homepage-stats {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
-    width: 100%;
-    background: white;
-    padding: 40px 20px;
-    border-top: 5px solid #BC4749;
-    text-align: center;
+.market-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  width: 100%;
 }
 
-.stats-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+.market-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  text-align: left;
 }
 
-.stats-icon {
-    font-size: 40px;
-    color: #BC4749;
+.market-icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  display: block;
 }
 
-.stats-item h3 {
-    font-size: 24px;
-    font-weight: bold;
+.market-item h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
-.stats-item p {
-    font-size: 16px;
-    color: #555;
+.market-item p {
+  font-size: 1rem;
 }
 
 /* MEAL RECOMMENDATIONS SECTION */
 .homepage-meals {
-    width: 100%;
-    border-radius: 10px;
-    text-align: center;
-    margin-top: 30px;
+  width: 100%;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 100px;
 }
 
 .homepage-meals h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: clamp(4rem, 5vw, 2.5rem);
-    word-break: break-word; /* Prevents overflow */
-    text-align: left;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: clamp(4rem, 5vw, 2.5rem);
+  word-break: break-word; /* Prevents overflow */
+  text-align: left;
+}
+
+.homepage-meals p {
+  text-align: left;
+  font-size: 1.2rem;
+  margin-bottom: 50px;
 }
 
 .meal-container {
-    display: flex;
-    justify-content: space-between; 
-    gap: 20px; 
-    flex-wrap: wrap;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-.meal-item {
-    flex: 1 1 calc(33.33% - 20px); 
-    width: 300px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.homepage-meal-item {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 300px;
+  max-width: 300px;
 }
+
 .meal-image {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 10px; 
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.meal-item p {
-    font-size: 14px;
-    color: #555;
-    margin-top: 10px;
-}
-
-.meal-item strong {
-    font-size: 14px;
-    color: #333;
+.homepage-meal-item p {
+  font-size: 14px;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .choose-meal-button {
-    margin-top: 50px;
-
+  margin-top: 50px;
 }
 
 /* TESTIMONIALS SECTION */
 .homepage-testimonials {
-    width: 100%;
-    padding: 40px 20px;
-    background: white; 
-    border-radius: 10px;
-    text-align: center;
-    margin-top: 60px;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 60px;
 }
 
 .homepage-testimonials h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-weight: bold;
-    font-size: clamp(4rem, 5vw, 2.5rem);
-    text-align: center; /* Ensures proper alignment */
-    word-break: break-word; /* Prevents overflow */
-    text-align: left;
-    
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: clamp(4rem, 5vw, 2.5rem);
+  word-break: break-word;
+  text-align: left;
+}
+
+.homepage-testimonials p {
+  text-align: left;
+  font-size: 1.2rem;
+  margin-bottom: 50px;
 }
 
 .testimonial-container {
-    display: flex;
-    justify-content: space-between; 
-    gap: 30px; 
-    flex-wrap: wrap;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .testimonial-item {
-    flex: 1 1 calc(33.33% - 20px); 
-    width: 320px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex: 1 1 calc(33.33% - 20px);
+  width: 320px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .testimonial-image {
-    width: 100%;
-    height: 250px; 
-    object-fit: cover;
-    border-radius: 10px; 
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .testimonial-item p {
-    font-size: 14px;
-    color: #555;
-    margin-top: 10px;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 .testimonial-item strong {
-    font-size: 14px;
-    color: #333;
+  font-size: 14px;
 }
 
 /* ✅ RESPONSIVENESS */
 
 @media (max-width: 1024px) {
-
 }
 
 /* Mobile 768px */
 
 @media (max-width: 768px) {
+  .banner-image {
+    width: 100%; /* Full width */
+    height: 250px; /* Adjust height */
+  }
 
-    .banner-image {
-        width: 100%; /* Full width */
-        height: 250px; /* Adjust height */
-    }
+  .banner-content {
+    width: 100%;
+    text-align: center; /* Center text */
+    padding: 20px;
+  }
 
-    .banner-content {
-        width: 100%;
-        text-align: center; /* Center text */
-        padding: 20px;
-    }
+  .homepage-header {
+    flex-direction: column; /* Stack items vertically */
+    min-height: 40vh;
+    text-align: center; /* Center-align text */
+  }
 
-    .homepage-header {
-        flex-direction: column; /* Stack items vertically */
-        min-height: 40vh;
-        text-align: center; /* Center-align text */
-    }
+  .homepage-header h1 {
+    font-size: clamp(3rem, 5vw, 5rem);
+  }
 
-    .homepage-header h1 {
-        font-size: clamp(3rem, 5vw, 5rem);
-    }
+  .homepage-header p {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    text-align: center;
+  }
 
-    .homepage-header p {
-        font-size: 1rem;
-        margin-bottom: 15px;
-    }
+  .meal-container {
+    flex-direction: column; /* Stacks meals on mobile */
+    align-items: center;
+  }
 
-    .meal-container {
-        flex-direction: column; /* Stacks meals on mobile */
-        align-items: center;
-    }
+  .homepage-meals h2 {
+    text-align: center;
+    font-size: clamp(2.5rem, 5vw, 2.5rem);
+  }
 
-    .homepage-meals h2 {
-        text-align: center;
-        font-size: clamp(2.5rem, 5vw, 2.5rem);
-    }
+  .homepage-meals p {
+    text-align: center;
+  }
 
-    .testimonial-container {
-        flex-direction: column;
-        align-items: center;
-    }
 
-    .homepage-testimonials h2 {
-        text-align: center;
-        font-size: clamp(2.5rem, 5vw, 2.5rem);
-    }
+  .testimonial-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .homepage-testimonials h2 {
+    text-align: center;
+    font-size: clamp(2.5rem, 5vw, 2.5rem);
+  }
+
+  .homepage-testimonials p {
+    text-align: center;
+  }
+
+  .market-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .homepage-market h2 {
+    text-align: center; /* Centers on smaller screens */
+    font-size: clamp(1.8rem, 3vw, 2.5rem); /* Adjust for better fit */
+  }
 }
