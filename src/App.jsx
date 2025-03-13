@@ -33,7 +33,7 @@ const ScrollToTop = () => {
   return null; // No UI, just functionality
 };
 
-// Main App component
+// Main App components
 function App() {
   return (
     <UserAuthContextProvider>
