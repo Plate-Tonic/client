@@ -29,6 +29,7 @@
 
 .macro-grid-wrapper {
     background: white;
+    border: 1px solid #ddd;
     padding: 15px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -148,6 +149,7 @@ h3 {
 
 .meal-item {
     background: white;
+    border: 1px solid #ddd;
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

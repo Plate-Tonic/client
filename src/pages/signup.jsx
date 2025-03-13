@@ -173,7 +173,7 @@ const SignUp = () => {
               required
             >
               {securityQuestions.map((question, index) => (
-                <option
+                <option 
                   key={index} value={question}>{question}
                 </option>
               ))}

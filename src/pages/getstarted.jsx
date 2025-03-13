@@ -141,7 +141,7 @@ const GetStarted = () => {
     <div className="get-started-page">
       <div className="getstarted-banner">Get Started</div>
 
-      <h1>Find Your Daily Calorie & Macro Needs</h1>
+      <h2>Find Your Daily Calorie & Macro Needs</h2>
       <p>Use our TDEE calculator to determine your daily intake.</p>
 
       <form className="tdee-form" onSubmit={handleSubmit}>

@@ -281,7 +281,7 @@ const Dashboard = () => {
                   type="email"
                   value={userDetails.email}
                   onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })} />
-                <button
+                <button 
                   onClick={() => handleUpdateUserDetails("email", userDetails.email)}>Save
                 </button>
               </div>
@@ -304,16 +304,6 @@ const Dashboard = () => {
                   <span>Maintain Weight</span>
                 </div>
               </div>
-
-
-              {/* <p><strong>Age:</strong>{userDetails.age}</p>
-              
-              <p><strong>Gender:</strong>{userDetails.gender}</p>
-
-              <p><strong>Activity Level:</strong>{userDetails.activitylevel}</p>
-
-              <p><strong>Goal:</strong>{userDetails.goal}</p> */}
-
             </div>
 
             // Display Calorie Tracker section

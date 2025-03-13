@@ -8,7 +8,7 @@ import bannerImage from "../assets/01_banner.jpg";
 import testimonial1 from "../assets/istockphoto-636082286-612x612.jpg";
 import testimonial2 from "../assets/before-after-inline-2-cz-240705-4ec0d5.jpg";
 import testimonial3 from "../assets/katie-bolden-weight-loss-success-story-d90c538dd489423d94c6455dafd0db05.jpg";
-import marketstatistics from "../assets/1257296_444960205450_Banner-1.1copy.jpg";
+import marketstatistics from "../assets/Untitled-4.jpg";
 import meal1 from "../assets/marry-me-chicken2-65b3f9451efb6.avif";
 import meal2 from "../assets/lemon-shrimp-and-shaved-asparagus-66a174bf43c51.avif";
 import meal3 from "../assets/creole-shrimp-caesar-salad-with-cheesy-croutons-1677186680.avif";
@@ -23,7 +23,7 @@ const Homepage = () => {
       <header className="homepage-header">
         <img src={bannerImage} alt="Hero Banner" className="banner-image" />
         <div className="banner-content">
-          <h1>Welcome to Plate Tonic</h1>
+          <h1>Welcome to PLATE TONIC</h1>
           <p>Delicious, nutritious meals tailored for you.</p>
           {/* Link to GetStarted Page */}
           <Link to="/getstarted" data-testid="get-started-button">
@@ -42,10 +42,10 @@ const Homepage = () => {
       {/* MARKET STATS SECTION */}
       <section className="homepage-stats">
 
-        <div className="stats-item">
+        {/* <div className="stats-item">
           <FaUtensils className="stats-icon" />
           <h3>Updating Recipes</h3>
-          <p>Frequently</p>
+          <p>Has never been easier</p>
         </div>
 
         <div className="stats-item">
@@ -58,7 +58,7 @@ const Homepage = () => {
           <FaBoxOpen className="stats-icon" />
           <h3>Deliveries</h3>
           <p>COMING SOON</p>
-        </div>
+        </div> */}
 
       </section>
 

@@ -22,11 +22,21 @@
     font-weight: bold;
 }
 
+.get-started-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.get-started-page p {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
 /* Form Styling */
 .tdee-form {
     width: 100%;
     max-width: 500px;
-    background: #f8f8f8;
+    border: 1px solid #ddd;
     padding: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -105,3 +115,7 @@ button {
     color: white;
     margin-top: 10px;
 }
+
+/* Responsiveness */
+
+@media (max-width: 768px) {

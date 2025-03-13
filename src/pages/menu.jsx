@@ -204,19 +204,19 @@ const Menu = () => {
           <div className="macro-grid-wrapper">
             <div className="macro-grid">
               <div>
-                <p className="macro-label">Calories:</p>
+                <p className="macro-label">Calories</p>
                 <p className="macro-value">{calorieData.calories} kcal</p>
               </div>
               <div>
-                <p className="macro-label">Protein:</p>
+                <p className="macro-label">Protein</p>
                 <p className="macro-value">{calorieData.protein}g</p>
               </div>
               <div>
-                <p className="macro-label">Fat:</p>
+                <p className="macro-label">Fat</p>
                 <p className="macro-value">{calorieData.fat}g</p>
               </div>
               <div>
-                <p className="macro-label">Carbs:</p>
+                <p className="macro-label">Carbs</p>
                 <p className="macro-value">{calorieData.carbs}g</p>
               </div>
             </div>
@@ -233,25 +233,25 @@ const Menu = () => {
             <div className="macro-grid-wrapper">
               <div className="macro-grid">
                 <div>
-                  <p className="macro-label">Calories:</p>
+                  <p className="macro-label">Calories</p>
                   <p className="macro-value">
                     {selectedMeals.reduce((acc, meal) => acc + meal.calories, 0)} kcal
                   </p>
                 </div>
                 <div>
-                  <p className="macro-label">Protein:</p>
+                  <p className="macro-label">Protein</p>
                   <p className="macro-value">
                     {selectedMeals.reduce((acc, meal) => acc + meal.protein, 0)}g
                   </p>
                 </div>
                 <div>
-                  <p className="macro-label">Fat:</p>
+                  <p className="macro-label">Fat</p>
                   <p className="macro-value">
                     {selectedMeals.reduce((acc, meal) => acc + meal.fat, 0)}g
                   </p>
                 </div>
                 <div>
-                  <p className="macro-label">Carbs:</p>
+                  <p className="macro-label">Carbs</p>
                   <p className="macro-value">
                     {selectedMeals.reduce((acc, meal) => acc + meal.carbs, 0)}g
                   </p>

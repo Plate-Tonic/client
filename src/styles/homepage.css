@@ -14,7 +14,7 @@
 /* HERO BANNER */
 
 .banner-image {
-    width: 50%; 
+    /* width: 50%;  */
     height: 100%;
     object-fit: cover; 
 }
@@ -39,13 +39,15 @@
 }
 
 .homepage-header h1 {
-    font-size: 2rem;
+    font-size: clamp(3rem, 5vh, 5rem);
+    line-height: 4rem;
     margin-bottom: 10px;
 }
 
 .homepage-header p {
     font-size: 1.2rem;
     margin-bottom: 20px;
+    text-align: right;
 }
 
 /* Marketing Banner */
@@ -243,14 +245,13 @@
     }
 
     .homepage-header {
-        
         flex-direction: column; /* Stack items vertically */
         min-height: 40vh;
         text-align: center; /* Center-align text */
     }
 
     .homepage-header h1 {
-        font-size: 1.7rem;
+        font-size: clamp(3rem, 5vw, 5rem);
     }
 
     .homepage-header p {

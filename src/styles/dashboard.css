@@ -5,12 +5,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh; /* Allow content to expand */
+    height: 80vh; 
     width: 100%;
     padding: 20px 0;
     box-sizing: border-box;
-    position: relative; /* Prevents absolute positioning issues */
-    overflow: hidden; /* Ensures content does not leak */
 }
 
 
@@ -29,7 +27,6 @@
 /* Sidebar for navigation */
 .sidebar {
   width: 220px;
-  background: #f2e8cf;
   padding: 15px;
   border-radius: 10px;
   display: flex;
@@ -66,6 +63,7 @@
 /* Styling the calorie tracker section */
 .content-box {
   background-color: #f9f9f9;
+  height: 100%;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -202,7 +200,6 @@
 .input-group button {
   padding: 8px 12px;
   font-size: 16px;
-  background-color: #6a994e;
   color: white;
   border: none;
   border-radius: 5px;
