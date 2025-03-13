@@ -69,7 +69,7 @@
   justify-content: center;
   align-items: center;
   padding-right: 100px;
-  margin-left: auto; /* Pushes links away from the logo */
+  margin-left: auto; 
 }
 
 .nav-links a {
@@ -126,12 +126,11 @@
     top: 70px;
     left: 0;
     width: 100%;
-    background-color: white;
     flex-direction: column;
     align-items: center;
     gap: 15px;
     padding: 15px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   
 
     /* Hide menu initially */
     visibility: hidden;
