@@ -18,13 +18,14 @@ const Contact = () => {
 
     // Contact Page Form
     <div className="contact-page">
+      <div className="contact-banner">Contact Us</div>
+      <p>Have a question or feedback? Send us a message!</p>
 
       {/* Top Section: Contact Form + Image */}
       <div className="contact-container">
 
         <div className="contact-form">
-          <h2>Contact Us</h2>
-          <p>Have a question or feedback? Send us a message!</p>
+          <h2>Send Us a Message</h2>
 
           {/* Form for Contact Information */}
           <form onSubmit={handleSubmit}>
@@ -72,26 +73,18 @@ const Contact = () => {
         </div>
 
         {/* Contact Image */}
-        <div className="contact-image">
+        {/* <div className="contact-image">
           <img src=
             {ContactImage}
             alt="Contact" />
-        </div>
+        </div> */}
 
       </div>
 
       {/* Bottom Section: Address & Phone Information */}
       <div className="contact-info">
-        <h2>Our Information</h2>
-
-        <p><strong>Address:</strong>
-          123 Example Street, Sydney, Australia
-        </p>
-
-        <p><strong>Email:</strong>
-          support@platetonic.com
-        </p>
-
+        <h2>or send us an email at ... </h2>
+        <p>support@platetonic.com</p>
       </div>
     </div>
   );

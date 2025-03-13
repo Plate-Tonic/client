@@ -1,26 +1,37 @@
 /* DASHBOARD STYLING */
 
-/* Dashboard Wrapper */
-.dashboard-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh; 
-    width: 100%;
-    padding: 20px 0;
-    box-sizing: border-box;
+.dashboard-banner {
+  width: 100%;
+  text-align: center;
+  padding: 40px;
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: bold;
 }
 
+.dashboard-page p {
+  font-size: 16px;
+  text-align: center;
+}
+
+
+/* Dashboard Wrapper */
+.dashboard-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
 
 /* Main container holding sidebar & content */
 .dashboard-container {
   display: flex;
   flex-direction: row;
-  background: white;
   padding: 20px;
   width: 90%;
   max-width: 1000px;
   border-radius: 10px;
+  border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -41,11 +52,10 @@
   padding: 20px;
   margin-left: 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .main-content label {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Sidebar button styles */
@@ -58,14 +68,16 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Styling the calorie tracker section */
+/* Styling the content box */
 .content-box {
-  background-color: #f9f9f9;
-  height: 100%;
+  background-color: white;
   padding: 20px;
   border-radius: 8px;
+  border: 1px solid #ddd;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
@@ -74,97 +86,16 @@
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: #333;
 }
 
 .content-box p {
   font-size: 18px;
   margin: 15px 0;
-  color: #555;
 }
 
 .content-box strong {
   font-weight: bold;
   color: #386641;
-}
-
-/* Current Meals Section Styling */
-.current-meals-list {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.current-meals-list h3 {
-  font-size: 24px;
-  margin-bottom: 15px;
-  color: #333;
-}
-
-.current-meals-list ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.current-meals-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  font-size: 18px;
-  width: 100%;
-}
-
-.current-meals-list li:last-child {
-  border-bottom: none;
-}
-
-.current-meals-list .meal-name {
-  font-weight: bold;
-  flex: 1;
-}
-
-.meal-calories,
-.meal-protein,
-.meal-carbs,
-.meal-fats {
-  color: black;
-  margin-left: 5px;
-}
-
-/* Remove Meal Button Styling */
-.remove-meal {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100px;
-  text-align: center;
-}
-
-/* MEAL BUTTON STYLING */
-.add-meal-btn {
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
-  display: block;
-  width: 100%;
-  max-width: 250px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.current-meals-list {
-  margin-bottom: 20px;
 }
 
 /* Personal Details Input Box */
@@ -179,13 +110,13 @@
   align-items: center;
   gap: 10px;
   width: 100%;
-  max-width: 700px; /* Adjust as needed */
+  max-width: 700px;
 }
 
 .input-group label {
   font-weight: bold;
   white-space: nowrap;
-  min-width: 80px; /* Ensures label stays in place */
+  min-width: 80px;
 }
 
 .input-group input {
@@ -205,34 +136,199 @@
   border-radius: 5px;
   cursor: pointer;
   flex-shrink: 0;
-  width: 80px; /* Set a fixed width */
+  width: 80px; 
   text-align: center;
 }
 
 .personal-details {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .info-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .info-row label {
-    font-weight: bold;
-    min-width: 120px;
-    text-align: left;
+  font-weight: bold;
+  min-width: 120px;
+  text-align: left;
 }
 
 .info-row span {
-    text-align: right;
-    flex-grow: 1;
+  text-align: right;
+  flex-grow: 1;
 }
 
+/* Calorie Tracker Section */
+
+.calorie-tracker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 20px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.calorie-tracker-grid div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  font-size: 18px;
+}
+
+.calorie-tracker-grid label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.content-box h4 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Progress Bar Styling */
+.progress-container {
+  width: 100%;
+  text-align: left;
+}
+
+.progress-label {
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  height: 12px;
+  border-radius: 8px;
+  background-color: #ddd;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.4s ease-in-out;
+}
+
+.calories-fill {
+  background-color: #ffcc00;
+}
+
+.protein-fill {
+  background-color: #ff9500;
+}
+
+.carbs-fill {
+  background-color: #A7C957;
+}
+
+.fats-fill {
+  background-color: #BC4749;
+}
+
+
+/* Current Meals Section */
+.current-meals-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  background-color: white;
+  max-height: 400px;
+  overflow-y: auto; 
+}
+
+.meal-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 5px;
+}
+
+.meal-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 5px;
+
+}
+
+.dashboard-meal-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+}
+
+.dashboard-meal-info p {
+  font-size: 18px;
+  margin: 0px;
+  text-align: left;
+}
+
+.meal-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.meal-macros {
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+/* Remove Meal Button Styling */
+.remove-meal {
+  background-color: #ff4d4d;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+  text-align: center;
+  margin-left: auto;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+/* MEAL BUTTON STYLING */
+.add-meal-btn {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 /* Change Password Input & Button Styling */
 .password-change-container {
@@ -240,12 +336,9 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 500px;
   margin: 0 auto;
   padding: 10px;
-  background: #f9f9f9;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .password-change-container input {
@@ -253,14 +346,14 @@
   padding: 12px;
   font-size: 16px;
   border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  margin-right: 10px;
+  margin: 10px;
 }
 
 .save-password-btn {
   padding: 12px 20px;
   font-size: 16px;
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -285,7 +378,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     width: 100%;
     padding: 20px 0;
     box-sizing: border-box;
@@ -327,7 +419,7 @@
 
   .input-group {
     flex-direction: column;
-    align-items: flex-start; /* Align input and button properly */
+    align-items: flex-start; 
     text-align: left;
     gap: 5px;
   }
@@ -337,12 +429,24 @@
   }
 
   .input-group button {
-    width: 100%; /* Make button full width */
+    width: 100%; 
     text-align: center;
-}
-  .current-meals-list {
+  }
+
+  .calorie-tracker-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .meal-card {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .remove-meal {
     width: 100%;
-    padding: 15px;
+    max-width: 200px;
+    margin-left: 0;
   }
 
   .add-meal-btn {
