@@ -223,8 +223,8 @@ const Dashboard = () => {
 
   // Handle logout button
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Remove the token from localStorage
-    localStorage.removeItem("macroTracker"); // Remove the macroTracker from localStorage
+    localStorage.removeItem("authToken"); 
+    localStorage.removeItem("macroTracker"); 
     navigate("/login");
   };
 
@@ -295,19 +295,19 @@ const Dashboard = () => {
                 <div className="personal-details">
                   <div className="info-row">
                     <label>Age:</label>
-                    <span>28</span>
+                    <span>{userDetails.age}</span>
                   </div>
                   <div className="info-row">
                     <label>Gender:</label>
-                    <span>Female</span>
+                    <span>{userDetails.gender}</span>
                   </div>
                   <div className="info-row">
                     <label>Activity Level:</label>
-                    <span>Moderately active (moderate exercise 3-5 days/week)</span>
+                    <span>{userDetails.activitylevel}</span>
                   </div>
                   <div className="info-row">
                     <label>Goal:</label>
-                    <span>Maintain Weight</span>
+                    <span>{userDetails.goal}</span>
                   </div>
                 </div>
               </div>

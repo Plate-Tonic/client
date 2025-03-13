@@ -195,7 +195,8 @@ h3 {
     }
 
     .meal-list {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        max-width: 100%;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
     }
 }
 
