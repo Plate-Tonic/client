@@ -189,7 +189,7 @@ const ForgetPassword = () => {
         {step !== 3 && (
           <p>
             Remembered your password?
-            <Link to="/login">Back to Login</Link>
+            <Link to="/login"> Back to Login</Link>
           </p>
         )}
 

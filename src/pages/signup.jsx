@@ -116,7 +116,7 @@ const SignUp = () => {
 
       {/* Sign Up Form */}
       <div className="signup-container">
-        <h2>Sign Up</h2>
+        <h2>Fill in your details here</h2>
         <form onSubmit={handleSignUp} data-testid="signup-form">
 
           {/* Input fields for user sign-up */}
@@ -214,7 +214,7 @@ const SignUp = () => {
         {/* Link to login page */}
         <p>
           Already have an account?
-          <Link to="/login">Login here</Link>
+          <Link to="/login"> Login here</Link>
         </p>
 
       </div>

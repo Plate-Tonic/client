@@ -7,6 +7,10 @@
     align-items: center;
 }
 
+.signup-page p {
+    margin-top: 20px;
+}
+
 /* Banner */
 .signup-banner {
     width: 100%;
@@ -39,7 +43,7 @@
 
 .signup-input label {
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .signup-input input {
