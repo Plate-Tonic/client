@@ -64,12 +64,21 @@ const MealDetail = () => {
 
   return (
     <div>
-      {/* Meal Selection Banner */}
-      <div className="meal-detail-banner">Meal Selection</div>
 
       {/* Meal Details */}
       <div className="meal-detail-page">
         <h2>{meal.name}</h2>
+
+        <div className="meal-info">
+          <label>Calories</label>
+          <span>{meal.calories}</span>
+          <label>Protein</label>
+          <span>{meal.protein}</span>
+          <label>Carbs</label>
+          <span>{meal.carbs}</span>
+          <label>Fats</label>
+          <span>{meal.fat}</span>
+        </div>
 
         {/* Image Section */}
         <img
@@ -80,7 +89,7 @@ const MealDetail = () => {
         />
 
         <div className="ingredients">
-          <strong>Ingredients:</strong>
+          <label>Ingredients:</label>
           <ul>
             {meal.ingredients.map((ingredient, index) => (
               <li key={index}>{ingredient}</li>
@@ -88,34 +97,19 @@ const MealDetail = () => {
           </ul>
         </div>
 
-        <div className="description">
-          <strong>Recipe:</strong>
-          {meal.description.split('\n').map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
-        </div>
-
-        <div className="meal-info">
-          <div className="calories">
-            <strong>Calories:</strong> {meal.calories}
-          </div>
-          <div className="macros">
-            <span>
-              <strong>Protein:</strong> {meal.protein}g
-            </span>
-            <span>
-              <strong>Carbs:</strong> {meal.carbs}g
-            </span>
-            <span>
-              <strong>Fats:</strong> {meal.fat}g
-            </span>
-          </div>
+        <div className="recipe">
+          <label>Recipe</label>
+          <span>
+            {meal.description.split('\n').map((line, index) => (
+              <p key={index}>{line}</p>
+            ))}
+          </span>
         </div>
 
         {/* Show Remove Button if Admin */}
         {isAdmin && (
           <>
-            <button className="remove-meal-btn"
+            <button className="remove-mealdetails-btn"
               onClick={() =>
                 setShowConfirm(true)}>Remove Meal
             </button>

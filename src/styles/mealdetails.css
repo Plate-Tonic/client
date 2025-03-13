@@ -1,29 +1,17 @@
 /* MEAL DETAIL PAGE STYLING */
 
-/* Styling for the meal detail banner */
-.meal-detail-banner {
-  width: 100%;  
-  background-color: #BC4749;
-  color: white;
-  text-align: center;
-  padding: 130px;  
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0;  
-  box-sizing: border-box; 
-}
-
 /* Styling for the meal detail page */
 .meal-detail-page {
-  padding: 20px;
+  padding: 50px;
   max-width: 1200px;  
   margin: 0 auto;  
   background-color: #fff;
 }
 
 .meal-detail-page h2 {
-  font-size: 32px;
+  font-size: clamp(3rem, 5vw, 4rem);
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .meal-detail-page .meal-image {
@@ -31,59 +19,50 @@
   height: auto;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  margin-bottom: 60px;
+}
+
+.meal-detail-page label {
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .meal-detail-page p {
   font-size: 18px;
   line-height: 1.6;
-  color: #333;
-  margin-bottom: 12px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
-.meal-detail-page .description {
+.ingredients {
   font-size: 18px;
-  color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
 }
 
-.meal-detail-page .ingredients {
-  font-size: 18px;
-  color: #333;
-  margin-bottom: 20px;
+.ingredients label {
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
 .meal-detail-page .ingredients ul {
-  padding-left: 20px;
+  margin-top: 20px;
+  padding-left: 50px;
   list-style-type: disc;
 }
 
-.meal-detail-page .meal-info {
+.meal-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 60px;
 }
 
-.meal-detail-page .meal-info .calories,
-.meal-detail-page .meal-info .macros {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.meal-detail-page .meal-info .macros {
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
-}
-
-.meal-detail-page .meal-info .macros span {
-  margin-right: 20px;
+.recipe label{
+  font-size: clamp(2rem, 5vw, 3rem);
 }
 
 /* Styling for the remove meal button */
 
-.remove-meal-btn {
-  background-color: red;
+.remove-mealdetails-btn {
+  background-color: #BC4749;
   color: white;
   padding: 10px;
   border: none;
@@ -109,7 +88,7 @@
 }
 
 .confirm-remove-btn {
-  background-color: red;
+  background-color: #BC4749;
   color: white;
   padding: 10px;
   margin-right: 10px;

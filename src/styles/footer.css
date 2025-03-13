@@ -6,6 +6,8 @@
   color: white;
   text-align: center;
   padding: 15px 0;
+  flex-shrink: 0; /* Prevents footer from collapsing */
+
 }
 
 .footer-content {

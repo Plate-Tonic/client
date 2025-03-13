@@ -31,8 +31,8 @@ const Blog = () => {
         const data = await response.json();
         setBlogs(data.data); // Store the fetched blogs array in state
       } catch (err) {
-        console.error("Error fetching blogs:", err); 
-        setError("Failed to load blog posts. Please try again later."); 
+        console.error("Error fetching blogs:", err);
+        setError("Failed to load blog posts. Please try again later.");
       }
     };
 
@@ -77,21 +77,20 @@ const Blog = () => {
         <h3>Filter by Tags</h3>
         <div className="filter-options">
           {[
-
-            'Nutrition',
-            'Meal Prep',
-            'Fitness',
-            'Healthy Eating',
-            'Weight Management',
-            'Gluten-free'
-
-          ].map(tag => (
-            <label key={tag}>
-              <input
-                type="checkbox"
-                value={tag}
-                onChange={handleFilterChange} />{tag.replace('-', ' ')}
-            </label>
+            "Nutrition",
+            "Meal Prep",
+            "Fitness",
+            "Healthy Eating",
+            "Weight Management",
+            "Gluten-free",
+          ].map((tag) => (
+            <button
+              key={tag}
+              className={`filter-button ${selectedFilters.includes(tag) ? "active" : ""}`}
+              onClick={() => setSelectedFilters((prevFilters) => prevFilters.includes(tag) ? prevFilters.filter((f) => f !== tag): [...prevFilters, tag])
+              }
+            >{tag}
+            </button>
           ))}
         </div>
       </div>

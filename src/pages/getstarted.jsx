@@ -147,7 +147,7 @@ const GetStarted = () => {
       <form className="tdee-form" onSubmit={handleSubmit}>
 
         {/* Enter Information */}
-        <div className="input-group">
+        <div className="getstarted-input">
           <label htmlFor="age">Age:</label>
           <input
             id="age"
@@ -158,7 +158,7 @@ const GetStarted = () => {
           />
         </div>
 
-        <div className="input-group">
+        <div className="getstarted-input">
           <label htmlFor="weight">Weight (kg):</label>
           <input
             id="weight"
@@ -169,7 +169,7 @@ const GetStarted = () => {
           />
         </div>
 
-        <div className="input-group">
+        <div className="getstarted-input">
           <label htmlFor="height">Height (cm):</label>
           <input
             id="height"
@@ -180,7 +180,7 @@ const GetStarted = () => {
           />
         </div>
 
-        <div className="input-group">
+        <div className="getstarted-input">
           <label htmlFor="gender">Gender:</label>
           <select
             id="gender"
@@ -192,7 +192,7 @@ const GetStarted = () => {
         </div>
 
         {/* Activity Level */}
-        <div className="input-group">
+        <div className="getstarted-input">
           <label htmlFor="activity">Activity Level:</label>
           <select
             id="activity"
@@ -207,7 +207,7 @@ const GetStarted = () => {
         </div>
 
         {/* Goal */}
-        <div className="input-group">
+        <div className="getstarted-input">
           <label htmlFor="goal">Goal:</label>
           <select
             id="goal"

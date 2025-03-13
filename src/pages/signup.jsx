@@ -120,7 +120,7 @@ const SignUp = () => {
         <form onSubmit={handleSignUp} data-testid="signup-form">
 
           {/* Input fields for user sign-up */}
-          <div className="input-group">
+          <div className="signup-input">
             <label htmlFor="name">Name:</label>
             <input
               id="name"
@@ -131,7 +131,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="input-group">
+          <div className="signup-input">
             <label htmlFor="email">Email:</label>
             <input
               id="email"
@@ -142,7 +142,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="input-group">
+          <div className="signup-input">
             <label htmlFor="password">Password:</label>
             <input
               id="password"
@@ -153,7 +153,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="input-group">
+          <div className="signup-input">
             <label htmlFor="confirmPassword">Confirm Password:</label>
             <input
               id="confirmPassword"
@@ -164,7 +164,7 @@ const SignUp = () => {
             />
           </div>
 
-          <div className="input-group">
+          <div className="signup-input">
             <label htmlFor="securityQuestion">Security Question:</label>
             <select
               id="securityQuestion"
@@ -181,7 +181,7 @@ const SignUp = () => {
 
           </div>
 
-          <div className="input-group">
+          <div className="signup-input">
             <label htmlFor="securityAnswer">Security Answer:</label>
             <input
               id="securityAnswer"

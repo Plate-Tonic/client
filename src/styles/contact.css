@@ -6,8 +6,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center; 
-    font-family: Arial, sans-serif;
-    color: #333;
   }
   
   /* Contact Form & Image Section */
@@ -88,7 +86,7 @@
   
 /* Contact Information Section */
 .contact-info {
-    width: 100vw;
+    width: 100%;
     background: #F2E8CF; 
     padding: 30px;
     text-align: center;

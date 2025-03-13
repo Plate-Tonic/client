@@ -265,9 +265,7 @@ const Dashboard = () => {
               <h3>Personal Details</h3>
 
               <div className="input-group">
-                <p>
-                  <strong>Name:</strong>
-                </p>
+                <label>Name:</label>
                 <input
                   type="text"
                   value={userDetails.name}
@@ -278,9 +276,7 @@ const Dashboard = () => {
               </div>
 
               <div className="input-group">
-                <p>
-                  <strong>Email:</strong>
-                </p>
+                <label>Email:</label>
                 <input
                   type="email"
                   value={userDetails.email}
@@ -290,21 +286,33 @@ const Dashboard = () => {
                 </button>
               </div>
 
-              <p>
-                <strong>Age:</strong>{userDetails.age}
-              </p>
+              <div className="personal-details">
+                <div className="info-row">
+                  <label>Age:</label>
+                  <span>28</span>
+                </div>
+                <div className="info-row">
+                  <label>Gender:</label>
+                  <span>Female</span>
+                </div>
+                <div className="info-row">
+                  <label>Activity Level:</label>
+                  <span>Moderately active (moderate exercise 3-5 days/week)</span>
+                </div>
+                <div className="info-row">
+                  <label>Goal:</label>
+                  <span>Maintain Weight</span>
+                </div>
+              </div>
 
-              <p>
-                <strong>Gender:</strong>{userDetails.gender}
-              </p>
 
-              <p>
-                <strong>Activity Level:</strong>{userDetails.activitylevel}
-              </p>
+              {/* <p><strong>Age:</strong>{userDetails.age}</p>
+              
+              <p><strong>Gender:</strong>{userDetails.gender}</p>
 
-              <p>
-                <strong>Goal:</strong>{userDetails.goal}
-              </p>
+              <p><strong>Activity Level:</strong>{userDetails.activitylevel}</p>
+
+              <p><strong>Goal:</strong>{userDetails.goal}</p> */}
 
             </div>
 

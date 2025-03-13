@@ -5,263 +5,351 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh; 
+    min-height: 80vh; /* Allow content to expand */
     width: 100%;
+    padding: 20px 0;
+    box-sizing: border-box;
+    position: relative; /* Prevents absolute positioning issues */
+    overflow: hidden; /* Ensures content does not leak */
 }
+
 
 /* Main container holding sidebar & content */
 .dashboard-container {
-    display: flex;
-    flex-direction: row; 
-    background: white;
-    padding: 20px;
-    width: 90%; 
-    max-width: 1000px; 
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  background: white;
+  padding: 20px;
+  width: 90%;
+  max-width: 1000px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Sidebar for navigation */
 .sidebar {
-    width: 220px;
-    background: #F2E8CF;
-    padding: 15px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  width: 220px;
+  background: #f2e8cf;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 /* Main content area */
 .main-content {
-    flex-grow: 1;
-    background: white;
-    padding: 20px;
-    margin-left: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); 
+  flex-grow: 1;
+  background: white;
+  padding: 20px;
+  margin-left: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.main-content label {
+    font-weight: bold;
 }
 
 /* Sidebar button styles */
 .sidebar button {
-    width: 100%;
-    padding: 10px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 600;
+  width: 100%;
+  padding: 10px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 /* Styling the calorie tracker section */
 .content-box {
-    background-color: #F9F9F9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .content-box h3 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .content-box p {
-    font-size: 18px;
-    margin: 15px 0;
-    color: #555;
+  font-size: 18px;
+  margin: 15px 0;
+  color: #555;
 }
 
 .content-box strong {
-    font-weight: bold;
-    color: #386641; 
+  font-weight: bold;
+  color: #386641;
 }
 
 /* Current Meals Section Styling */
 .current-meals-list {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #F9F9F9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .current-meals-list h3 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #333;
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
 }
 
 .current-meals-list ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .current-meals-list li {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    font-size: 18px;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+  width: 100%;
 }
 
 .current-meals-list li:last-child {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .current-meals-list .meal-name {
-    font-weight: bold;
-    flex: 1; 
+  font-weight: bold;
+  flex: 1;
 }
 
 .meal-calories,
 .meal-protein,
 .meal-carbs,
 .meal-fats {
-    color: black;
-    margin-left: 5px;
+  color: black;
+  margin-left: 5px;
 }
 
 /* Remove Meal Button Styling */
 .remove-meal {
-    background-color: #FF4D4D;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100px; 
-    text-align: center;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100px;
+  text-align: center;
 }
 
 /* MEAL BUTTON STYLING */
 .add-meal-btn {
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
-    display: block;
-    width: 100%;
-    max-width: 250px;
-    margin-left: auto;
-    margin-right: auto; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .current-meals-list {
-    margin-bottom: 20px; 
+  margin-bottom: 20px;
+}
+
+/* Personal Details Input Box */
+
+.content-box {
+  text-align: left;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 700px; /* Adjust as needed */
+}
+
+.input-group label {
+  font-weight: bold;
+  white-space: nowrap;
+  min-width: 80px; /* Ensures label stays in place */
+}
+
+.input-group input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: auto;
 }
 
 .input-group button {
-    flex-shrink: 0; 
-    width: fit-content; 
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #6A994E; 
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    white-space: nowrap; 
+  padding: 8px 12px;
+  font-size: 16px;
+  background-color: #6a994e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+  width: 80px; /* Set a fixed width */
+  text-align: center;
 }
 
-.content-box {
+.personal-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.info-row label {
+    font-weight: bold;
+    min-width: 120px;
     text-align: left;
 }
 
+.info-row span {
+    text-align: right;
+    flex-grow: 1;
+}
+
+
 /* Change Password Input & Button Styling */
 .password-change-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; 
-    width: 100%;
-    max-width: 500px; 
-    margin: 0 auto; 
-    padding: 10px;
-    background: #F9F9F9;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .password-change-container input {
-    flex: 1; 
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px; 
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
 }
 
 .save-password-btn {
-    padding: 12px 20px;
-    font-size: 16px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    white-space: nowrap;
+  padding: 12px 20px;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 /* RESPONSIVENESS */
 
+@media (max-width: 1024px) {
+  .password-change-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+  }
+}
+
 /* MOBILE STYLES */
 
 @media (max-width: 768px) {
+  .dashboard-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px 0;
+    box-sizing: border-box;
+  }
 
-    .dashboard-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh; 
-        width: 100%;
-        padding: 20px 0; 
-        box-sizing: border-box;
-    }
-    
-    .dashboard-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
+  .dashboard-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
-    .sidebar {
-        width: 100%;
-        display: flex;
-        flex-direction: column; 
-        align-items: center; 
-        gap: 10px;
-        padding: 10px;
-        border-radius: 10px;
-    }
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
 
-    .sidebar button {
-        width: 100%; 
-        max-width: 300px; 
-        padding: 10px;
-    }
+  .sidebar button {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+  }
 
-    .main-content {
-        width: 100%;
-        margin-left: 0;
-        margin-top: 15px;
-    }
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 15px;
+  }
 
-    .current-meals-list {
-        width: 100%;
-        padding: 15px;
-    }
+  .content-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
 
-    .add-meal-btn {
-        width: 100%;
-        max-width: 250px;
-    }
+  .input-group {
+    flex-direction: column;
+    align-items: flex-start; /* Align input and button properly */
+    text-align: left;
+    gap: 5px;
+  }
+
+  .input-group input {
+    width: 100%;
+  }
+
+  .input-group button {
+    width: 100%; /* Make button full width */
+    text-align: center;
 }
+  .current-meals-list {
+    width: 100%;
+    padding: 15px;
+  }
 
+  .add-meal-btn {
+    width: 100%;
+    max-width: 250px;
+  }
+}

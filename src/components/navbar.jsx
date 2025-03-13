@@ -3,6 +3,8 @@ import { FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "../styles/navbar.css";
 
+import logo from "../assets/03_logo_platetonic.png";
+
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -26,7 +28,7 @@ const Navbar = () => {
         <div className="logo">
           <Link to="/" onClick={() => setMenuOpen(false)}>
             <img 
-              src="https://bcassetcdn.com/public/blog/wp-content/uploads/2022/10/05203628/blue-window-house-app-by-royallogo-brandcrowd.png" 
+              src={logo}
               alt="Plate Tonic Logo" 
             />
           </Link>

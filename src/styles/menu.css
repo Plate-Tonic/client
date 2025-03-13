@@ -5,59 +5,133 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
+    min-height: 90vh;
+    padding: 0 20px; /
 }
 
 /* Banner Styling */
 .menu-banner {
-    width: 100vw;
-    background-color: #BC4749;
-    color: white;
+    width: 100%;
     text-align: center;
-    padding: 100px;
-    font-size: 24px;
+    padding: 40px;
+    font-size: clamp(3rem, 5vw, 5rem);
     font-weight: bold;
 }
 
 /* Calorie Tracker */
+
 .calorie-tracker {
-    background: #F2E8CF;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100vw;
+    width: 80%;
     text-align: center;
-    margin: 30px 0;
     font-size: 18px;
+    color: #333;
+}
+
+.macro-grid-wrapper {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    width: 100%;
+    /* max-width: 700px; */
+}
+
+/* Grid layout */
+.macro-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.macro-grid div {
+    padding: 12px;
+    border-right: 1px solid #ddd; 
+}
+
+.macro-grid div:last-child {
+    border-right: none;
+}
+
+/* Label styling */
+.macro-label {
+    font-size: 16px;
     font-weight: bold;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+/* Value text */
+.macro-value {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Selected Meal Calories heading */
+h3 {
+    margin-top: 15px;
 }
 
 .selected-macros {
     margin-top: 5px;
-    
     color: #333;
   }
 
 /* Filter Section */
 .filter-section {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 80%;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
+/* Filter Options Container */
 .filter-options {
     display: flex;
+    gap: 12px;
     justify-content: center;
-    gap: 20px;
     flex-wrap: wrap;
+    max-width: 100%;
+}
+
+/* Filter Buttons */
+.filter-button {
+    padding: 10px 18px;
+    border-radius: 50px;
+    border: 2px solid #000;
+    background: transparent;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    min-width: unset; 
+}
+
+.filter-options button {
+    flex: 0; /* Prevents buttons from expanding */
+}
+
+/* Active (Selected) Button */
+.filter-button.active {
+    background: #A7C957;
+    color: white;
+}
+
+/* Hover Effect */
+.filter-button:hover {
+    background: #BC4749;
+    color: white;
 }
 
 /* Meal Sections */
 .meal-section {
-    width: 80%;
+    width: 100%;
     text-align: center;
     margin-top: 30px;
 }
@@ -80,14 +154,14 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    min-width: 220px;
+    min-width: 300px;
     max-width: 300px;
 }
 
-/* Add Meal Button */
+/* Add Meal Details Button */
 .new-meal-button {
-    
     width: 80%;
 }
 
@@ -95,6 +169,11 @@
 .macro-btn {
     max-width: 50%;
   }
+
+/* Remove Meal Button */
+.remove-meal-btn {
+    background-color: #BC4749;
+}
 
 /* Responsive Design */
 
@@ -118,6 +197,10 @@
         padding: 20px;
     }
 
+    .calorie-tracker {
+        width: 100%;
+    }
+
     .filter-section {
         width: 100%;
     }
@@ -129,5 +212,5 @@
 }
 
 .macro-btn {
-    min-width: 450px;
+    min-width: 100%;
   }

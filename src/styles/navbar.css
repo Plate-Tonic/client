@@ -28,6 +28,13 @@
   padding: 0 20px;
 }
 
+.nav-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1; /* Ensures nav-links stay centered */
+}
+
 /* Logo Styling */
 .logo {
   display: flex;
@@ -59,8 +66,10 @@
   gap: 30px;
   margin: 0;
   padding: 0;
-  flex-grow: 1;
   justify-content: center;
+  align-items: center;
+  padding-right: 100px;
+  margin-left: auto; /* Pushes links away from the logo */
 }
 
 .nav-links a {

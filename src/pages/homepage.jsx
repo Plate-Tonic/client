@@ -4,6 +4,7 @@ import "../styles/homepage.css";
 import { FaUtensils, FaSmile, FaBoxOpen } from "react-icons/fa"; // Import icons
 
 // Import images locally
+import bannerImage from "../assets/01_banner.jpg";
 import testimonial1 from "../assets/istockphoto-636082286-612x612.jpg";
 import testimonial2 from "../assets/before-after-inline-2-cz-240705-4ec0d5.jpg";
 import testimonial3 from "../assets/katie-bolden-weight-loss-success-story-d90c538dd489423d94c6455dafd0db05.jpg";
@@ -20,14 +21,17 @@ const Homepage = () => {
     <div className="homepage">
       {/* HERO BANNER */}
       <header className="homepage-header">
-        <h1>Welcome to Plate Tonic</h1>
-        <p>Delicious, nutritious meals tailored for you.</p>
-        {/* Link to GetStarted Page */}
-        <Link to="/getstarted" data-testid="get-started-button">
-          <button type="button">
-            Get Started
-          </button>
-        </Link>
+        <img src={bannerImage} alt="Hero Banner" className="banner-image" />
+        <div className="banner-content">
+          <h1>Welcome to Plate Tonic</h1>
+          <p>Delicious, nutritious meals tailored for you.</p>
+          {/* Link to GetStarted Page */}
+          <Link to="/getstarted" data-testid="get-started-button">
+            <button type="button" className="get-started-button">
+              Get Started
+            </button>
+          </Link>
+        </div>
       </header>
 
       {/* MARKET STATISTICS */}
@@ -87,12 +91,12 @@ const Homepage = () => {
 
       {/* MEAL BUTTON */}
       <Link to="/menu">
-        <button type="button">Choose your Meal</button>
+        <button type="button" className="choose-meal-button">Choose your Meal</button>
       </Link>
 
       {/* TESTIMONIALS SECTION */}
       <section className="homepage-testimonials">
-        <h2>What Our Customers Say</h2>
+        <h2>The Journey</h2>
 
         <div className="testimonial-container">
           <div className="testimonial-item">
