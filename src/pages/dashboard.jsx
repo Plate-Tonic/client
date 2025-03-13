@@ -223,197 +223,268 @@ const Dashboard = () => {
 
   // Handle logout button
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Remove the token from localStorage
-    localStorage.removeItem("macroTracker"); // Remove the macroTracker from localStorage
+    localStorage.removeItem("authToken"); 
+    localStorage.removeItem("macroTracker"); 
     navigate("/login");
   };
 
   // Render the dashboard content
   return (
-    <div className="dashboard-wrapper">
-      <div className="dashboard-container">
+    <div className="dashboard-page">
+      {/* Dashboard Banner */}
+      <div className="dashboard-banner">Your Dashboard</div>
 
-        {/* Sidebar */}
-        <div className="sidebar">
-          <button onClick={() =>
-            setActiveSection("personal-details")}>Personal Details
-          </button>
+      <p>Manage your personal details, track your calories, and update your meals.</p>
 
-          <button onClick={() =>
-            setActiveSection("calorie-tracker")}>Calorie Tracker
-          </button>
+      <div className="dashboard-wrapper">
+        <div className="dashboard-container">
 
-          <button onClick={() =>
-            setActiveSection("current-meals")}>Current Meals
-          </button>
+          {/* Sidebar */}
+          <div className="sidebar">
+            <button onClick={() =>
+              setActiveSection("personal-details")}>Personal Details
+            </button>
 
-          <button onClick={() =>
-            setActiveSection("change-password")}>Change Password
-          </button>
+            <button onClick={() =>
+              setActiveSection("calorie-tracker")}>Calorie Tracker
+            </button>
 
-          <button onClick=
-            {handleLogout} className="logout-btn">Logout
-          </button>
+            <button onClick={() =>
+              setActiveSection("current-meals")}>Current Meals
+            </button>
 
-        </div>
+            <button onClick={() =>
+              setActiveSection("change-password")}>Change Password
+            </button>
 
-        {/* Main Content */}
-        <div className="main-content">
+            <button onClick=
+              {handleLogout} className="logout-btn">Logout
+            </button>
 
-          {activeSection === "personal-details" ? (
-            <div className="content-box">
-              <h3>Personal Details</h3>
+          </div>
 
-              <div className="input-group">
-                <label>Name:</label>
-                <input
-                  type="text"
-                  value={userDetails.name}
-                  onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })} />
-                <button
-                  onClick={() => handleUpdateUserDetails("name", userDetails.name)}>Save
+          {/* Main Content */}
+          <div className="main-content">
+
+            {activeSection === "personal-details" ? (
+              <div className="content-box">
+                <h3>Personal Details</h3>
+
+                <div className="input-group">
+                  <label>Name:</label>
+                  <input
+                    type="text"
+                    value={userDetails.name}
+                    onChange={(e) => setUserDetails({ ...userDetails, name: e.target.value })} />
+                  <button
+                    onClick={() => handleUpdateUserDetails("name", userDetails.name)}>Save
+                  </button>
+                </div>
+
+                <div className="input-group">
+                  <label>Email:</label>
+                  <input
+                    type="email"
+                    value={userDetails.email}
+                    onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })} />
+                  <button
+                    onClick={() => handleUpdateUserDetails("email", userDetails.email)}>Save
+                  </button>
+                </div>
+
+                <div className="personal-details">
+                  <div className="info-row">
+                    <label>Age:</label>
+                    <span>{userDetails.age}</span>
+                  </div>
+                  <div className="info-row">
+                    <label>Gender:</label>
+                    <span>{userDetails.gender}</span>
+                  </div>
+                  <div className="info-row">
+                    <label>Activity Level:</label>
+                    <span>{userDetails.activitylevel}</span>
+                  </div>
+                  <div className="info-row">
+                    <label>Goal:</label>
+                    <span>{userDetails.goal}</span>
+                  </div>
+                </div>
+              </div>
+
+              // Display Calorie Tracker section
+            ) : activeSection === "calorie-tracker" ? (
+              <div className="content-box">
+
+                <h3>Calorie Tracker</h3>
+
+                {/* Progress Bars */}
+                <div className="progress-container">
+                  
+                  <div className="progress-label">
+                    <span>Calories</span>
+                    <span>{currentCalories} kcal / {calorieRequirement} kcal</span>
+                  </div>
+                  <div className="progress-bar">
+                    <div className="progress-fill calories-fill"
+                      style={{ width: `${(currentCalories / calorieRequirement) * 100}%` }}
+                    ></div>
+                  </div>
+
+                  <div className="progress-label">
+                    <span>Protein</span>
+                    <span>{currentProtein}g / {proteinRequirement}g</span>
+                  </div>
+                  <div className="progress-bar">
+                    <div className="progress-fill protein-fill"
+                      style={{ width: `${(currentProtein / proteinRequirement) * 100}%` }}
+                    ></div>
+                  </div>
+
+                  <div className="progress-label">
+                    <span>Carbs</span>
+                    <span>{currentCarbs}g / {carbRequirement}g</span>
+                  </div>
+                  <div className="progress-bar">
+                    <div className="progress-fill carbs-fill"
+                      style={{ width: `${(currentCarbs / carbRequirement) * 100}%` }}
+                    ></div>
+                  </div>
+
+                  <div className="progress-label">
+                    <span>Fats</span>
+                    <span>{currentFats}g / {fatRequirement}g</span>
+                  </div>
+                  <div className="progress-bar">
+                    <div className="progress-fill fats-fill"
+                      style={{ width: `${(currentFats / fatRequirement) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* Requirement Grid */}
+                <h4>Your Required Calories</h4>
+                <div className="calorie-tracker-grid">
+                  <div>
+                    <label>Calories</label>
+                    <p>{calorieRequirement} kcal</p>
+                  </div>
+
+                  <div>
+                    <label>Protein</label>
+                    <p>{proteinRequirement} g</p>
+                  </div>
+
+                  <div>
+                    <label>Fat</label>
+                    <p>{fatRequirement} g</p>
+                  </div>
+
+                  <div>
+                    <label>Carbs</label>
+                    <p>{carbRequirement} g</p>
+                  </div>
+                </div>
+
+                {/* Selected Meal Calories Grid */}
+                <h4>Your Calorie Intake</h4>
+                <div className="calorie-tracker-grid">
+                  <div>
+                    <label>Calories</label>
+                    <p>{currentCalories} kcal</p>
+                  </div>
+
+                  <div>
+                    <label>Protein</label>
+                    <p>{currentProtein} g</p>
+                  </div>
+
+                  <div>
+                    <label>Fat</label>
+                    <p>{currentFats} g</p>
+                  </div>
+
+                  <div>
+                    <label>Carbs</label>
+                    <p>{currentCarbs} g</p>
+                  </div>
+                </div>
+              </div>
+
+
+              // Display Current Meals section
+            ) : activeSection === "current-meals" ? (
+              <div className="content-box">
+                <h3>Current Meals</h3>
+
+                {selectedMeals.length === 0 ? (
+                  <p>No meals selected yet.</p>
+                ) : (
+                  <div className="current-meals-container">
+                    {selectedMeals.map((meal) => (
+                      <div key={meal._id} className="meal-card">
+                        {/* Meal Image */}
+                        <img
+                          src={`${import.meta.env.VITE_AUTH_API_URL}${meal.mealImage || "/uploads/placeholder-image.jpg"}`}
+                          alt={meal.name}
+                          crossOrigin="anonymous"
+                        />
+
+                        {/* Meal Info */}
+                        <div className="dashboard-meal-info">
+                          <p className="meal-name" onClick={() => navigate(`/meal/${meal._id}`)}>
+                            {meal.name}
+                          </p>
+                          <p className="meal-macros">
+                            {meal.calories} KCAL P {meal.protein}G C {meal.carbs}G F {meal.fat}G
+                          </p>
+                        </div>
+
+                        {/* Remove Button */}
+                        <button className="remove-meal" onClick={() => removeMeal(meal._id)}>
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Add Meal button */}
+                <button className="add-meal-btn"
+                  onClick={() => navigate("/menu")}>Add Meal
                 </button>
               </div>
 
-              <div className="input-group">
-                <label>Email:</label>
-                <input
-                  type="email"
-                  value={userDetails.email}
-                  onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })} />
-                <button 
-                  onClick={() => handleUpdateUserDetails("email", userDetails.email)}>Save
-                </button>
-              </div>
+              // Display Change Password section
+            ) : activeSection === "change-password" ? (
+              <div className="content-box">
+                <h3>Change Password</h3>
+                <div className="password-change-container">
 
-              <div className="personal-details">
-                <div className="info-row">
-                  <label>Age:</label>
-                  <span>28</span>
+                  <input
+                    type="password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    placeholder="Enter current password"
+                  />
+
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Enter new password"
+                  />
                 </div>
-                <div className="info-row">
-                  <label>Gender:</label>
-                  <span>Female</span>
-                </div>
-                <div className="info-row">
-                  <label>Activity Level:</label>
-                  <span>Moderately active (moderate exercise 3-5 days/week)</span>
-                </div>
-                <div className="info-row">
-                  <label>Goal:</label>
-                  <span>Maintain Weight</span>
-                </div>
-              </div>
-            </div>
-
-            // Display Calorie Tracker section
-          ) : activeSection === "calorie-tracker" ? (
-            <div className="content-box">
-              <h3>Calorie Tracker</h3>
-
-              <p>
-                <strong>Calorie Requirement:</strong>{calorieRequirement} kcal
-              </p>
-
-              <p>
-                <strong>Protein Requirement:</strong>{proteinRequirement} g
-              </p>
-
-              <p>
-                <strong>Carb Requirement:</strong>{carbRequirement} g
-              </p>
-
-              <p>
-                <strong>Fat Requirement:</strong>{fatRequirement} g
-              </p>
-
-              <p>
-                <strong>Current Intake:</strong>{currentCalories} kcal
-              </p>
-
-              <p>
-                <strong>Current Protein:</strong>{currentProtein} g
-              </p>
-
-              <p>
-                <strong>Current Carbs:</strong>{currentCarbs} g
-              </p>
-
-              <p>
-                <strong>Current Fats:</strong>{currentFats} g
-              </p>
-
-            </div>
-
-            // Display Current Meals section
-          ) : activeSection === "current-meals" ? (
-            <div className="content-box">
-              <h3>Current Meals</h3>
-
-              {/* Display Selected Meals */}
-              {selectedMeals.length === 0 ? <p>No meals selected yet.</p> : ( // Message if no meals are selected
-
-                // Display the list of selected meals
-                <ul className="current-meals-list">
-
-                  {/* Meal Displayed */}
-                  {selectedMeals.map((meal) => (
-                    <li key={meal._id}>
-                      <p className="meal-name"
-                        onClick={() => navigate(`/meal/${meal._id}`)} // redirect to meal details
-                        style={{
-                          cursor: "pointer",
-                          textDecoration: "underline",
-                          color: "blue"
-                        }}>
-                        {meal.name} - {meal.calories} kcal
-                      </p>
-
-                      {/* Remove Meal button */}
-                      <button className="remove-meal"
-                        onClick={() => removeMeal(meal._id)}>Remove
-                      </button>
-
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* Add Meal button */}
-              <button className="add-meal-btn"
-                onClick={() => navigate("/menu")}>Add Meal
-              </button>
-            </div>
-
-            // Display Change Password section
-          ) : activeSection === "change-password" ? (
-            <div className="content-box">
-              <h3>Change Password</h3>
-              <div className="password-change-container">
-
-                <input
-                  type="password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  placeholder="Enter current password"
-                />
-
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Enter new password"
-                />
 
                 <button className="save-password-btn"
                   onClick={handleChangePassword}>Save
                 </button>
 
               </div>
-            </div>
-          ) : null} {/* End of activeSection conditional rendering */}
+            ) : null} {/* End of activeSection conditional rendering */}
+          </div>
         </div>
-      </div>
+      </div >
     </div>
   );
 };

@@ -6,14 +6,13 @@
   justify-content: center;
   align-items: center;
   padding: 60px 20px;
-  background-color: #f9f9f9;
 }
 
 /* Terms and Conditions Content */
 .terms-content {
   max-width: 800px;
   padding: 30px;
-  background-color: #ffffff;
+  background-color: white;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   border-radius: 8px;
 }
