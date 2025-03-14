@@ -82,7 +82,6 @@ const Blog = () => {
             "Fitness",
             "Healthy Eating",
             "Weight Management",
-            "Gluten-free",
           ].map((tag) => (
             <button
               key={tag}

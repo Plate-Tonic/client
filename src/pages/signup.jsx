@@ -98,7 +98,7 @@ const SignUp = () => {
       localStorage.setItem("userData", JSON.stringify({})); // Reset instead of removing
       console.log("After clearing, macroTracker in localStorage:", localStorage.getItem("macroTracker"));
 
-      window.location.href = "/login"; // Redirect to login page
+      navigate("/login") // Redirect to login page
 
       // Show success message
       alert("Successfully registered user!");
