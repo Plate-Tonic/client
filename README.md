@@ -1,12 +1,48 @@
-# React + Vite
+# PlateTonic Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Contributors
 
-Currently, two official plugins are available:
+Van Nguyen - [GitHub](https://github.com/montsieur)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Veronica Chung - [GitHub](https://github.com/chung-v)
 
-## Expanding the ESLint configuration
+### Deployed Application
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Front End: [https://platetonic.netlify.app](https://platetonic.netlify.app/)
+
+- Back End: [https://platetonic.onrender.com](https://platetonic.onrender.com)
+
+### Repositories
+
+- Documentation: [Plate-Tonic/part-b](https://github.com/Plate-Tonic/platetonic-part-b)
+
+- Front End: [Plate-Tonic/client](https://github.com/Plate-Tonic/client)
+
+- Back End: [Plate-Tonic/server](https://github.com/Plate-Tonic/server)
+
+# Application Setup
+
+1. Clone the repository.
+
+```
+git@github.com:Plate-Tonic/client.git
+cd client
+```
+
+2. Create your `.env` file in the root directory.
+
+```
+VITE_AUTH_API_URL="your-backend-api-url"
+```
+
+3. Install dependencies.
+
+```
+npm install
+```
+
+4. Run the application.
+
+```
+npm run dev
+```
