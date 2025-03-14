@@ -265,7 +265,7 @@ const Menu = () => {
       <div className="filter-section">
         <h3>Filter by Preferences</h3>
         <div className="filter-options">
-          {["Vegetarian", "Vegan", "Gluten Free", "Nut Free", "None"].map((filter) => (
+          {["Vegetarian", "Vegan", "Gluten-Free", "Nut-Free", "None"].map((filter) => (
             <button
               key={filter}
               className={`filter-button ${selectedFilters.includes(filter) ? "active" : ""}`}
